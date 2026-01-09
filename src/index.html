@@ -2,12 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>NgReport</title>
+  <title>Report Dashboard | Industrial Style</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- CDNs from original project for full compatibility -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <!-- Google Fonts: Roboto Condensed for Headings, Roboto for Body (CAT Style) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" crossorigin="anonymous">
+  
+  <!-- Global Styles from original -->
+  <style>
+      :root {
+          --cat-yellow: #FFCD11;
+          --cat-black: #101010;
+          --cat-gray: #212121;
+          --cat-light-gray: #F2F2F2;
+      }
+      body { font-family: 'Roboto', sans-serif; }
+      h1, h2, h3, h4, th, .brand-font { font-family: 'Roboto Condensed', sans-serif; }
+      
+      /* CAT Theme Utilities */
+      .cat-yellow-bg { background-color: var(--cat-yellow); }
+      .cat-black-bg { background-color: var(--cat-black); }
+      .cat-text-yellow { color: var(--cat-yellow); }
+      .cat-border { border-color: var(--cat-yellow); }
+      
+      .sharp { border-radius: 0px !important; }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: #f1f1f1; }
+      ::-webkit-scrollbar-thumb { background: #555; }
+      ::-webkit-scrollbar-thumb:hover { background: #000; }
+      
+      input:focus, select:focus {
+          outline: 2px solid var(--cat-yellow);
+          outline-offset: -2px;
+      }
+  </style>
 </head>
-<body>
+<body class="bg-neutral-100 min-h-screen flex flex-col text-neutral-800">
   <app-root></app-root>
 </body>
 </html>

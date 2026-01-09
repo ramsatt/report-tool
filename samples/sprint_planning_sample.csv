@@ -1,0 +1,6 @@
+Work Item ID,Work Item Type,Work Item,Scope,Resource,Story Points
+1001,User Story,Refactor Auth Module,Implement new JWT flow,Alice Developer,5
+1002,Bug,Fix Header Alignment,Adjust CSS for mobile view,Bob Designer,3
+1003,User Story,API Optimization,Reduce latency by caching,Charlie Backend,8
+1004,Task,Update Documentation,Add new API endpoints to swagger,Alice Developer,2
+1005,Bug,Login Timeout,Fix session timeout issue on edge cases,Dave QA,3

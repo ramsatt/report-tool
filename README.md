@@ -1,59 +1,74 @@
-# NgReport
+# NG-Report Generator
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+A comprehensive Angular application for generating Sprint Planning and Sprint Closure reports with an industrial aesthetic.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Sprint Planning Module**: Generate estimation reports with total story points, resource allocation, and detailed scope.
+- **Sprint Closure Module**: Generate closure reports with committed vs. completed points, spilled points logic, and status breakdown.
+- **Excel Data Import**: Upload Excel/CSV files to populate report data instantly.
+- **Multi-Format Export**:
+  - **Export to PDF**: High-quality PDF generation.
+  - **Export to Word**: Editable Word document export (Print Layout compatible).
+  - **Copy for Email**: Outlook-compatible HTML copy-paste for email bodies.
+- **Industrial Design**: High-contrast Black, White, and Yellow theme.
 
-```bash
-ng serve
-```
+## Excel Data Format
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+To use the Excel upload feature, your data must follow the specific column headers described below.
 
-## Code scaffolding
+### 1. Sprint Planning Data format
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+**Required Columns:**
 
-```bash
-ng generate component component-name
-```
+- `Work Item ID` (e.g., 12345)
+- `Work Item Type` (e.g., User Story, Bug)
+- `Work Item` (Title of the item)
+- `Scope` (Description of work)
+- `Resource` (Developer name)
+- `Story Points` (Numeric value)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+**Sample row:**
 
-```bash
-ng generate --help
-```
+| Work Item ID | Work Item Type | Work Item       | Scope            | Resource | Story Points |
+| :----------- | :------------- | :-------------- | :--------------- | :------- | :----------- |
+| 56781        | User Story     | Api Integration | Create endpoints | John Doe | 5            |
 
-## Building
+### 2. Sprint Closure Data format
 
-To build the project run:
+**Required Columns:**
 
-```bash
-ng build
-```
+- `Work Item ID`
+- `Work Item Type`
+- `Work Item` (Title)
+- `Story Points`
+- `Status` (Must be 'Completed' for done items, otherwise treated as open)
+- `Dev Overview` (Remarks)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+**Sample row:**
 
-## Running unit tests
+| Work Item ID | Work Item Type | Work Item       | Story Points | Status      | Dev Overview           |
+| :----------- | :------------- | :-------------- | :----------- | :---------- | :--------------------- |
+| 56781        | User Story     | Api Integration | 5            | Completed   | Delivered successfully |
+| 56792        | Bug            | Fix Login Crash | 3            | In Progress | Spilled to next sprint |
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Getting Started
 
-```bash
-ng test
-```
+1. **Install Dependencies**
 
-## Running end-to-end tests
+   ```bash
+   npm install
+   ```
 
-For end-to-end (e2e) testing, run:
+2. **Run Application**
 
-```bash
-ng e2e
-```
+   ```bash
+   npm start
+   ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+   Navigate to `http://localhost:4200` (or the port shown in terminal).
 
-## Additional Resources
+## Exporting Reports
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Copy to Email**: Click "Copy Report for Email" in the Preview tab. Paste directly into Outlook or Gmail. The formatting preserves colors and layout.
+- **Word Export**: Click "Export Word" to download a `.doc` file. This file opens in Print Layout mode by default.

@@ -1,0 +1,201 @@
+    <!-- CAT Style Navigation -->
+    <nav class="bg-black text-white border-b-[6px] border-[#FFCD11] sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <!-- CAT Logo -->
+                <img src="assets/cat-logo.png" alt="CAT" class="logo-preview h-12 w-auto bg-white p-1">
+                
+                <div class="h-10 w-[1px] bg-neutral-800 mx-6"></div>
+
+                <div class="flex flex-col justify-center h-12">
+                    <h1 class="text-2xl font-black uppercase tracking-wide leading-none font-condensed">ESTIMATION<span class="text-[#FFCD11]">GENERATOR</span></h1>
+                    <p class="text-[11px] font-bold text-neutral-400 tracking-wider uppercase mt-1">Operations & Engineering</p>
+                </div>
+            </div>
+            
+            <div class="flex gap-0">
+                <button (click)="switchTab('input')" 
+                        [ngClass]="activeTab === 'input' ? 'bg-[#FFCD11] text-black border-2 border-[#FFCD11]' : 'bg-[#111] text-white border-2 border-white hover:bg-[#333] hover:border-[#FFCD11] hover:text-[#FFCD11]'" 
+                        class="sharp h-12 px-8 text-sm font-bold uppercase tracking-widest transition-all">
+                    Data Input
+                </button>
+                <button (click)="switchTab('preview')" 
+                        [ngClass]="activeTab === 'preview' ? 'bg-[#FFCD11] text-black border-2 border-[#FFCD11]' : 'bg-[#111] text-white border-2 border-white hover:bg-[#333] hover:border-[#FFCD11] hover:text-[#FFCD11]'"
+                        class="sharp h-12 px-8 text-sm font-bold uppercase tracking-widest transition-all ml-4">
+                    Preview Report
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 md:p-10 space-y-8">
+        
+        <!-- INPUT MODE -->
+        <div *ngIf="activeTab === 'input'" class="grid grid-cols-1 xl:grid-cols-4 gap-8 fade-in">
+            
+            <!-- Sidebar -->
+            <div class="xl:col-span-1 space-y-8">
+                
+                <!-- Sprint Data -->
+                <div class="bg-white p-6 shadow-md border-t-4 border-black sharp">
+                    <h2 class="text-sm font-black uppercase border-b-2 border-neutral-100 pb-2 mb-4">Sprint Parameters</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-neutral-500 uppercase mb-1">Sprint Identity</label>
+                            <input type="text" [(ngModel)]="sprintData.number" (input)="updateMeta()" class="sharp w-full bg-neutral-100 border border-neutral-300 p-3 font-bold text-sm text-black">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-neutral-500 uppercase mb-1">Start (Inc)</label>
+                                <input type="text" [(ngModel)]="sprintData.startDate" (input)="updateMeta()" class="sharp w-full bg-neutral-100 border border-neutral-300 p-2 text-xs font-bold uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-neutral-500 uppercase mb-1">End (Inc)</label>
+                                <input type="text" [(ngModel)]="sprintData.endDate" (input)="updateMeta()" class="sharp w-full bg-neutral-100 border border-neutral-300 p-2 text-xs font-bold uppercase">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Summary -->
+                <div class="bg-black text-white p-6 shadow-lg sharp relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-[#FFCD11] transform translate-x-8 -translate-y-8 rotate-45"></div>
+                    <h2 class="text-xs font-black uppercase tracking-widest text-[#FFCD11] mb-6">Estimation Totals</h2>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="flex items-end justify-between border-b border-neutral-800 pb-2">
+                            <span class="text-[10px] font-bold uppercase text-neutral-400">Total Points</span>
+                            <span class="text-3xl font-black text-[#FFCD11]">{{ totalPoints }}</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <span class="text-[10px] font-bold uppercase text-neutral-400">Total Items</span>
+                            <span class="text-xl font-bold">{{ totalCount }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Editor -->
+            <div class="xl:col-span-3 flex flex-col h-full bg-white shadow-md border-t-4 border-[#FFCD11] sharp min-h-[600px]">
+                <div class="p-4 border-b border-neutral-200 flex justify-between items-center bg-neutral-50">
+                    <h3 class="text-sm font-black uppercase tracking-widest flex items-center gap-2">
+                        <span class="w-2 h-2 bg-black"></span> Work Items & Scope
+                    </h3>
+                    <div class="flex items-center gap-2">
+                        <input type="file" id="excel-upload" class="hidden" accept=".xlsx, .xls, .csv" (change)="handleFileUpload($event)">
+                        <button (click)="fileInput.click()" class="sharp bg-neutral-800 hover:bg-black text-white px-3 py-2 text-[10px] font-black uppercase tracking-wide transition-colors flex items-center gap-2">
+                            <i data-lucide="upload-cloud" class="w-3 h-3"></i> Upload Excel
+                        </button>
+                        <!-- hidden file input trigger trick -->
+                        <input #fileInput type="file" style="display:none" (change)="handleFileUpload($event)" accept=".xlsx,.xls,.csv"/>
+
+                        <button (click)="addRow()" class="sharp bg-[#FFCD11] border-2 border-[#FFCD11] hover:bg-yellow-400 text-black px-3 py-2 text-[10px] font-black uppercase tracking-wide transition-colors flex items-center gap-2">
+                            <i data-lucide="plus" class="w-3 h-3"></i> Add Row
+                        </button>
+                        <button (click)="clearData()" class="sharp border-2 border-red-200 text-red-600 hover:bg-red-600 hover:text-white hover:border-red-600 px-3 py-2 text-[10px] font-black uppercase tracking-wide transition-colors ml-2" title="Reset all data">
+                            <i data-lucide="trash-2" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex-1 overflow-auto bg-white p-0">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-black text-white sticky top-0 z-10">
+                            <tr>
+                                <th class="p-3 text-[10px] font-black uppercase tracking-wider w-20">ID</th>
+                                <th class="p-3 text-[10px] font-black uppercase tracking-wider w-20">Type</th>
+                                <th class="p-3 text-[10px] font-black uppercase tracking-wider w-48">Work Item</th>
+                                <th class="p-3 text-[10px] font-black uppercase tracking-wider w-48">Scope</th>
+                                <th class="p-3 text-[10px] font-black uppercase tracking-wider w-32">Resource</th>
+                                <th class="p-3 text-[10px] font-black uppercase tracking-wider w-12 text-center">Pts</th>
+                                <th class="p-3 w-8"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-neutral-100">
+                            <tr *ngFor="let item of workItems; let i = index" class="hover:bg-yellow-50 border-b border-neutral-100 transition-colors">
+                                <td class="p-2"><input type="text" [(ngModel)]="item.id" (input)="onItemChange()" class="w-full bg-transparent p-1 font-mono text-xs font-bold border-b border-transparent focus:border-[#FFCD11] outline-none"></td>
+                                <td class="p-2">
+                                    <select [(ngModel)]="item.type" (change)="onItemChange()" class="w-full bg-transparent p-1 text-xs font-bold uppercase text-neutral-500 border-b border-transparent focus:border-[#FFCD11] outline-none">
+                                        <option value="BUG">BUG</option>
+                                        <option value="USER STORY">USER STORY</option>
+                                        <option value="TASK">TASK</option>
+                                    </select>
+                                </td>
+                                <td class="p-2"><textarea [(ngModel)]="item.title" (input)="onItemChange()" class="w-full bg-transparent p-1 text-xs border-b border-transparent focus:border-[#FFCD11] outline-none resize-none h-10"></textarea></td>
+                                <td class="p-2"><textarea [(ngModel)]="item.scope" (input)="onItemChange()" class="w-full bg-transparent p-1 text-xs text-neutral-500 border-b border-transparent focus:border-[#FFCD11] outline-none resize-none h-10"></textarea></td>
+                                <td class="p-2"><input type="text" [(ngModel)]="item.resource" (input)="onItemChange()" class="w-full bg-transparent p-1 text-xs font-bold border-b border-transparent focus:border-[#FFCD11] outline-none"></td>
+                                <td class="p-2"><input type="number" [(ngModel)]="item.points" (input)="onItemChange()" class="w-full bg-transparent p-1 text-xs font-black text-center border-b border-transparent focus:border-[#FFCD11] outline-none"></td>
+                                <td class="p-2 text-right">
+                                    <button (click)="removeRow(i)" class="text-neutral-300 hover:text-red-600 p-1"><i data-lucide="x-square" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREVIEW MODE -->
+        <div *ngIf="activeTab === 'preview'" class="fade-in space-y-6">
+            <div class="flex justify-between items-end border-b-2 border-neutral-200 pb-4">
+                <div>
+                    <h2 class="text-2xl font-black uppercase tracking-tighter">Estimation Report</h2>
+                    <p class="text-xs text-neutral-500 font-bold uppercase">Ready for distribution</p>
+                </div>
+                <div class="flex gap-4">
+                     <button (click)="exportImage()" class="sharp bg-white border-2 border-black text-black hover:bg-neutral-100 px-6 py-3 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2">
+                        <i data-lucide="image" class="w-4 h-4"></i> Export Image
+                    </button>
+                    <button (click)="exportPdf()" class="sharp bg-white border-2 border-black text-black hover:bg-neutral-100 px-6 py-3 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-4 h-4"></i> Export PDF
+                    </button>
+                    <button (click)="exportWord()" class="sharp bg-white border-2 border-black text-black hover:bg-neutral-100 px-6 py-3 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2">
+                        <i data-lucide="file" class="w-4 h-4"></i> Export Word
+                    </button>
+                    <button (click)="copyVisualReport()" class="sharp bg-black text-[#FFCD11] hover:bg-neutral-800 px-6 py-3 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2">
+                        <i data-lucide="copy" class="w-4 h-4"></i> Copy Report for Email
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sub-Tabs -->
+            <div class="flex border-b border-neutral-300">
+                <button (click)="togglePreviewSubTab('visual')" [class.bg-neutral-800]="previewSubTab === 'visual'" [class.text-white]="previewSubTab === 'visual'" [class.bg-neutral-200]="previewSubTab !== 'visual'" class="px-6 py-3 text-xs font-black uppercase tracking-widest transition-colors">Visual Preview</button>
+                <button (click)="togglePreviewSubTab('code')" [class.bg-neutral-800]="previewSubTab === 'code'" [class.text-white]="previewSubTab === 'code'" [class.bg-neutral-200]="previewSubTab !== 'code'" class="px-6 py-3 text-xs font-black uppercase tracking-widest transition-colors">Source Code</button>
+            </div>
+
+            <div class="grid grid-cols-1 gap-12">
+                <div *ngIf="previewSubTab === 'visual'" class="bg-neutral-100 p-8 shadow-inner overflow-auto border border-neutral-300 sharp">
+                    <div class="bg-white shadow-2xl mx-auto max-w-[960px]">
+                        <!-- Render safe HTML -->
+                        <div [innerHTML]="previewHtmlSafe"></div>
+                    </div>
+                </div>
+                <div *ngIf="previewSubTab === 'code'" class="bg-[#1a1a1a] p-0 flex flex-col h-[600px] shadow-2xl sharp border-l-4 border-[#FFCD11]">
+                    <div class="bg-black p-3 px-4 flex justify-between items-center border-b border-neutral-800">
+                        <span class="text-[#FFCD11] text-[10px] font-black uppercase tracking-widest">Source Code</span>
+                    </div>
+                    <pre class="flex-1 p-4 text-[11px] font-mono text-neutral-400 overflow-auto whitespace-pre-wrap leading-relaxed selection:bg-[#FFCD11] selection:text-black">{{ previewCode }}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Render container for image export (hidden) -->
+        <!-- We handle this dynamically in the component via DOM manipulation to ensure styles capture correctly, or use a hidden div here -->
+        
+        <!-- CUSTOM MODAL -->
+        <div *ngIf="modalVisible" class="fixed inset-0 z-[100000] flex items-center justify-center bg-black/80 backdrop-blur-sm fade-in">
+            <div class="bg-white border-l-8 border-[#FFCD11] p-8 shadow-2xl w-[400px] sharp relative transform scale-100 transition-transform">
+                <div class="absolute top-0 right-0 p-2 opacity-50 hover:opacity-100 cursor-pointer" (click)="closeModal()">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </div>
+                <h3 class="text-2xl font-black uppercase text-black mb-2 tracking-tighter">{{ modalTitle }}</h3>
+                <p class="text-xs text-neutral-600 font-bold uppercase mb-8 leading-relaxed border-t border-neutral-100 pt-4">{{ modalMsg }}</p>
+                <div class="flex justify-end gap-3">
+                     <button (click)="closeModal()" class="sharp border-2 border-neutral-200 text-neutral-400 hover:text-black hover:border-black px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-colors">Cancel</button>
+                     <button (click)="confirmModal()" class="sharp bg-[#FFCD11] text-black hover:bg-yellow-400 px-8 py-3 text-[10px] font-black uppercase tracking-widest transition-colors shadow-lg">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+    </main>

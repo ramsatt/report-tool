@@ -1127,7 +1127,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
                     
                     <!-- Chart Area -->
                     <div style="flex-grow: 1; display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 5px; padding-top: 10px;">
-                        ${this.deliveryStrategyData.map(d => `
+                        ${[...this.deliveryStrategyData].reverse().map(d => `
                             <!-- Bar Group -->
                             <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 10%;">
                                 <div style="display: flex; gap: 4px; align-items: flex-end; height: 80px;">
@@ -1154,7 +1154,8 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
                             ${(() => {
                                 let html = '';
                                 let lastMonth = '';
-                                this.deliveryStrategyData.forEach((row, idx) => {
+                                const reversedData = [...this.deliveryStrategyData].reverse();
+                                reversedData.forEach((row, idx) => {
                                     const isNewMonth = row.month && row.month !== lastMonth;
                                     if (isNewMonth) lastMonth = row.month;
                                     
@@ -1168,7 +1169,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
                                         <!-- Timeline Connector -->
                                         <div style="width: 30px; display: flex; flex-direction: column; align-items: center; position: relative;">
                                             <div style="width: 10px; height: 10px; border-radius: 50%; background-color: ${parseFloat(row.pct) >= 100 ? '#26C6DA' : '#ff9800'}; border: 2px solid white; box-shadow: 0 0 0 1px #eee; z-index: 2;"></div>
-                                            ${idx < this.deliveryStrategyData.length - 1 ? `<div style="width: 1px; background-color: #eee; height: 100%; position: absolute; top: 10px; z-index: 1;"></div>` : ''}
+                                            ${idx < reversedData.length - 1 ? `<div style="width: 1px; background-color: #eee; height: 100%; position: absolute; top: 10px; z-index: 1;"></div>` : ''}
                                         </div>
 
                                         <!-- Sprint Card Content -->
@@ -1178,7 +1179,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
                                                     <span style="font-weight: 700; color: #333; font-size: 11px;">${row.sprint}</span>
                                                     ${row.planned !== '-' ? `<span style="font-size: 9px; padding: 1px 4px; background-color: #f0f4c3; color: #558b2f; border-radius: 4px;">Deployed: ${row.actual}</span>` : ''}
                                                 </div>
-                                                <div style="font-size: 10px; color: #666; font-style: italic;">${row.comment}</div>
+                                                <div style="font-size: 10px; color: #666; font-style: italic;">${row.comment || ''}</div>
                                             </div>
                                             
                                             <!-- Stats Badge -->
@@ -1598,9 +1599,9 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
                         <tbody>
                             ${this.teamActionsData.map(a => `
                             <tr style="border-bottom: 1px solid #eee;">
-                                <td style="padding: 15px 12px; color: #444; vertical-align: middle;">${a.item}</td>
-                                <td style="padding: 15px 12px; color: #666; vertical-align: middle;">${a.duration}</td>
-                                <td style="padding: 15px 12px; color: #666; vertical-align: middle; font-style: italic;">${a.comments}</td>
+                                <td style="padding: 15px 12px; color: #444; vertical-align: middle;">${a.item || ''}</td>
+                                <td style="padding: 15px 12px; color: #666; vertical-align: middle;">${a.duration || ''}</td>
+                                <td style="padding: 15px 12px; color: #666; vertical-align: middle; font-style: italic;">${a.comments || ''}</td>
                             </tr>
                             `).join('')}
                         </tbody>

@@ -2005,37 +2005,99 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
             pptx.defineLayout({ name: 'CUSTOM', width: 10, height: 5.625 });
             pptx.layout = 'CUSTOM';
 
-            // Slide 1: Title Slide
+            // Helper function to add footer to slides
+            const addFooter = (slide: any, pageNum: number) => {
+                slide.addText('Cognizant | Caterpillar: Confidential Green', { 
+                    x: 0.5, y: 5.2, w: 6, h: 0.3, fontSize: 9, color: '666666' 
+                });
+                slide.addText(`${pageNum}`, { 
+                    x: 9, y: 5.2, w: 0.8, h: 0.3, fontSize: 10, bold: true, 
+                    color: 'FFFFFF', fill: { color: '000048' }, align: 'center', valign: 'middle'
+                });
+            };
+
+            let pageNum = 1;
+
+            // ===== Slide 1: Title Slide =====
+            updateStatus('Creating title slide...');
             const slide1 = pptx.addSlide();
             slide1.background = { color: '000048' };
-            
             slide1.addText('Cognizant', { x: 8.2, y: 0.4, w: 1.5, h: 0.4, fontSize: 14, bold: true, color: 'FFFFFF' });
+            slide1.addText('CAT', { x: 8.2, y: 0.8, w: 1.5, h: 0.4, fontSize: 14, bold: true, color: 'FFFFFF' });
             slide1.addText('CAT Technology', { x: 0.6, y: 1.8, w: 8, h: 0.6, fontSize: 48, bold: false, color: 'FFFFFF' });
             slide1.addText('DQME – Core/App', { x: 0.6, y: 2.5, w: 8, h: 0.6, fontSize: 48, bold: true, color: 'FFFFFF' });
             slide1.addText(`${this.currentMonth.toUpperCase()} ${this.currentYear}`, { 
                 x: 0.6, y: 3.5, w: 2, h: 0.5, fontSize: 20, bold: true, color: 'FFFFFF', 
                 fill: { color: '2f78c4' }, align: 'center', valign: 'middle'
             });
+            slide1.addText(`© ${new Date().getFullYear()} Cognizant. All rights reserved. | Caterpillar: Confidential Green`, {
+                x: 0.6, y: 5.0, w: 8, h: 0.3, fontSize: 9, color: 'FFFFFF'
+            });
 
-            // Slide 2: Core Highlights
+            // ===== Slide 2: Core Highlights =====
+            updateStatus('Creating Core Highlights...');
+            pageNum = 2;
             const slide2 = pptx.addSlide();
             slide2.background = { color: 'F8F9FA' };
             slide2.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
             slide2.addText('Deliverable Highlights', { x: 0.5, y: 0.15, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
             slide2.addText('Core Platform', { x: 0.5, y: 0.45, w: 8, h: 0.2, fontSize: 12, bold: true, color: '26C6DA' });
+            slide2.addText(`${this.currentMonth} ${this.currentYear}`, { x: 8.5, y: 0.25, w: 1.3, h: 0.3, fontSize: 12, color: 'FFFFFF' });
             
             let yPos = 1.0;
             slide2.addText('Key Achievements', { x: 0.6, y: yPos, w: 8, h: 0.3, fontSize: 16, bold: true, color: '000048' });
             yPos += 0.4;
-            
             this.coreHighlights.forEach((highlight) => {
                 if (yPos < 4.5) {
                     slide2.addText('• ' + highlight, { x: 0.8, y: yPos, w: 8.5, h: 0.25, fontSize: 14, color: '333333' });
                     yPos += 0.3;
                 }
             });
+            addFooter(slide2, pageNum);
 
-            // Slide 3: App Highlights
+            // ===== Slides 3+: Core Delivery Metrics =====
+            updateStatus('Creating Core Delivery Metrics...');
+            const coreChunks = [];
+            for (let i = 0; i < this.coreDeliveryDataRows.length; i += 2) {
+                coreChunks.push(this.coreDeliveryDataRows.slice(i, i + 2));
+            }
+            
+            coreChunks.forEach((chunk) => {
+                pageNum++;
+                const slide = pptx.addSlide();
+                slide.background = { color: 'F8F9FA' };
+                slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.6, fill: { color: '000048' } });
+                slide.addText('Delivery Metrics', { x: 0.5, y: 0.1, w: 8, h: 0.3, fontSize: 20, bold: true, color: 'FFFFFF' });
+                slide.addText('Core Platform', { x: 0.5, y: 0.35, w: 8, h: 0.2, fontSize: 11, bold: true, color: '26C6DA' });
+                slide.addText(`${this.currentMonth} ${this.currentYear}`, { x: 8.5, y: 0.2, w: 1.3, h: 0.25, fontSize: 11, color: 'FFFFFF' });
+                
+                chunk.forEach((row, idx) => {
+                    const cardY = idx === 0 ? 0.8 : 2.4;
+                    slide.addShape(pptx.ShapeType.rect, { x: 0.4, y: cardY, w: 9.2, h: 1.4, fill: { color: 'FFFFFF' }, 
+                        line: { color: '000048', width: 2 }
+                    });
+                    slide.addText(row.sprintMonth.split('\n')[0], { x: 0.6, y: cardY + 0.1, w: 2, h: 0.3, fontSize: 13, bold: true, color: '000048' });
+                    slide.addText(`C: ${row.committed}  D: ${row.delivered}  A: ${row.achieved}`, { 
+                        x: 3, y: cardY + 0.1, w: 3, h: 0.25, fontSize: 10, bold: true, 
+                        color: parseInt(row.achieved) >= 100 ? '2e7d32' : 'ef6c00' 
+                    });
+                    slide.addText('Features:', { x: 0.6, y: cardY + 0.45, w: 8.8, h: 0.2, fontSize: 9, bold: true, color: '000048' });
+                    const features = row.features.slice(0, 4).map((f: string) => '• ' + (f.length > 80 ? f.substring(0, 80) + '...' : f)).join('\n');
+                    slide.addText(features, { x: 0.6, y: cardY + 0.65, w: 8.8, h: 0.6, fontSize: 8, color: '444444' });
+                });
+                
+                // Grand Total
+                const totals = this.getTotals(this.coreDeliveryDataRows);
+                slide.addShape(pptx.ShapeType.rect, { x: 0.4, y: 4.2, w: 9.2, h: 0.4, fill: { color: '00155c' } });
+                slide.addText(`Grand Total: C: ${totals.committed}  D: ${totals.delivered}  A: ${totals.achieved}`, {
+                    x: 0.6, y: 4.3, w: 8.8, h: 0.2, fontSize: 11, bold: true, color: 'FFFFFF'
+                });
+                addFooter(slide, pageNum);
+            });
+
+            // ===== App Highlights =====
+            updateStatus('Creating App Highlights...');
+            pageNum++;
             const slide3 = pptx.addSlide();
             slide3.background = { color: 'F8F9FA' };
             slide3.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
@@ -2045,19 +2107,130 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
             yPos = 1.0;
             slide3.addText('Key Achievements', { x: 0.6, y: yPos, w: 8, h: 0.3, fontSize: 16, bold: true, color: '000048' });
             yPos += 0.4;
-            
             this.appHighlights.forEach((highlight) => {
                 if (yPos < 4.5) {
                     slide3.addText('• ' + highlight, { x: 0.8, y: yPos, w: 8.5, h: 0.25, fontSize: 14, color: '333333' });
                     yPos += 0.3;
                 }
             });
+            addFooter(slide3, pageNum);
 
-            // Thank You slide
+            // ===== App Delivery Metrics =====
+            updateStatus('Creating App Delivery Metrics...');
+            const appChunks = [];
+            for (let i = 0; i < this.appDeliveryDataRows.length; i += 2) {
+                appChunks.push(this.appDeliveryDataRows.slice(i, i + 2));
+            }
+            
+            appChunks.forEach((chunk) => {
+                pageNum++;
+                const slide = pptx.addSlide();
+                slide.background = { color: 'F8F9FA' };
+                slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.6, fill: { color: '000048' } });
+                slide.addText('Delivery Metrics', { x: 0.5, y: 0.1, w: 8, h: 0.3, fontSize: 20, bold: true, color: 'FFFFFF' });
+                slide.addText('App Platform', { x: 0.5, y: 0.35, w: 8, h: 0.2, fontSize: 11, bold: true, color: '26C6DA' });
+                
+                chunk.forEach((row, idx) => {
+                    const cardY = idx === 0 ? 0.8 : 2.4;
+                    slide.addShape(pptx.ShapeType.rect, { x: 0.4, y: cardY, w: 9.2, h: 1.4, fill: { color: 'FFFFFF' }, 
+                        line: { color: '000048', width: 2 }
+                    });
+                    slide.addText(row.sprintMonth.split('\n')[0], { x: 0.6, y: cardY + 0.1, w: 2, h: 0.3, fontSize: 13, bold: true, color: '000048' });
+                    slide.addText(`C: ${row.committed}  D: ${row.delivered}  A: ${row.achieved}`, { 
+                        x: 3, y: cardY + 0.1, w: 3, h: 0.25, fontSize: 10, bold: true, 
+                        color: parseInt(row.achieved) >= 100 ? '2e7d32' : 'ef6c00' 
+                    });
+                    const features = row.features.slice(0, 4).map((f: string) => '• ' + (f.length > 80 ? f.substring(0, 80) + '...' : f)).join('\n');
+                    slide.addText(features, { x: 0.6, y: cardY + 0.65, w: 8.8, h: 0.6, fontSize: 8, color: '444444' });
+                });
+                addFooter(slide, pageNum);
+            });
+
+            // ===== Migration Status =====
+            if (this.migrationData.length > 0) {
+                updateStatus('Creating Migration Status...');
+                pageNum++;
+                const migSlide = pptx.addSlide();
+                migSlide.background = { color: 'F8F9FA' };
+                migSlide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
+                migSlide.addText('Migration Status', { x: 0.5, y: 0.2, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
+                
+                const migRows = this.migrationData.slice(0, 8).map(row => [
+                    row.module, row.start, row.end, row.pct, row.status
+                ]);
+                migSlide.addTable(migRows, {
+                    x: 0.5, y: 1.0, w: 9, h: 3.8,
+                    colW: [3, 1.2, 1.2, 0.8, 1.5, 1.3],
+                    border: { pt: 1, color: '000048' },
+                    fill: { color: 'FFFFFF' },
+                    fontSize: 9,
+                    color: '333333'
+                });
+                addFooter(migSlide, pageNum);
+            }
+
+            // ===== Feedback =====
+            if (this.feedbackData.length > 0) {
+                updateStatus('Creating Feedback slide...');
+                pageNum++;
+                const fbSlide = pptx.addSlide();
+                fbSlide.background = { color: 'F8F9FA' };
+                fbSlide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
+                fbSlide.addText('Feedback & Actions', { x: 0.5, y: 0.2, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
+                
+                yPos = 1.0;
+                this.feedbackData.slice(0, 10).forEach((fb) => {
+                    fbSlide.addText(`• ${fb.item || 'N/A'}`, { x: 0.6, y: yPos, w: 8.5, h: 0.25, fontSize: 11, color: '000048', bold: true });
+                    fbSlide.addText(`Owner: ${fb.owner || 'N/A'}  |  Status: ${fb.status || 'PENDING'}`, { 
+                        x: 0.8, y: yPos + 0.25, w: 8.5, h: 0.15, fontSize: 9, color: '666666' 
+                    });
+                    yPos += 0.45;
+                });
+                addFooter(fbSlide, pageNum);
+            }
+
+            // ===== People Update =====
+            if (this.leavePlanData.length > 0 || this.teamActionsData.length > 0) {
+                updateStatus('Creating People Update...'); 
+                pageNum++;
+                const peopleSlide = pptx.addSlide();
+                peopleSlide.background = { color: 'F8F9FA' };
+                peopleSlide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
+                peopleSlide.addText('People Update', { x: 0.5, y: 0.2, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
+                
+                // Leave Plan
+                peopleSlide.addText('Holiday / Leave Plan', { x: 0.5, y: 1.0, w: 9, h: 0.25, fontSize: 14, bold: true, color: '000048' });
+                if (this.leavePlanData.length > 0) {
+                    const leaveRows = this.leavePlanData.slice(0, 5).map(l => [l.date, l.event, l.member]);
+                    peopleSlide.addTable(leaveRows, {
+                        x: 0.5, y: 1.3, w: 9, h: 1.2,
+                        colW: [1.5, 4.5, 3],
+                        fontSize: 10,
+                        border: { pt: 1, color: 'CCCCCC' }
+                    });
+                }
+                
+                // Action Items
+                peopleSlide.addText('Action Items', { x: 0.5, y: 2.7, w: 9, h: 0.25, fontSize: 14, bold: true, color: '000048' });
+                if (this.teamActionsData.length > 0) {
+                    const actionRows = this.teamActionsData.slice(0, 5).map(a => [a.item || 'N/A', a.duration || '', a.comments || '']);
+                    peopleSlide.addTable(actionRows, {
+                        x: 0.5, y: 3.0, w: 9, h: 1.8,
+                        colW: [4, 1.5, 3.5],
+                        fontSize: 9,
+                        border: { pt: 1, color: 'CCCCCC' }
+                    });
+                }
+                addFooter(peopleSlide, pageNum);
+            }
+
+            // ===== Thank You Slide =====
+            updateStatus('Creating Thank You slide...');
             const thankYouSlide = pptx.addSlide();
             thankYouSlide.background = { color: 'FFFFFF' };
             thankYouSlide.addText('Thank you', { x: 0.8, y: 2.3, w: 8, h: 0.8, fontSize: 48, bold: true, color: '000048' });
             thankYouSlide.addShape(pptx.ShapeType.rect, { x: 0.8, y: 3.2, w: 1.2, h: 0.05, fill: { color: '26C6DA' } });
+            thankYouSlide.addText('Cognizant', { x: 8.5, y: 0.4, w: 1.2, h: 0.4, fontSize: 24, bold: true, color: '000048' });
 
             updateStatus('Saving PPTX with content...');
             await pptx.writeFile({ fileName: `Monthly_Report_Content_${this.currentMonth}_${this.currentYear}.pptx` });

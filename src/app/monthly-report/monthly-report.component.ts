@@ -2098,22 +2098,34 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
             pptx.writeFile({ fileName: `Monthly_Report_${this.currentMonth}_${this.currentYear}.pptx` });
 
         } else if (format === 'image') {
-             updateStatus('Capturing current slide...');
-             const currentSlideEl = slideElements[this.currentSlideIndex];
-             if (currentSlideEl) {
-                 const imgData = await htmlToImage.toPng(currentSlideEl, {
-                     pixelRatio: 2,
-                     width: 1000,
-                     height: 562.5,
-                     backgroundColor: '#ffffff',
-                     skipAutoScale: true
-                 });
-                 const link = document.createElement('a');
-                 link.href = imgData;
-                 link.download = `Slide_${this.currentSlideIndex + 1}_${this.currentMonth}.png`;
-                 link.click();
+             // Export all slides as separate images
+             for (let i = 0; i < slideElements.length; i++) {
+                 updateStatus(`Capturing Slide ${i + 1} of ${slideElements.length}...`);
+                 const slideElement = slideElements[i];
+                 await new Promise(resolve => setTimeout(resolve, 100));
+                 
+                 try {
+                     const imgData = await htmlToImage.toPng(slideElement, {
+                         pixelRatio: 2,
+                         width: 1000,
+                         height: 562.5,
+                         backgroundColor: '#ffffff',
+                         skipAutoScale: true
+                     });
+                     
+                     // Download each slide as a separate image
+                     const link = document.createElement('a');
+                     link.href = imgData;
+                     link.download = `Slide_${String(i + 1).padStart(2, '0')}_${this.currentMonth}_${this.currentYear}.png`;
+                     link.click();
+                     
+                     // Small delay between downloads to prevent browser blocking
+                     await new Promise(resolve => setTimeout(resolve, 200));
+                 } catch (e) {
+                     console.error(`Error capturing slide ${i+1}:`, e);
+                 }
              }
-        }
+         }
 
     } catch (error) {
         console.error('Export Error:', error);

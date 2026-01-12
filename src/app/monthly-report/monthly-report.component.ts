@@ -549,7 +549,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
                     Project Status Report
                 </div>
                 <h1 style="font-size: 64px; font-weight: 300; color: white; margin: 0; line-height: 1.1;">
-                    CAT Digital<br>
+                    CAT Technology<br>
                     <span style="font-weight: 800;">DQME – Core/App</span>
                 </h1>
                 

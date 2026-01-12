@@ -1971,7 +1971,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
   exportProgress = '';
 
   // Export Logic
-  async exportReport(format: 'pdf' | 'pptx' | 'image') {
+  async exportReport(format: 'pdf' | 'pptx' | 'image' | 'pptx-content') {
     this.isExporting = true;
     this.exportProgress = 'Initializing...';
     
@@ -1995,19 +1995,90 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
         this.exportProgress = msg;
     };
 
-    // Create a container to hold ALL slides at once
-    // We position it at 0,0 but put it behind the overlay (z-index 9999 < 10000)
-    // This ensures it is "on screen" for the renderer
-    const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.top = '0';
-    container.style.left = '0';
-    container.style.width = '1000px';
-    container.style.zIndex = '9999'; 
-    container.style.backgroundColor = '#f0f0f0';
-    document.body.appendChild(container);
-
     try {
+        // For PPTX Content export, we don't need DOM rendering
+        if (format === 'pptx-content') {
+            // Export PPTX with actual editable content
+            updateStatus('Creating PowerPoint with editable content...');
+            const pptx = new PptxGenJS();
+            pptx.layout = 'LAYOUT_16x9';
+            pptx.defineLayout({ name: 'CUSTOM', width: 10, height: 5.625 });
+            pptx.layout = 'CUSTOM';
+
+            // Slide 1: Title Slide
+            const slide1 = pptx.addSlide();
+            slide1.background = { color: '000048' };
+            
+            slide1.addText('Cognizant', { x: 8.2, y: 0.4, w: 1.5, h: 0.4, fontSize: 14, bold: true, color: 'FFFFFF' });
+            slide1.addText('CAT Technology', { x: 0.6, y: 1.8, w: 8, h: 0.6, fontSize: 48, bold: false, color: 'FFFFFF' });
+            slide1.addText('DQME – Core/App', { x: 0.6, y: 2.5, w: 8, h: 0.6, fontSize: 48, bold: true, color: 'FFFFFF' });
+            slide1.addText(`${this.currentMonth.toUpperCase()} ${this.currentYear}`, { 
+                x: 0.6, y: 3.5, w: 2, h: 0.5, fontSize: 20, bold: true, color: 'FFFFFF', 
+                fill: { color: '2f78c4' }, align: 'center', valign: 'middle'
+            });
+
+            // Slide 2: Core Highlights
+            const slide2 = pptx.addSlide();
+            slide2.background = { color: 'F8F9FA' };
+            slide2.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
+            slide2.addText('Deliverable Highlights', { x: 0.5, y: 0.15, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
+            slide2.addText('Core Platform', { x: 0.5, y: 0.45, w: 8, h: 0.2, fontSize: 12, bold: true, color: '26C6DA' });
+            
+            let yPos = 1.0;
+            slide2.addText('Key Achievements', { x: 0.6, y: yPos, w: 8, h: 0.3, fontSize: 16, bold: true, color: '000048' });
+            yPos += 0.4;
+            
+            this.coreHighlights.forEach((highlight) => {
+                if (yPos < 4.5) {
+                    slide2.addText('• ' + highlight, { x: 0.8, y: yPos, w: 8.5, h: 0.25, fontSize: 14, color: '333333' });
+                    yPos += 0.3;
+                }
+            });
+
+            // Slide 3: App Highlights
+            const slide3 = pptx.addSlide();
+            slide3.background = { color: 'F8F9FA' };
+            slide3.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
+            slide3.addText('Deliverable Highlights', { x: 0.5, y: 0.15, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
+            slide3.addText('App Platform', { x: 0.5, y: 0.45, w: 8, h: 0.2, fontSize: 12, bold: true, color: '26C6DA' });
+            
+            yPos = 1.0;
+            slide3.addText('Key Achievements', { x: 0.6, y: yPos, w: 8, h: 0.3, fontSize: 16, bold: true, color: '000048' });
+            yPos += 0.4;
+            
+            this.appHighlights.forEach((highlight) => {
+                if (yPos < 4.5) {
+                    slide3.addText('• ' + highlight, { x: 0.8, y: yPos, w: 8.5, h: 0.25, fontSize: 14, color: '333333' });
+                    yPos += 0.3;
+                }
+            });
+
+            // Thank You slide
+            const thankYouSlide = pptx.addSlide();
+            thankYouSlide.background = { color: 'FFFFFF' };
+            thankYouSlide.addText('Thank you', { x: 0.8, y: 2.3, w: 8, h: 0.8, fontSize: 48, bold: true, color: '000048' });
+            thankYouSlide.addShape(pptx.ShapeType.rect, { x: 0.8, y: 3.2, w: 1.2, h: 0.05, fill: { color: '26C6DA' } });
+
+            updateStatus('Saving PPTX with content...');
+            await pptx.writeFile({ fileName: `Monthly_Report_Content_${this.currentMonth}_${this.currentYear}.pptx` });
+            
+            // Clean up and exit early
+            if(document.body.contains(overlay)) document.body.removeChild(overlay);
+            this.isExporting = false;
+            this.exportProgress = '';
+            return;
+        }
+
+        // For other formats, create DOM container
+        const container = document.createElement('div');
+        container.style.position = 'absolute';
+        container.style.top = '0';
+        container.style.left = '0';
+        container.style.width = '1000px';
+        container.style.zIndex = '9999'; 
+        container.style.backgroundColor = '#f0f0f0';
+        document.body.appendChild(container);
+
         const slides = this.generateSlides();
         
         // Append all slides to the DOM
@@ -2125,13 +2196,79 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
                      console.error(`Error capturing slide ${i+1}:`, e);
                  }
              }
+         } else if (format === 'pptx-content') {
+             // Export PPTX with actual editable content
+             updateStatus('Creating PowerPoint with editable content...');
+             const pptx = new PptxGenJS();
+             pptx.layout = 'LAYOUT_16x9';
+             pptx.defineLayout({ name: 'CUSTOM', width: 10, height: 5.625 });
+             pptx.layout = 'CUSTOM';
+
+             // Slide 1: Title Slide
+             const slide1 = pptx.addSlide();
+             slide1.background = { color: '000048' };
+             
+             slide1.addText('Cognizant', { x: 8.2, y: 0.4, w: 1.5, h: 0.4, fontSize: 14, bold: true, color: 'FFFFFF' });
+             slide1.addText('CAT Technology', { x: 0.6, y: 1.8, w: 8, h: 0.6, fontSize: 48, bold: false, color: 'FFFFFF' });
+             slide1.addText('DQME – Core/App', { x: 0.6, y: 2.5, w: 8, h: 0.6, fontSize: 48, bold: true, color: 'FFFFFF' });
+             slide1.addText(`${this.currentMonth.toUpperCase()} ${this.currentYear}`, { 
+                 x: 0.6, y: 3.5, w: 2, h: 0.5, fontSize: 20, bold: true, color: 'FFFFFF', 
+                 fill: { color: '2f78c4' }, align: 'center', valign: 'middle'
+             });
+
+             // Slide 2: Core Highlights
+             const slide2 = pptx.addSlide();
+             slide2.background = { color: 'F8F9FA' };
+             slide2.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
+             slide2.addText('Deliverable Highlights', { x: 0.5, y: 0.15, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
+             slide2.addText('Core Platform', { x: 0.5, y: 0.45, w: 8, h: 0.2, fontSize: 12, bold: true, color: '26C6DA' });
+             
+             let yPos = 1.0;
+             slide2.addText('Key Achievements', { x: 0.6, y: yPos, w: 8, h: 0.3, fontSize: 16, bold: true, color: '000048' });
+             yPos += 0.4;
+             
+             this.coreHighlights.forEach((highlight) => {
+                 if (yPos < 4.5) {
+                     slide2.addText('• ' + highlight, { x: 0.8, y: yPos, w: 8.5, h: 0.25, fontSize: 14, color: '333333' });
+                     yPos += 0.3;
+                 }
+             });
+
+             // Slide 3: App Highlights
+             const slide3 = pptx.addSlide();
+             slide3.background = { color: 'F8F9FA' };
+             slide3.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 10, h: 0.7, fill: { color: '000048' } });
+             slide3.addText('Deliverable Highlights', { x: 0.5, y: 0.15, w: 8, h: 0.4, fontSize: 22, bold: true, color: 'FFFFFF' });
+             slide3.addText('App Platform', { x: 0.5, y: 0.45, w: 8, h: 0.2, fontSize: 12, bold: true, color: '26C6DA' });
+             
+             yPos = 1.0;
+             slide3.addText('Key Achievements', { x: 0.6, y: yPos, w: 8, h: 0.3, fontSize: 16, bold: true, color: '000048' });
+             yPos += 0.4;
+             
+             this.appHighlights.forEach((highlight) => {
+                 if (yPos < 4.5) {
+                     slide3.addText('• ' + highlight, { x: 0.8, y: yPos, w: 8.5, h: 0.25, fontSize: 14, color: '333333' });
+                     yPos += 0.3;
+                 }
+             });
+
+             // Thank You slide
+             const thankYouSlide = pptx.addSlide();
+             thankYouSlide.background = { color: 'FFFFFF' };
+             thankYouSlide.addText('Thank you', { x: 0.8, y: 2.3, w: 8, h: 0.8, fontSize: 48, bold: true, color: '000048' });
+             thankYouSlide.addShape(pptx.ShapeType.rect, { x: 0.8, y: 3.2, w: 1.2, h: 0.05, fill: { color: '26C6DA' } });
+
+             updateStatus('Saving PPTX with content...');
+             await pptx.writeFile({ fileName: `Monthly_Report_Content_${this.currentMonth}_${this.currentYear}.pptx` });
          }
 
     } catch (error) {
         console.error('Export Error:', error);
         alert('An error occurred during export.');
     } finally {
-        if(document.body.contains(container)) document.body.removeChild(container);
+        // Clean up DOM elements (container only exists for non-pptx-content exports)
+        const container = document.querySelector('div[style*="position: absolute"][style*="z-index: 9999"]') as HTMLElement;
+        if(container && document.body.contains(container)) document.body.removeChild(container);
         if(document.body.contains(overlay)) document.body.removeChild(overlay);
         this.isExporting = false;
         this.exportProgress = '';

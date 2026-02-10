@@ -1,0 +1,214 @@
+<div class="deck-container">
+  
+  <!-- Left Sidebar Controls -->
+  <aside class="controls-sidebar">
+    <div class="sidebar-header">
+      <h3>Monthly Connect</h3>
+      <div class="brand-line"></div>
+    </div>
+
+    <div class="data-controls">
+      <div *ngIf="!dataLoaded" class="upload-section">
+        <p class="section-title">Import Data</p>
+        <div class="file-upload-wrapper">
+          <input type="file" id="excelUpload" (change)="onFileChange($event)" accept=".xlsx" class="file-input-hidden" />
+          <label for="excelUpload" class="upload-btn">
+            <span class="icon">📂</span> Select Excel File
+          </label>
+        </div>
+        <p class="hint-text">Supported format: .xlsx</p>
+      </div>
+
+      <div *ngIf="dataLoaded" class="loaded-card">
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span>Active Session</span>
+        </div>
+        <div class="loaded-info">
+          <div class="info-label">Reporting Period</div>
+          <div class="info-value">{{ monthlyData?.generalInfo?.month }} {{ monthlyData?.generalInfo?.year }}</div>
+        </div>
+        <div class="button-group" style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+             <button (click)="toggleFullScreen()" class="action-btn" style="flex: 1 1 100%; background-color: #0ea5e9; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: 600; cursor: pointer; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                 <span>🖥️</span> Start Presentation
+             </button>
+             <button (click)="exportToPptx()" [disabled]="isExporting" class="action-btn" style="flex: 1; background-color: #26C6DA; color: #000048; border: none; padding: 8px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 13px;">
+                 {{ isExporting ? 'Exporting...' : 'Export PPTX' }}
+             </button>
+             <button (click)="resetData()" class="reset-link" style="flex: 1; background: none; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 13px;">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Deck -->
+    <div class="deck-nav" *ngIf="dataLoaded">
+      <div class="nav-header">
+        <span class="nav-label">Slide Navigation</span>
+        <span class="slide-count">{{ currentSlideIndex + 1 }} / {{ slides.length }}</span>
+      </div>
+      
+      <div class="nav-actions">
+        <button (click)="prevSlide()" [disabled]="currentSlideIndex === 0" class="nav-btn secondary">
+          Previous
+        </button>
+        <button (click)="nextSlide()" [disabled]="currentSlideIndex === slides.length - 1" class="nav-btn primary">
+          Next Slide
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Deck Content Area -->
+  <div class="deck-main-area" #deckMainArea>
+    <div class="deck-content" *ngIf="dataLoaded; else noData" 
+         [style.transform]="'scale(' + scale + ')'"
+         [style.transform-origin]="'center center'"
+         style="width: 1000px; height: 562.5px;">
+      <div [ngSwitch]="currentSlideIndex">
+        <app-slide-1-title *ngSwitchCase="0" [generalInfo]="monthlyData?.generalInfo!"></app-slide-1-title>
+        <app-slide-2-highlights *ngSwitchCase="1" [generalInfo]="monthlyData?.generalInfo!"></app-slide-2-highlights>
+        <app-slide-3-core-delivery *ngSwitchCase="2" 
+             [generalInfo]="monthlyData?.generalInfo!"
+             [deliveryMetrics]="monthlyData?.deliveryMetrics || []">
+        </app-slide-3-core-delivery>
+        
+        <app-slide-4-app-highlights *ngSwitchCase="3" [generalInfo]="monthlyData?.generalInfo!"></app-slide-4-app-highlights>
+        
+        <app-slide-5-app-delivery *ngSwitchCase="4" 
+             [generalInfo]="monthlyData?.generalInfo!"
+             [deliveryMetrics]="monthlyData?.deliveryMetrics || []">
+        </app-slide-5-app-delivery>
+        
+        <app-slide-6-velocity *ngSwitchCase="5" 
+             [generalInfo]="monthlyData?.generalInfo!"
+             [velocityData]="monthlyData?.velocityStrategy || []">
+        </app-slide-6-velocity>
+        
+        <app-slide-7-migration *ngSwitchCase="6"></app-slide-7-migration>
+
+        <app-slide-8-feedback *ngSwitchCase="7"
+             [generalInfo]="monthlyData?.generalInfo!"
+             [feedbackData]="monthlyData?.feedback || []">
+        </app-slide-8-feedback>
+
+        <app-slide-9-defect-analysis *ngSwitchCase="8"
+             [data]="monthlyData">
+        </app-slide-9-defect-analysis>
+
+        <app-slide-10-defect-backlogs *ngSwitchCase="9"
+             [data]="monthlyData">
+        </app-slide-10-defect-backlogs>
+        
+        <app-slide-11-defect-metrics *ngSwitchCase="10"
+             [data]="monthlyData">
+        </app-slide-11-defect-metrics>
+
+        <app-slide-12-roadmap *ngSwitchCase="11"
+             [data]="monthlyData">
+        </app-slide-12-roadmap>
+        
+        <app-slide-13-team-coordination *ngSwitchCase="12"
+             [data]="monthlyData">
+        </app-slide-13-team-coordination>
+
+        <app-slide-14-thank-you *ngSwitchCase="13"></app-slide-14-thank-you>
+        
+        <div *ngSwitchDefault class="placeholder-slide">
+          <h2>{{ slides[currentSlideIndex] }}</h2>
+          <p>Slide content coming soon...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden Export Container -->
+    <!-- Position fixed at 0,0 but with negative z-index to be behind everything, 
+         and opacity 0 to be invisible but still "rendered" for html-to-image -->
+    <div class="export-container" #exportContainer *ngIf="dataLoaded" 
+         style="position: fixed; top: 0; left: 0; width: 1000px; height: 562.5px; z-index: -1000; opacity: 0; pointer-events: none;">
+         
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+           <app-slide-1-title [generalInfo]="monthlyData?.generalInfo!"></app-slide-1-title>
+         </div>
+         
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+           <app-slide-2-highlights [generalInfo]="monthlyData?.generalInfo!"></app-slide-2-highlights>
+         </div>
+         
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+           <app-slide-3-core-delivery [generalInfo]="monthlyData?.generalInfo!" [deliveryMetrics]="monthlyData?.deliveryMetrics || []"></app-slide-3-core-delivery>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+           <app-slide-4-app-highlights [generalInfo]="monthlyData?.generalInfo!"></app-slide-4-app-highlights>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-5-app-delivery [generalInfo]="monthlyData?.generalInfo!" [deliveryMetrics]="monthlyData?.deliveryMetrics || []"></app-slide-5-app-delivery>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-6-velocity [generalInfo]="monthlyData?.generalInfo!" [velocityData]="monthlyData?.velocityStrategy || []"></app-slide-6-velocity>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-7-migration></app-slide-7-migration>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-8-feedback [generalInfo]="monthlyData?.generalInfo!" [feedbackData]="monthlyData?.feedback || []"></app-slide-8-feedback>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-9-defect-analysis [data]="monthlyData"></app-slide-9-defect-analysis>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-10-defect-backlogs [data]="monthlyData"></app-slide-10-defect-backlogs>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-11-defect-metrics [data]="monthlyData"></app-slide-11-defect-metrics>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-12-roadmap [data]="monthlyData"></app-slide-12-roadmap>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-13-team-coordination [data]="monthlyData"></app-slide-13-team-coordination>
+         </div>
+
+         <div class="export-slide" style="width: 1000px; height: 562.5px;">
+            <app-slide-14-thank-you></app-slide-14-thank-you>
+         </div>
+    </div>
+
+    <ng-template #noData>
+      <div class="no-data-message">
+        <h3>No Data Loaded</h3>
+        <p>Please upload the Monthly Metrics Excel file to generate the deck.</p>
+      </div>
+    </ng-template>
+    <!-- Export Modal Overlay -->
+    <div class="export-modal-overlay" *ngIf="isExporting">
+      <div class="export-modal">
+        <h3>Exporting to PowerPoint...</h3>
+        
+        <div class="progress-container">
+          <div class="progress-bar" [style.width.%]="exportProgress"></div>
+        </div>
+        <div class="progress-text">{{ exportProgress }}% Complete</div>
+
+        <div class="console-window" #consoleWindow>
+            <div *ngFor="let log of exportLogs" class="log-line">{{ log }}</div>
+        </div>
+
+        <button *ngIf="exportProgress === 100 || hasExportError" 
+                (click)="isExporting = false" 
+                class="modal-close-btn">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

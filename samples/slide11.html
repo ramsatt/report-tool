@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DQME Defect Analysis | Executive Slide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=JetBrains+Mono:wght@500&display=swap');
+        
+        :root {
+            --bg-deep: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --accent-blue: #0284c7;
+            --accent-green: #059669;
+            --accent-gold: #d97706;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: #1e293b;
+            overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .slide-frame {
+            width: 1280px;
+            height: 720px;
+            background: #ffffff;
+            padding: 32px;
+            position: relative;
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            gap: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .chart-container { position: relative; width: 100%; height: 100%; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeIn 0.6s ease-out forwards; }
+    </style>
+</head>
+<body>
+
+    <div class="slide-frame">
+        <!-- HEADER -->
+        <header class="flex justify-between items-end border-b border-slate-200 pb-4 animate-in">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="bg-sky-600 h-8 w-1 rounded"></div>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-900">Defect Performance Analytics</h1>
+                </div>
+                <p class="text-slate-500 text-sm uppercase tracking-widest font-semibold">DQME Application Ecosystem • Sprint-Wise Velocity Metrics</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-slate-400 font-mono">CYCLE: Q4-2025 / Q1-2026</p>
+                <h2 class="text-xl font-bold text-sky-700">Execution Velocity Summary</h2>
+            </div>
+        </header>
+
+        <!-- KPI STRIP -->
+        <div class="grid grid-cols-4 gap-4 animate-in" style="animation-delay: 0.1s;">
+            <div class="glass p-4 flex items-center gap-4">
+                <div class="h-12 w-12 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 text-xl">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-slate-900">15</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Total Volume</div>
+                </div>
+            </div>
+            <div class="glass p-4 flex items-center gap-4 border-l-4 border-emerald-600">
+                <div class="h-12 w-12 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl">
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-slate-900">Sprint 26</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Highest Resolution Vol</div>
+                </div>
+            </div>
+            <div class="glass p-4 flex items-center gap-4">
+                <div class="h-12 w-12 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 text-xl">
+                    <i class="fa-solid fa-hourglass-start"></i>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-slate-900">4 Items</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Avg. Sprint Carry-over</div>
+                </div>
+            </div>
+            <div class="glass p-4 flex items-center gap-4">
+                <div class="h-12 w-12 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 text-xl">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-slate-900">1.8x</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Resolution Velocity Ratio</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="grid grid-cols-12 gap-5 overflow-hidden animate-in" style="animation-delay: 0.2s;">
+            
+            <!-- LEFT: SPRINT PERFORMANCE VISUALS -->
+            <div class="col-span-8 flex flex-col gap-5 overflow-hidden">
+                <!-- CHART: CREATED VS RESOLVED -->
+                <div class="glass p-5 flex flex-col overflow-hidden" style="height: 55%;">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-600">Sprint-Wise Throughput: Created vs Resolved</h3>
+                        <div class="flex gap-4 text-[10px] font-bold">
+                            <span class="flex items-center gap-2"><span class="h-3 w-3 rounded bg-sky-600"></span> Created Defects</span>
+                            <span class="flex items-center gap-2"><span class="h-3 w-3 rounded bg-emerald-600"></span> Resolved Defects</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sprintChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- TABLE: SPRINT SUMMARY -->
+                <div class="glass overflow-hidden flex-grow">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead class="bg-slate-50 text-[10px] uppercase text-slate-500 font-bold">
+                            <tr>
+                                <th class="p-4">Sprint Iteration</th>
+                                <th class="p-4 text-center">New Defects</th>
+                                <th class="p-4 text-center">Resolved</th>
+                                <th class="p-4 text-center">Active (Carry)</th>
+                                <th class="p-4 text-right">Throughput Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 pl-4 font-bold text-slate-700">Sprint 23</td>
+                                <td class="p-3 text-center">1</td>
+                                <td class="p-3 text-center font-bold text-emerald-600">2</td>
+                                <td class="p-3 text-center text-slate-400">8</td>
+                                <td class="p-3 text-right font-mono text-sky-600">200%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 pl-4 font-bold text-slate-700">Sprint 24</td>
+                                <td class="p-3 text-center">2</td>
+                                <td class="p-3 text-center font-bold text-emerald-600">3</td>
+                                <td class="p-3 text-center text-slate-400">7</td>
+                                <td class="p-3 text-right font-mono text-sky-600">150%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3 pl-4 font-bold text-slate-700">Sprint 25</td>
+                                <td class="p-3 text-center">1</td>
+                                <td class="p-3 text-center font-bold text-emerald-600">2</td>
+                                <td class="p-3 text-center text-slate-400">6</td>
+                                <td class="p-3 text-right font-mono text-sky-600">200%</td>
+                            </tr>
+                            <tr class="hover:bg-sky-50 transition-colors bg-sky-50/30">
+                                <td class="p-3 pl-4 font-bold text-sky-700">Sprint 26</td>
+                                <td class="p-3 text-center">0</td>
+                                <td class="p-3 text-center font-bold text-emerald-600">4</td>
+                                <td class="p-3 text-center text-slate-400">2</td>
+                                <td class="p-3 text-right font-mono text-sky-600">∞</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- RIGHT: INTELLIGENCE SIDEBAR -->
+            <div class="col-span-4 flex flex-col gap-5">
+                <!-- ROOT CAUSE -->
+                <div class="glass p-5 flex flex-col h-1/2">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 text-center">Root Cause Breakdown</h3>
+                    <div class="chart-container flex-grow">
+                        <canvas id="rcChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- STRATEGIC INSIGHTS -->
+                <div class="glass p-5 flex-grow">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Execution Insights</h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-3">
+                            <div class="mt-1 h-2 w-2 rounded-full bg-emerald-500 shrink-0"></div>
+                            <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Efficiency:</strong> Sprint 26 cleared the largest backlog of legacy items.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1 h-2 w-2 rounded-full bg-sky-500 shrink-0"></div>
+                            <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Trends:</strong> Discovery rates dropped consistently after Sprint 24.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1 h-2 w-2 rounded-full bg-amber-500 shrink-0"></div>
+                            <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Bottleneck:</strong> Corrective action in Sprint 25 shifted the curve toward zero-defect state.</p>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-slate-100">
+                            <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase mb-2">
+                                <span>Stability Index</span>
+                                <span class="text-emerald-600">92%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+            <div>DQME • Confidential Internal Performance Metric</div>
+            <div>Snapshot Date: Feb 10, 2026</div>
+        </footer>
+    </div>
+
+    <script>
+        function initCharts() {
+            // SPRINT THROUGHPUT CHART
+            const sprintCtx = document.getElementById('sprintChart').getContext('2d');
+            new Chart(sprintCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sprint 23', 'Sprint 24', 'Sprint 25', 'Sprint 26', 'Sprint 01', 'Sprint 02'],
+                    datasets: [
+                        {
+                            label: 'Created Defects',
+                            data: [1, 2, 1, 0, 0, 1],
+                            backgroundColor: '#0284c7',
+                            borderRadius: 4,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.7
+                        },
+                        {
+                            label: 'Resolved Defects',
+                            data: [2, 3, 2, 4, 3, 1],
+                            backgroundColor: '#059669',
+                            borderRadius: 4,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.7
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                            ticks: { color: '#64748b', font: { size: 10 } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#64748b', font: { size: 10, weight: '600' } }
+                        }
+                    }
+                }
+            });
+
+            // ROOT CAUSE BREAKDOWN
+            const rcCtx = document.getElementById('rcChart').getContext('2d');
+            new Chart(rcCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Coding', 'Data', 'Config', 'Other'],
+                    datasets: [{
+                        data: [8, 3, 1, 3],
+                        backgroundColor: ['#0284c7', '#d97706', '#059669', '#64748b'],
+                        borderWidth: 0,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    cutout: '75%',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#64748b',
+                                font: { size: 10, weight: 'bold' },
+                                boxWidth: 10,
+                                padding: 10
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = initCharts;
+    </script>
+</body>
+</html>

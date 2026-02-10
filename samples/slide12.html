@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DQME | Technical Optimization Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=JetBrains+Mono:wght@500&display=swap');
+        
+        :root {
+            --bg-deep: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --accent-blue: #0284c7;
+            --accent-green: #059669;
+            --accent-amber: #d97706;
+            --accent-rose: #e11d48;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: #1e293b;
+            overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .slide-frame {
+            width: 1280px;
+            height: 720px;
+            background: #ffffff;
+            padding: 24px 32px;
+            position: relative;
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            gap: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .priority-high { border-left: 4px solid var(--accent-rose); }
+        .priority-low { border-left: 4px solid var(--accent-blue); }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 100px;
+            text-transform: uppercase;
+        }
+
+        .status-done { background: #dcfce7; color: #166534; }
+        .status-tbd { background: #f1f5f9; color: #475569; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: slideUp 0.6s ease-out forwards; }
+    </style>
+</head>
+<body>
+
+    <div class="slide-frame">
+        <!-- HEADER -->
+        <header class="flex justify-between items-end border-b border-slate-200 pb-2 animate-in">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="bg-sky-600 h-8 w-1 rounded"></div>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-900">Technical Optimization Roadmap</h1>
+                </div>
+                <p class="text-slate-500 text-sm uppercase tracking-widest font-semibold">DQME Application Ecosystem • Security & Performance Strategy</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-slate-400 font-mono">VERSION: 2.0-STRAT-PLAN</p>
+                <h2 class="text-xl font-bold text-sky-700">Engineering Quality Backlog</h2>
+            </div>
+        </header>
+
+        <!-- KPI STRIP -->
+        <!-- KPI STRIP -->
+        <div class="grid grid-cols-4 gap-3 animate-in" style="animation-delay: 0.1s;">
+            <div class="glass p-3 flex items-center gap-3">
+                <div class="h-10 w-10 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 text-lg">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-slate-900">04</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Strategic Tasks</div>
+                </div>
+            </div>
+            <div class="glass p-3 flex items-center gap-3">
+                <div class="h-10 w-10 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600 text-lg">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-slate-900">02</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Security Critical</div>
+                </div>
+            </div>
+            <div class="glass p-3 flex items-center gap-3 border-l-4 border-emerald-500">
+                <div class="h-10 w-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 text-lg">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-slate-900">25%</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Completion Rate</div>
+                </div>
+            </div>
+            <div class="glass p-3 flex items-center gap-3">
+                <div class="h-10 w-10 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 text-lg">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-slate-900">02</div>
+                    <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Performance Wins</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="grid grid-cols-12 gap-4 overflow-hidden animate-in" style="animation-delay: 0.2s;">
+            
+            <!-- LEFT: ROADMAP MATRIX -->
+            <div class="col-span-8 glass flex flex-col overflow-hidden bg-white/60 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl">
+                <div class="px-5 py-3 border-b border-slate-100/60 flex justify-between items-center bg-white/40">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-[#003f5c]">Strategic Work Items</h3>
+                    <div class="flex items-center gap-2">
+                         <span class="flex h-2 w-2 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                        </span>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Live Tracking</span>
+                    </div>
+                </div>
+                
+                <div class="overflow-y-auto custom-scrollbar flex-grow p-4 space-y-3">
+                    
+                    <!-- Task 1: Performance (#003f5c) -->
+                    <div class="group relative bg-white rounded-xl p-3 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <!-- Left Accent -->
+                        <div class="absolute inset-y-0 left-0 w-1.5 bg-[#003f5c] rounded-l-xl"></div>
+                        
+                        <div class="pl-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-xs font-mono font-bold text-slate-400">#01</span>
+                                    <h4 class="text-sm font-bold text-slate-800 group-hover:text-[#003f5c] transition-colors">Server Side Pagination</h4>
+                                </div>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200">TBD</span>
+                            </div>
+                            
+                            <p class="text-xs text-slate-500 leading-relaxed mb-3">Implement pagination for Fleet List, Template, Factory, and Charts to prevent API timeouts and improve load times as data volume grows.</p>
+                            
+                            <div class="flex gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#003f5c]/10 text-[#003f5c] uppercase tracking-wider">Performance</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task 2: Security (#ff6361) -->
+                    <div class="group relative bg-white rounded-xl p-3 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <div class="absolute inset-y-0 left-0 w-1.5 bg-[#ff6361] rounded-l-xl"></div>
+                         <div class="pl-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-xs font-mono font-bold text-slate-400">#02</span>
+                                    <h4 class="text-sm font-bold text-slate-800 group-hover:text-[#ff6361] transition-colors">Spring Boot Version Upgrade</h4>
+                                </div>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200">TBD</span>
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed mb-3 truncate">Migrate from 2.5.8 to 3.x to resolve CVE security risks, ensure Jakarta EE compatibility, and improve startup performance.</p>
+                            <div class="flex gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#ff6361]/10 text-[#ff6361] uppercase tracking-wider">Security Critical</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wider">Tech Debt</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task 4: Security (#ff6361) -->
+                    <div class="group relative bg-white rounded-xl p-3 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <div class="absolute inset-y-0 left-0 w-1.5 bg-[#ff6361] rounded-l-xl"></div>
+                         <div class="pl-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-xs font-mono font-bold text-slate-400">#04</span>
+                                    <h4 class="text-sm font-bold text-slate-800 group-hover:text-[#ff6361] transition-colors">SQL Query Migration (JPA/Hibernate)</h4>
+                                </div>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200">TBD</span>
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed mb-3">Migrate massive SQL strings from application.properties to MyBatis or JPA/Hibernate to mitigate security vulnerabilities.</p>
+                            <div class="flex gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#ff6361]/10 text-[#ff6361] uppercase tracking-wider">Security</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task 3: Optimization (#ffa600) -->
+                     <div class="group relative bg-white/90 rounded-xl p-3 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <div class="absolute inset-y-0 left-0 w-1.5 bg-[#ffa600] rounded-l-xl"></div>
+                         <div class="pl-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-xs font-mono font-bold text-slate-400">#03</span>
+                                    <h4 class="text-sm font-bold text-slate-800 group-hover:text-[#ffa600] transition-colors">Global Exception Handling</h4>
+                                </div>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200">TBD</span>
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed mb-3">Implement global @ControllerAdvice to standardize backend error codes and standardise HTTP status responses across the application.</p>
+                            <div class="flex gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#ffa600]/10 text-[#ffa600] uppercase tracking-wider">Optimization</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT: ANALYTICS SIDEBAR -->
+            <div class="col-span-4 flex flex-col gap-4">
+                <!-- CATEGORY CHART -->
+                <div class="glass p-4 flex flex-col h-1/2">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3 text-center">Backlog Distribution</h3>
+                    <div class="relative w-1/2 mx-auto my-auto">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- STRATEGIC INSIGHTS -->
+                <div class="glass p-4 flex-grow">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Implementation Guidance</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="mt-1 h-2 w-2 rounded-full bg-[#ff6361] shrink-0"></div>
+                            <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Security Priority:</strong> Spring Boot upgrade is non-negotiable for EOL compliance and Jakarta EE migration.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1 h-2 w-2 rounded-full bg-[#003f5c] shrink-0"></div>
+                            <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Scalability:</strong> Pagination is the critical path for handling upcoming data growth in Factory & Chart modules.</p>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-slate-100">
+                            <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase mb-2">
+                                <span>Future-Proofing Readiness</span>
+                                <span class="text-sky-600">45%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-sky-600 h-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+            <div>DQME Tech Strategy • Confidential Internal Document</div>
+            <div>Ref Date: Feb 10, 2026</div>
+        </footer>
+    </div>
+
+    <script>
+        function initCharts() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Security', 'Performance', 'Optimization'],
+                    datasets: [{
+                        data: [2, 2, 1],
+                        backgroundColor: ['#ff6361', '#003f5c', '#ffa600'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#64748b',
+                                font: { size: 10, weight: 'bold' },
+                                padding: 15,
+                                boxWidth: 10
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = initCharts;
+    </script>
+
+</body>
+</html>

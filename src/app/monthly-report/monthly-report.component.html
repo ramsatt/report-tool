@@ -20,26 +20,18 @@
     </div>
 
     <div class="flex gap-0">
-      <button
-        (click)="switchTab('input')"
-        [ngClass]="
+      <button (click)="switchTab('input')" [ngClass]="
           activeTab === 'input'
             ? 'bg-[#0033A0] text-white border-2 border-[#0033A0]'
             : 'bg-[#111] text-white border-2 border-white hover:bg-[#333] hover:border-[#0033A0] hover:text-[#0033A0]'
-        "
-        class="sharp h-12 px-8 text-sm font-bold uppercase tracking-widest transition-all"
-      >
+        " class="sharp h-12 px-8 text-sm font-bold uppercase tracking-widest transition-all">
         Data Input
       </button>
-      <button
-        (click)="switchTab('preview')"
-        [ngClass]="
+      <button (click)="switchTab('preview')" [ngClass]="
           activeTab === 'preview'
             ? 'bg-[#0033A0] text-white border-2 border-[#0033A0]'
             : 'bg-[#111] text-white border-2 border-white hover:bg-[#333] hover:border-[#0033A0] hover:text-[#0033A0]'
-        "
-        class="sharp h-12 px-8 text-sm font-bold uppercase tracking-widest transition-all ml-4"
-      >
+        " class="sharp h-12 px-8 text-sm font-bold uppercase tracking-widest transition-all ml-4">
         Preview Deck
       </button>
     </div>
@@ -58,30 +50,26 @@
         <div class="space-y-4">
           <div>
             <label class="block text-[11px] font-bold text-neutral-500 uppercase mb-1">Month</label>
-            <input
-              type="text"
-              [(ngModel)]="currentMonth"
-              class="sharp w-full bg-neutral-100 border border-neutral-300 p-3 font-bold text-sm text-black"
-            />
+            <input type="text" [(ngModel)]="currentMonth"
+              class="sharp w-full bg-neutral-100 border border-neutral-300 p-3 font-bold text-sm text-black" />
           </div>
           <div>
             <label class="block text-[11px] font-bold text-neutral-500 uppercase mb-1">Year</label>
-            <input
-              type="text"
-              [(ngModel)]="currentYear"
-              class="sharp w-full bg-neutral-100 border border-neutral-300 p-3 font-bold text-sm text-black"
-            />
+            <input type="text" [(ngModel)]="currentYear"
+              class="sharp w-full bg-neutral-100 border border-neutral-300 p-3 font-bold text-sm text-black" />
           </div>
           <div class="pt-4 border-t border-neutral-100">
-             <button (click)="downloadExcelTemplate()" class="w-full sharp bg-green-600 text-white hover:bg-green-700 p-3 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
-                 <i data-lucide="download" class="w-4 h-4"></i> Excel Template
-             </button>
+            <button (click)="downloadExcelTemplate()"
+              class="w-full sharp bg-green-600 text-white hover:bg-green-700 p-3 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+              <i data-lucide="download" class="w-4 h-4"></i> Excel Template
+            </button>
           </div>
           <div class="pt-2">
-             <input type="file" (change)="onFileChange($event)" multiple="false" accept=".xlsx, .xls" hidden #fileInput>
-             <button (click)="fileInput.click()" class="w-full sharp bg-blue-600 text-white hover:bg-blue-700 p-3 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
-                 <i data-lucide="upload" class="w-4 h-4"></i> Upload Data
-             </button>
+            <input type="file" (change)="onFileChange($event)" multiple="false" accept=".xlsx, .xls" hidden #fileInput>
+            <button (click)="fileInput.click()"
+              class="w-full sharp bg-blue-600 text-white hover:bg-blue-700 p-3 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+              <i data-lucide="upload" class="w-4 h-4"></i> Upload Data
+            </button>
           </div>
         </div>
       </div>
@@ -91,25 +79,17 @@
     <div class="xl:col-span-3 space-y-8">
       <!-- Core Highlights -->
       <div class="bg-white shadow-md border-t-4 border-[#0033A0] sharp p-6">
-        <h3
-          class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center"
-        >
+        <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
           <span>Core Highlights</span>
-          <button
-            (click)="addCoreHighlight()"
-            class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded"
-          >
+          <button (click)="addCoreHighlight()" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">
             Add Item
           </button>
         </h3>
         <ul class="space-y-2">
           <li *ngFor="let h of coreHighlights; let i = index" class="flex items-center gap-2">
             <span class="font-bold text-[#0033A0]">&gt;</span>
-            <input
-              type="text"
-              [(ngModel)]="coreHighlights[i]"
-              class="flex-1 border-b border-gray-300 focus:border-[#0033A0] outline-none p-1 text-sm"
-            />
+            <input type="text" [(ngModel)]="coreHighlights[i]"
+              class="flex-1 border-b border-gray-300 focus:border-[#0033A0] outline-none p-1 text-sm" />
             <button (click)="removeCoreHighlight(i)" class="text-red-500 hover:text-red-700">
               <i data-lucide="x" class="w-4 h-4"></i>
             </button>
@@ -119,25 +99,17 @@
 
       <!-- App Highlights -->
       <div class="bg-white shadow-md border-t-4 border-[#0033A0] sharp p-6">
-        <h3
-          class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center"
-        >
+        <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
           <span>App Highlights</span>
-          <button
-            (click)="addAppHighlight()"
-            class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded"
-          >
+          <button (click)="addAppHighlight()" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">
             Add Item
           </button>
         </h3>
         <ul class="space-y-2">
           <li *ngFor="let h of appHighlights; let i = index" class="flex items-center gap-2">
             <span class="font-bold text-[#0033A0]">&gt;</span>
-            <input
-              type="text"
-              [(ngModel)]="appHighlights[i]"
-              class="flex-1 border-b border-gray-300 focus:border-[#0033A0] outline-none p-1 text-sm"
-            />
+            <input type="text" [(ngModel)]="appHighlights[i]"
+              class="flex-1 border-b border-gray-300 focus:border-[#0033A0] outline-none p-1 text-sm" />
             <button (click)="removeAppHighlight(i)" class="text-red-500 hover:text-red-700">
               <i data-lucide="x" class="w-4 h-4"></i>
             </button>
@@ -147,246 +119,319 @@
 
       <!-- DATA TABLES EDITING -->
       <div class="space-y-8">
-        
+
         <!-- Core Delivery Metrics -->
         <div class="bg-white shadow-md border-t-4 border-[#0033A0] sharp p-6">
-            <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                <span>Core Delivery Metrics</span>
-                <button (click)="coreDeliveryDataRows.push({sprintMonth: '', committed: 0, delivered: 0, achieved: 0, features: [], deploymentStatus: '', bugs: 0, comments: ''})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Sprint</button>
-            </h3>
-            <div *ngFor="let row of coreDeliveryDataRows; let i = index" class="border-b border-gray-100 pb-4 mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
-                <button (click)="coreDeliveryDataRows.splice(i, 1)" class="absolute top-0 right-0 text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                <div>
-                    <label class="block text-[10px] uppercase font-bold text-gray-400">Sprint/Month</label>
-                    <input [(ngModel)]="row.sprintMonth" class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm font-semibold">
-                </div>
-                <div>
-                     <label class="block text-[10px] uppercase font-bold text-gray-400">Deployment Status</label>
-                    <input [(ngModel)]="row.deploymentStatus" class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
-                </div>
-                <div class="grid grid-cols-3 gap-2">
-                     <div><label class="block text-[10px] uppercase font-bold text-gray-400">Committed</label><input type="number" [(ngModel)]="row.committed" class="w-full border-b border-gray-200 p-1 text-sm"></div>
-                     <div><label class="block text-[10px] uppercase font-bold text-gray-400">Delivered</label><input type="number" [(ngModel)]="row.delivered" class="w-full border-b border-gray-200 p-1 text-sm"></div>
-                     <div><label class="block text-[10px] uppercase font-bold text-gray-400">Bugs</label><input type="number" [(ngModel)]="row.bugs" class="w-full border-b border-gray-200 p-1 text-sm"></div>
-                </div>
-                <div>
-                    <label class="block text-[10px] uppercase font-bold text-gray-400">Comments</label>
-                    <input [(ngModel)]="row.comments" class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
-                </div>
-                <div class="md:col-span-2">
-                     <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Features (One per line)</label>
-                     <textarea [ngModel]="row.features.join('\n')" (ngModelChange)="row.features = $event.split('\n')" rows="3" class="w-full bg-gray-50 border border-gray-200 p-2 text-xs font-mono"></textarea>
-                </div>
+          <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+            <span>Core Delivery Metrics</span>
+            <button
+              (click)="coreDeliveryDataRows.push({sprintMonth: '', committed: 0, delivered: 0, achieved: 0, features: [], deploymentStatus: '', bugs: 0, comments: ''})"
+              class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Sprint</button>
+          </h3>
+          <div *ngFor="let row of coreDeliveryDataRows; let i = index"
+            class="border-b border-gray-100 pb-4 mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+            <button (click)="coreDeliveryDataRows.splice(i, 1)"
+              class="absolute top-0 right-0 text-red-500 hover:text-red-700"><i data-lucide="trash-2"
+                class="w-4 h-4"></i></button>
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-gray-400">Sprint/Month</label>
+              <input [(ngModel)]="row.sprintMonth"
+                class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm font-semibold">
             </div>
-            <div *ngIf="coreDeliveryDataRows.length === 0" class="text-sm text-gray-400 italic">No data. Upload Excel or add manually.</div>
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-gray-400">Deployment Status</label>
+              <input [(ngModel)]="row.deploymentStatus"
+                class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <div><label class="block text-[10px] uppercase font-bold text-gray-400">Committed</label><input
+                  type="number" [(ngModel)]="row.committed" class="w-full border-b border-gray-200 p-1 text-sm"></div>
+              <div><label class="block text-[10px] uppercase font-bold text-gray-400">Delivered</label><input
+                  type="number" [(ngModel)]="row.delivered" class="w-full border-b border-gray-200 p-1 text-sm"></div>
+              <div><label class="block text-[10px] uppercase font-bold text-gray-400">Bugs</label><input type="number"
+                  [(ngModel)]="row.bugs" class="w-full border-b border-gray-200 p-1 text-sm"></div>
+            </div>
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-gray-400">Comments</label>
+              <input [(ngModel)]="row.comments"
+                class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Features (One per line)</label>
+              <textarea [ngModel]="row.features.join('\n')" (ngModelChange)="row.features = $event.split('\n')" rows="3"
+                class="w-full bg-gray-50 border border-gray-200 p-2 text-xs font-mono"></textarea>
+            </div>
+          </div>
+          <div *ngIf="coreDeliveryDataRows.length === 0" class="text-sm text-gray-400 italic">No data. Upload Excel or
+            add manually.</div>
         </div>
 
         <!-- App Delivery Metrics -->
         <div class="bg-white shadow-md border-t-4 border-[#0033A0] sharp p-6">
-            <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                <span>App Delivery Metrics</span>
-                <button (click)="appDeliveryDataRows.push({sprintMonth: '', committed: 0, delivered: 0, achieved: 0, features: [], deploymentStatus: '', bugs: 0, comments: ''})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Sprint</button>
-            </h3>
-            <div *ngFor="let row of appDeliveryDataRows; let i = index" class="border-b border-gray-100 pb-4 mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
-                <button (click)="appDeliveryDataRows.splice(i, 1)" class="absolute top-0 right-0 text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                <div>
-                    <label class="block text-[10px] uppercase font-bold text-gray-400">Sprint/Month</label>
-                    <input [(ngModel)]="row.sprintMonth" class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm font-semibold">
-                </div>
-                <div>
-                     <label class="block text-[10px] uppercase font-bold text-gray-400">Deployment Status</label>
-                    <input [(ngModel)]="row.deploymentStatus" class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
-                </div>
-                <div class="grid grid-cols-3 gap-2">
-                     <div><label class="block text-[10px] uppercase font-bold text-gray-400">Committed</label><input type="number" [(ngModel)]="row.committed" class="w-full border-b border-gray-200 p-1 text-sm"></div>
-                     <div><label class="block text-[10px] uppercase font-bold text-gray-400">Delivered</label><input type="number" [(ngModel)]="row.delivered" class="w-full border-b border-gray-200 p-1 text-sm"></div>
-                     <div><label class="block text-[10px] uppercase font-bold text-gray-400">Bugs</label><input type="number" [(ngModel)]="row.bugs" class="w-full border-b border-gray-200 p-1 text-sm"></div>
-                </div>
-                 <div>
-                    <label class="block text-[10px] uppercase font-bold text-gray-400">Comments</label>
-                    <input [(ngModel)]="row.comments" class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
-                </div>
-                <div class="md:col-span-2">
-                     <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Features (One per line)</label>
-                     <textarea [ngModel]="row.features.join('\n')" (ngModelChange)="row.features = $event.split('\n')" rows="3" class="w-full bg-gray-50 border border-gray-200 p-2 text-xs font-mono"></textarea>
-                </div>
+          <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+            <span>App Delivery Metrics</span>
+            <button
+              (click)="appDeliveryDataRows.push({sprintMonth: '', committed: 0, delivered: 0, achieved: 0, features: [], deploymentStatus: '', bugs: 0, comments: ''})"
+              class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Sprint</button>
+          </h3>
+          <div *ngFor="let row of appDeliveryDataRows; let i = index"
+            class="border-b border-gray-100 pb-4 mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+            <button (click)="appDeliveryDataRows.splice(i, 1)"
+              class="absolute top-0 right-0 text-red-500 hover:text-red-700"><i data-lucide="trash-2"
+                class="w-4 h-4"></i></button>
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-gray-400">Sprint/Month</label>
+              <input [(ngModel)]="row.sprintMonth"
+                class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm font-semibold">
             </div>
-             <div *ngIf="appDeliveryDataRows.length === 0" class="text-sm text-gray-400 italic">No data. Upload Excel or add manually.</div>
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-gray-400">Deployment Status</label>
+              <input [(ngModel)]="row.deploymentStatus"
+                class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <div><label class="block text-[10px] uppercase font-bold text-gray-400">Committed</label><input
+                  type="number" [(ngModel)]="row.committed" class="w-full border-b border-gray-200 p-1 text-sm"></div>
+              <div><label class="block text-[10px] uppercase font-bold text-gray-400">Delivered</label><input
+                  type="number" [(ngModel)]="row.delivered" class="w-full border-b border-gray-200 p-1 text-sm"></div>
+              <div><label class="block text-[10px] uppercase font-bold text-gray-400">Bugs</label><input type="number"
+                  [(ngModel)]="row.bugs" class="w-full border-b border-gray-200 p-1 text-sm"></div>
+            </div>
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-gray-400">Comments</label>
+              <input [(ngModel)]="row.comments"
+                class="w-full border-b border-gray-200 focus:border-[#0033A0] p-1 text-sm">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Features (One per line)</label>
+              <textarea [ngModel]="row.features.join('\n')" (ngModelChange)="row.features = $event.split('\n')" rows="3"
+                class="w-full bg-gray-50 border border-gray-200 p-2 text-xs font-mono"></textarea>
+            </div>
+          </div>
+          <div *ngIf="appDeliveryDataRows.length === 0" class="text-sm text-gray-400 italic">No data. Upload Excel or
+            add manually.</div>
         </div>
 
         <!-- Migration Status (Block 3) -->
         <div class="bg-white shadow-md border-t-4 border-cyan-500 sharp p-6">
-            <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                <span>Migration Status (Block 3)</span>
-                <button (click)="migrationData.push({module: '', start: '', end: '', pct: '0%', status: 'Pending', comments: ''})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Row</button>
-            </h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs">
-                    <thead>
-                        <tr class="bg-gray-100 text-left">
-                            <th class="p-2">Module</th>
-                            <th class="p-2">Start</th>
-                            <th class="p-2">End</th>
-                            <th class="p-2 w-16">%</th>
-                            <th class="p-2">Status</th>
-                            <th class="p-2">Comments</th>
-                            <th class="p-2 w-8"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let row of migrationData; let i = index" class="border-b border-gray-100">
-                             <td><input [(ngModel)]="row.module" class="w-full bg-transparent p-2 outline-none font-semibold"></td>
-                             <td><input [(ngModel)]="row.start" class="w-full bg-transparent p-2 outline-none"></td>
-                             <td><input [(ngModel)]="row.end" class="w-full bg-transparent p-2 outline-none"></td>
-                             <td><input [(ngModel)]="row.pct" class="w-full bg-transparent p-2 outline-none"></td>
-                             <td><input [(ngModel)]="row.status" class="w-full bg-transparent p-2 outline-none"></td>
-                             <td><input [(ngModel)]="row.comments" class="w-full bg-transparent p-2 outline-none"></td>
-                             <td><button (click)="migrationData.splice(i,1)" class="text-red-500 hover:text-red-700"><i data-lucide="x" class="w-4 h-4"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                 <div *ngIf="migrationData.length === 0" class="text-sm text-gray-400 italic p-2">No data.</div>
-            </div>
+          <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+            <span>Migration Status (Block 3)</span>
+            <button
+              (click)="migrationData.push({module: '', start: '', end: '', pct: '0%', status: 'Pending', comments: ''})"
+              class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Row</button>
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs">
+              <thead>
+                <tr class="bg-gray-100 text-left">
+                  <th class="p-2">Module</th>
+                  <th class="p-2">Start</th>
+                  <th class="p-2">End</th>
+                  <th class="p-2 w-16">%</th>
+                  <th class="p-2">Status</th>
+                  <th class="p-2">Comments</th>
+                  <th class="p-2 w-8"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of migrationData; let i = index" class="border-b border-gray-100">
+                  <td><input [(ngModel)]="row.module" class="w-full bg-transparent p-2 outline-none font-semibold"></td>
+                  <td><input [(ngModel)]="row.start" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><input [(ngModel)]="row.end" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><input [(ngModel)]="row.pct" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><input [(ngModel)]="row.status" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><input [(ngModel)]="row.comments" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><button (click)="migrationData.splice(i,1)" class="text-red-500 hover:text-red-700"><i
+                        data-lucide="x" class="w-4 h-4"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="migrationData.length === 0" class="text-sm text-gray-400 italic p-2">No data.</div>
+          </div>
         </div>
 
         <!-- Velocity / Strategy -->
         <div class="bg-white shadow-md border-t-4 border-orange-500 sharp p-6">
-            <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                <span>Velocity & Strategy</span>
-                <button (click)="deliveryStrategyData.push({month: '', sprint: '', committed: 0, delivered: 0, pct: '0%', comments: ''})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Row</button>
-            </h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs">
-                    <thead>
-                        <tr class="bg-gray-100 text-left">
-                            <th class="p-2">Month</th>
-                            <th class="p-2">Sprint</th>
-                            <th class="p-2 w-16">Commit</th>
-                            <th class="p-2 w-16">Deliver</th>
-                            <th class="p-2 w-16">%</th>
-                            <th class="p-2">Comment</th>
-                            <th class="p-2 w-8"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let row of deliveryStrategyData; let i = index" class="border-b border-gray-100">
-                            <td><input [(ngModel)]="row.month" class="w-full bg-transparent p-2 outline-none"></td>
-                            <td><input [(ngModel)]="row.sprint" class="w-full bg-transparent p-2 outline-none"></td>
-                            <td><input [(ngModel)]="row.committed" type="number" class="w-full bg-transparent p-2 outline-none"></td>
-                            <td><input [(ngModel)]="row.delivered" type="number" class="w-full bg-transparent p-2 outline-none"></td>
-                            <td><input [(ngModel)]="row.pct" class="w-full bg-transparent p-2 outline-none"></td>
-                            <td><input [(ngModel)]="row.comment" class="w-full bg-transparent p-2 outline-none"></td>
-                            <td><button (click)="deliveryStrategyData.splice(i,1)" class="text-red-500 hover:text-red-700"><i data-lucide="x" class="w-4 h-4"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                 <div *ngIf="deliveryStrategyData.length === 0" class="text-sm text-gray-400 italic p-2">No data.</div>
-            </div>
+          <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+            <span>Velocity & Strategy</span>
+            <button
+              (click)="deliveryStrategyData.push({month: '', sprint: '', committed: 0, delivered: 0, pct: '0%', comments: ''})"
+              class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Row</button>
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs">
+              <thead>
+                <tr class="bg-gray-100 text-left">
+                  <th class="p-2">Month</th>
+                  <th class="p-2">Sprint</th>
+                  <th class="p-2 w-16">Commit</th>
+                  <th class="p-2 w-16">Deliver</th>
+                  <th class="p-2 w-16">%</th>
+                  <th class="p-2">Comment</th>
+                  <th class="p-2 w-8"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of deliveryStrategyData; let i = index" class="border-b border-gray-100">
+                  <td><input [(ngModel)]="row.month" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><input [(ngModel)]="row.sprint" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><input [(ngModel)]="row.committed" type="number" class="w-full bg-transparent p-2 outline-none">
+                  </td>
+                  <td><input [(ngModel)]="row.delivered" type="number" class="w-full bg-transparent p-2 outline-none">
+                  </td>
+                  <td><input [(ngModel)]="row.pct" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><input [(ngModel)]="row.comment" class="w-full bg-transparent p-2 outline-none"></td>
+                  <td><button (click)="deliveryStrategyData.splice(i,1)" class="text-red-500 hover:text-red-700"><i
+                        data-lucide="x" class="w-4 h-4"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="deliveryStrategyData.length === 0" class="text-sm text-gray-400 italic p-2">No data.</div>
+          </div>
         </div>
 
         <!-- Defect Analysis -->
         <div class="bg-white shadow-md border-t-4 border-red-600 sharp p-6">
-             <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                <span>Defect Analysis</span>
-                <button (click)="defectBacklogData.push({id:'', desc:'', priority:0, created:'', assigned:'', intro:'', eta:'', status: 'NEW', statusColor: '#e3f2fd', statusText: '#1565c0'})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Bug</button>
-            </h3>
-             <div class="overflow-x-auto">
-                <table class="w-full text-xs">
-                    <thead>
-                         <tr class="bg-gray-100 text-left">
-                            <th class="p-2 w-24">ID</th>
-                            <th class="p-2">Description</th>
-                            <th class="p-2 w-12">Pri</th>
-                            <th class="p-2 w-24">Status</th>
-                            <th class="p-2 w-8"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let row of defectBacklogData; let i = index" class="border-b border-gray-100">
-                             <td class="align-top"><input [(ngModel)]="row.id" class="w-full bg-transparent p-2 outline-none font-bold"></td>
-                             <td class="align-top">
-                                 <textarea [(ngModel)]="row.desc" rows="2" class="w-full bg-transparent p-2 outline-none resize-none"></textarea>
-                                 <div class="grid grid-cols-2 gap-2 mt-1">
-                                     <input [(ngModel)]="row.created" placeholder="Created" class="text-[10px] border-b border-gray-200">
-                                     <input [(ngModel)]="row.assigned" placeholder="Assigned" class="text-[10px] border-b border-gray-200">
-                                 </div>
-                             </td>
-                             <td class="align-top"><input [(ngModel)]="row.priority" class="w-full bg-transparent p-2 outline-none text-center"></td>
-                             <td class="align-top">
-                                 <select [(ngModel)]="row.status" class="w-full bg-transparent p-2 outline-none text-[10px] font-bold">
-                                     <option value="NEW">NEW</option>
-                                     <option value="IN-PROGRESS">IN-PROGRESS</option>
-                                     <option value="RESOLVED">RESOLVED</option>
-                                     <option value="CLOSED">CLOSED</option>
-                                 </select>
-                             </td>
-                             <td class="align-top text-center pt-2"><button (click)="defectBacklogData.splice(i,1)" class="text-red-500 hover:text-red-700"><i data-lucide="x" class="w-4 h-4"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                 <div *ngIf="defectBacklogData.length === 0" class="text-sm text-gray-400 italic p-2">No data.</div>
-            </div>
+          <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+            <span>Defect Analysis</span>
+            <button
+              (click)="defectBacklogData.push({id:'', desc:'', priority:0, created:'', assigned:'', intro:'', eta:'', status: 'NEW', statusColor: '#e3f2fd', statusText: '#1565c0'})"
+              class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Bug</button>
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs">
+              <thead>
+                <tr class="bg-gray-100 text-left">
+                  <th class="p-2 w-24">ID</th>
+                  <th class="p-2">Description</th>
+                  <th class="p-2 w-12">Pri</th>
+                  <th class="p-2 w-24">Status</th>
+                  <th class="p-2 w-8"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of defectBacklogData; let i = index" class="border-b border-gray-100">
+                  <td class="align-top"><input [(ngModel)]="row.id"
+                      class="w-full bg-transparent p-2 outline-none font-bold"></td>
+                  <td class="align-top">
+                    <textarea [(ngModel)]="row.desc" rows="2"
+                      class="w-full bg-transparent p-2 outline-none resize-none"></textarea>
+                    <div class="grid grid-cols-2 gap-2 mt-1">
+                      <input [(ngModel)]="row.created" placeholder="Created"
+                        class="text-[10px] border-b border-gray-200">
+                      <input [(ngModel)]="row.assigned" placeholder="Assigned"
+                        class="text-[10px] border-b border-gray-200">
+                    </div>
+                  </td>
+                  <td class="align-top"><input [(ngModel)]="row.priority"
+                      class="w-full bg-transparent p-2 outline-none text-center"></td>
+                  <td class="align-top">
+                    <select [(ngModel)]="row.status"
+                      class="w-full bg-transparent p-2 outline-none text-[10px] font-bold">
+                      <option value="NEW">NEW</option>
+                      <option value="IN-PROGRESS">IN-PROGRESS</option>
+                      <option value="RESOLVED">RESOLVED</option>
+                      <option value="CLOSED">CLOSED</option>
+                    </select>
+                  </td>
+                  <td class="align-top text-center pt-2"><button (click)="defectBacklogData.splice(i,1)"
+                      class="text-red-500 hover:text-red-700"><i data-lucide="x" class="w-4 h-4"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="defectBacklogData.length === 0" class="text-sm text-gray-400 italic p-2">No data.</div>
+          </div>
         </div>
 
         <!-- Defect Metrics (Simplified View) -->
         <div class="bg-white shadow-md border-t-4 border-red-800 sharp p-6">
-             <h3 class="text-sm font-black uppercase tracking-widest mb-4">Defect Matrix (Read Only View)</h3>
-             <ul class="text-xs space-y-2">
-                 <li *ngFor="let row of defectMetricsData" class="flex justify-between border-b border-gray-100 pb-1">
-                     <span class="font-bold">{{ row.title }}</span>
-                     <span class="text-gray-500">Backlog: {{ row.backlog || '-' }}</span>
-                 </li>
-             </ul>
-             <div *ngIf="defectMetricsData.length === 0" class="text-sm text-gray-400 italic">No data loaded.</div>
+          <h3 class="text-sm font-black uppercase tracking-widest mb-4">Defect Matrix (Read Only View)</h3>
+          <div class="overflow-x-auto max-h-60">
+            <table class="w-full text-xs">
+              <thead>
+                <tr class="bg-gray-100 text-left sticky top-0">
+                  <th class="p-2">ID</th>
+                  <th class="p-2">Title</th>
+                  <th class="p-2">Created Date</th>
+                  <th class="p-2">Resolved Date</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of defectMetricsData" class="border-b border-gray-100">
+                  <td class="p-2 font-bold">{{ row.id }}</td>
+                  <td class="p-2">{{ row.desc }}</td>
+                  <td class="p-2">{{ row.createdDate }}</td>
+                  <td class="p-2">{{ row.resolvedDate }}</td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="defectMetricsData.length === 0" class="text-sm text-gray-400 italic">No data loaded.</div>
         </div>
 
         <!-- Feedback -->
         <div class="bg-white shadow-md border-t-4 border-green-600 sharp p-6">
-             <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                <span>Feedback & Actions</span>
-                <button (click)="feedbackData.push({date:'', item:'', owner:'', status:'', comments:''})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Item</button>
-            </h3>
-            <div *ngFor="let row of feedbackData; let i = index" class="border-b border-gray-100 pb-2 mb-2 grid grid-cols-1 md:grid-cols-12 gap-2 relative text-xs">
-                 <button (click)="feedbackData.splice(i, 1)" class="absolute top-0 right-0 text-red-500 hover:text-red-700"><i data-lucide="x" class="w-4 h-4"></i></button>
-                 <div class="md:col-span-2"><input [(ngModel)]="row.date" placeholder="Date" class="w-full border-b border-gray-200 p-1"></div>
-                 <div class="md:col-span-4"><input [(ngModel)]="row.item" placeholder="Action Item" class="w-full border-b border-gray-200 p-1 font-semibold"></div>
-                 <div class="md:col-span-2"><input [(ngModel)]="row.owner" placeholder="Owner" class="w-full border-b border-gray-200 p-1"></div>
-                 <div class="md:col-span-1"><input [(ngModel)]="row.status" placeholder="Status" class="w-full border-b border-gray-200 p-1"></div>
-                 <div class="md:col-span-3"><input [(ngModel)]="row.comments" placeholder="Comments" class="w-full border-b border-gray-200 p-1 italic text-gray-500"></div>
-            </div>
-             <div *ngIf="feedbackData.length === 0" class="text-sm text-gray-400 italic">No data.</div>
+          <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+            <span>Feedback & Actions</span>
+            <button (click)="feedbackData.push({date:'', item:'', owner:'', status:'', comments:''})"
+              class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add Item</button>
+          </h3>
+          <div *ngFor="let row of feedbackData; let i = index"
+            class="border-b border-gray-100 pb-2 mb-2 grid grid-cols-1 md:grid-cols-12 gap-2 relative text-xs">
+            <button (click)="feedbackData.splice(i, 1)"
+              class="absolute top-0 right-0 text-red-500 hover:text-red-700"><i data-lucide="x"
+                class="w-4 h-4"></i></button>
+            <div class="md:col-span-2"><input [(ngModel)]="row.date" placeholder="Date"
+                class="w-full border-b border-gray-200 p-1"></div>
+            <div class="md:col-span-4"><input [(ngModel)]="row.item" placeholder="Action Item"
+                class="w-full border-b border-gray-200 p-1 font-semibold"></div>
+            <div class="md:col-span-2"><input [(ngModel)]="row.owner" placeholder="Owner"
+                class="w-full border-b border-gray-200 p-1"></div>
+            <div class="md:col-span-1"><input [(ngModel)]="row.status" placeholder="Status"
+                class="w-full border-b border-gray-200 p-1"></div>
+            <div class="md:col-span-3"><input [(ngModel)]="row.comments" placeholder="Comments"
+                class="w-full border-b border-gray-200 p-1 italic text-gray-500"></div>
+          </div>
+          <div *ngIf="feedbackData.length === 0" class="text-sm text-gray-400 italic">No data.</div>
         </div>
 
         <!-- People & Team Actions -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-             <!-- Leave Plan -->
-             <div class="bg-white shadow-md border-t-4 border-purple-600 sharp p-6">
-                 <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                    <span>Leave Plan</span>
-                    <button (click)="leavePlanData.push({date:'', event:'', member:''})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add</button>
-                </h3>
-                <div *ngFor="let row of leavePlanData; let i = index" class="flex gap-2 mb-2 text-xs">
-                    <input [(ngModel)]="row.date" placeholder="Date" class="w-20 border-b border-gray-200 p-1">
-                    <input [(ngModel)]="row.event" placeholder="Event" class="flex-1 border-b border-gray-200 p-1">
-                    <input [(ngModel)]="row.member" placeholder="Member" class="flex-1 border-b border-gray-200 p-1">
-                    <button (click)="leavePlanData.splice(i,1)" class="text-red-500 hover:text-red-700"><i data-lucide="x" class="w-4 h-4"></i></button>
-                </div>
-                 <div *ngIf="leavePlanData.length === 0" class="text-sm text-gray-400 italic">No data.</div>
-             </div>
+          <!-- Leave Plan -->
+          <div class="bg-white shadow-md border-t-4 border-purple-600 sharp p-6">
+            <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+              <span>Leave Plan</span>
+              <button (click)="leavePlanData.push({date:'', event:'', member:''})"
+                class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add</button>
+            </h3>
+            <div *ngFor="let row of leavePlanData; let i = index" class="flex gap-2 mb-2 text-xs">
+              <input [(ngModel)]="row.date" placeholder="Date" class="w-20 border-b border-gray-200 p-1">
+              <input [(ngModel)]="row.event" placeholder="Event" class="flex-1 border-b border-gray-200 p-1">
+              <input [(ngModel)]="row.member" placeholder="Member" class="flex-1 border-b border-gray-200 p-1">
+              <button (click)="leavePlanData.splice(i,1)" class="text-red-500 hover:text-red-700"><i data-lucide="x"
+                  class="w-4 h-4"></i></button>
+            </div>
+            <div *ngIf="leavePlanData.length === 0" class="text-sm text-gray-400 italic">No data.</div>
+          </div>
 
-             <!-- Team Actions -->
-             <div class="bg-white shadow-md border-t-4 border-purple-800 sharp p-6">
-                 <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
-                    <span>Team Actions</span>
-                     <button (click)="teamActionsData.push({item:'', duration:'', comments:''})" class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add</button>
-                </h3>
-                 <div *ngFor="let row of teamActionsData; let i = index" class="flex gap-2 mb-2 text-xs">
-                    <input [(ngModel)]="row.item" placeholder="Action" class="flex-1 border-b border-gray-200 p-1 font-semibold">
-                    <input [(ngModel)]="row.duration" placeholder="Duration" class="w-20 border-b border-gray-200 p-1">
-                     <button (click)="teamActionsData.splice(i,1)" class="text-red-500 hover:text-red-700"><i data-lucide="x" class="w-4 h-4"></i></button>
-                </div>
-                 <div *ngIf="teamActionsData.length === 0" class="text-sm text-gray-400 italic">No data.</div>
-             </div>
+          <!-- Team Actions -->
+          <div class="bg-white shadow-md border-t-4 border-purple-800 sharp p-6">
+            <h3 class="text-sm font-black uppercase tracking-widest mb-4 flex justify-between items-center">
+              <span>Team Actions</span>
+              <button (click)="teamActionsData.push({item:'', duration:'', comments:''})"
+                class="text-xs bg-gray-200 px-2 py-1 hover:bg-gray-300 rounded">Add</button>
+            </h3>
+            <div *ngFor="let row of teamActionsData; let i = index" class="flex gap-2 mb-2 text-xs">
+              <input [(ngModel)]="row.item" placeholder="Action"
+                class="flex-1 border-b border-gray-200 p-1 font-semibold">
+              <input [(ngModel)]="row.duration" placeholder="Duration" class="w-20 border-b border-gray-200 p-1">
+              <button (click)="teamActionsData.splice(i,1)" class="text-red-500 hover:text-red-700"><i data-lucide="x"
+                  class="w-4 h-4"></i></button>
+            </div>
+            <div *ngIf="teamActionsData.length === 0" class="text-sm text-gray-400 italic">No data.</div>
+          </div>
         </div>
 
       </div>
@@ -402,106 +447,121 @@
       </div>
       <!-- Actions -->
       <div class="flex gap-2">
-          <button (click)="exportReport('pdf')" class="sharp bg-white text-red-600 border border-red-600 hover:bg-red-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
-            <i data-lucide="file-text" class="w-4 h-4"></i> PDF
-          </button>
-          <button (click)="exportReport('image')" class="sharp bg-white text-blue-600 border border-blue-600 hover:bg-blue-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
-            <i data-lucide="image" class="w-4 h-4"></i> IMG
-          </button>
-          <button (click)="exportReport('pptx')" class="sharp bg-white text-orange-600 border border-orange-600 hover:bg-orange-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
-            <i data-lucide="monitor" class="w-4 h-4"></i> PPTX (IMG)
-          </button>
-          <button (click)="exportReport('pptx-content')" class="sharp bg-white text-purple-600 border border-purple-600 hover:bg-purple-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
-            <i data-lucide="file-type" class="w-4 h-4"></i> PPTX (CONTENT)
-          </button>
-          <button (click)="startPresentation()" class="sharp bg-black text-[#FFCD11] hover:bg-neutral-800 px-6 py-3 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2">
-              <i data-lucide="play-circle" class="w-4 h-4"></i> Present Deck
-          </button>
+        <button (click)="exportReport('pdf')"
+          class="sharp bg-white text-red-600 border border-red-600 hover:bg-red-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
+          <i data-lucide="file-text" class="w-4 h-4"></i> PDF
+        </button>
+        <button (click)="exportReport('image')"
+          class="sharp bg-white text-blue-600 border border-blue-600 hover:bg-blue-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
+          <i data-lucide="image" class="w-4 h-4"></i> IMG
+        </button>
+        <button (click)="exportReport('pptx')"
+          class="sharp bg-white text-orange-600 border border-orange-600 hover:bg-orange-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
+          <i data-lucide="monitor" class="w-4 h-4"></i> PPTX (IMG)
+        </button>
+        <button (click)="exportReport('pptx-content')"
+          class="sharp bg-white text-purple-600 border border-purple-600 hover:bg-purple-50 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all shadow-sm flex items-center gap-2">
+          <i data-lucide="file-type" class="w-4 h-4"></i> PPTX (CONTENT)
+        </button>
+        <button (click)="startPresentation()"
+          class="sharp bg-black text-[#FFCD11] hover:bg-neutral-800 px-6 py-3 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2">
+          <i data-lucide="play-circle" class="w-4 h-4"></i> Present Deck
+        </button>
       </div>
     </div>
 
     <!-- Normal Preview Scroll -->
     <div
-      class="bg-neutral-100 p-8 shadow-inner overflow-auto border border-neutral-300 sharp flex flex-col items-center gap-8"
-    >
+      class="bg-neutral-100 p-8 shadow-inner overflow-auto border border-neutral-300 sharp flex flex-col items-center gap-8">
       <div [innerHTML]="previewHtmlSafe"></div>
     </div>
   </div>
 
 </main>
 
-  <!-- PRESENTATION OVERLAY -->
-  <div *ngIf="isPresenting" class="fixed inset-0 z-[100000] bg-black flex flex-col items-center justify-center fade-in">
-       <!-- Controls -->
-       <div class="absolute top-4 right-4 flex gap-4 z-50">
-            <button (click)="endPresentation()" class="text-white/50 hover:text-white transition-colors">
-                <i data-lucide="x" class="w-8 h-8"></i>
-            </button>
-       </div>
-        
-       <!-- Slide Container -->
-       <div class="transition-transform duration-300 ease-in-out" style="transform-origin: center center;" [style.transform]="'scale(' + presentationScale + ')'">
-            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(slides[currentSlideIndex])"></div>
-       </div>
-
-       <!-- Navigation Overlay (Bottom) -->
-       <div class="absolute bottom-8 flex items-center gap-6 bg-neutral-900/80 backdrop-blur px-6 py-3 rounded-full border border-neutral-700">
-           <button (click)="prevSlide()" [disabled]="currentSlideIndex === 0" [class.opacity-30]="currentSlideIndex === 0" class="text-white hover:text-[#0033A0] transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-           <div class="text-white font-mono text-sm tracking-widest">{{ currentSlideIndex + 1 }} / {{ slides.length }}</div>
-           <button (click)="nextSlide()" [disabled]="currentSlideIndex === slides.length - 1" [class.opacity-30]="currentSlideIndex === slides.length - 1" class="text-white hover:text-[#0033A0] transition-colors"><i data-lucide="arrow-right" class="w-6 h-6"></i></button>
-       </div>
+<!-- PRESENTATION OVERLAY -->
+<div *ngIf="isPresenting" class="fixed inset-0 z-[100000] bg-black flex flex-col items-center justify-center fade-in">
+  <!-- Controls -->
+  <div class="absolute top-4 right-4 flex gap-4 z-50">
+    <button (click)="endPresentation()" class="text-white/50 hover:text-white transition-colors">
+      <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
   </div>
 
-  <!-- EXPORT LOADING OVERLAY -->
-  <div *ngIf="isExporting" class="fixed inset-0 z-[200000] bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center fade-in cursor-wait">
-      <div class="flex flex-col items-center gap-6 p-8 rounded-lg">
-          <div class="w-16 h-16 border-4 border-gray-200 border-t-[#0033A0] rounded-full animate-spin"></div>
-          <div class="text-center space-y-2">
-              <h3 class="text-2xl font-black uppercase text-[#000048] tracking-widest">Generating Report</h3>
-              <p class="text-gray-500 font-mono text-sm font-bold">{{ exportProgress }}</p>
-          </div>
-      </div>
+  <!-- Slide Container -->
+  <div class="transition-transform duration-300 ease-in-out" style="transform-origin: center center;"
+    [style.transform]="'scale(' + presentationScale + ')'">
+    <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(slides[currentSlideIndex])"></div>
   </div>
 
-  <!-- IMPORT SUCCESS OVERLAY -->
-  <div *ngIf="importModalVisible" class="fixed inset-0 z-[150000] bg-black/80 backdrop-blur-sm flex items-center justify-center fade-in">
-    <div class="bg-white max-w-md w-full shadow-2xl transform scale-100 transition-transform">
-        <!-- Header -->
-        <div class="bg-[#0033A0] p-6 text-white flex items-center gap-4 border-b-4 border-[#FFCD11]">
-            <div class="bg-white/20 p-3 rounded-full">
-                <i data-lucide="check" class="w-8 h-8 text-[#FFCD11]"></i>
-            </div>
-            <div>
-                <h3 class="text-xl font-black uppercase tracking-widest">Import Successful</h3>
-                <p class="text-blue-100 text-xs font-bold uppercase mt-1">Data has been loaded</p>
-            </div>
-        </div>
-        
-        <!-- content -->
-        <div class="p-8">
-            <div class="grid grid-cols-2 gap-4">
-                <div class="p-4 bg-neutral-50 border border-neutral-100">
-                    <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Highlights</div>
-                    <div class="text-2xl font-black text-neutral-800">{{ importStats.coreHighlights + importStats.appHighlights }}</div>
-                </div>
-                <div class="p-4 bg-neutral-50 border border-neutral-100">
-                    <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Sprints</div>
-                    <div class="text-2xl font-black text-neutral-800">{{ importStats.sprints }}</div>
-                </div>
-                <div class="p-4 bg-neutral-50 border border-neutral-100">
-                    <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Backlog</div>
-                    <div class="text-2xl font-black text-neutral-800">{{ importStats.backlog }}</div>
-                </div>
-                <div class="p-4 bg-neutral-50 border border-neutral-100">
-                    <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Velocity</div>
-                    <div class="text-2xl font-black text-neutral-800">{{ importStats.velocity }}</div>
-                </div>
-            </div>
-            
-            <button (click)="closeImportModal()" class="mt-8 w-full sharp bg-black text-[#FFCD11] hover:bg-neutral-800 py-4 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center justify-center gap-2">
-                <span>Done</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
-        </div>
+  <!-- Navigation Overlay (Bottom) -->
+  <div
+    class="absolute bottom-8 flex items-center gap-6 bg-neutral-900/80 backdrop-blur px-6 py-3 rounded-full border border-neutral-700">
+    <button (click)="prevSlide()" [disabled]="currentSlideIndex === 0" [class.opacity-30]="currentSlideIndex === 0"
+      class="text-white hover:text-[#0033A0] transition-colors"><i data-lucide="arrow-left"
+        class="w-6 h-6"></i></button>
+    <div class="text-white font-mono text-sm tracking-widest">{{ currentSlideIndex + 1 }} / {{ slides.length }}</div>
+    <button (click)="nextSlide()" [disabled]="currentSlideIndex === slides.length - 1"
+      [class.opacity-30]="currentSlideIndex === slides.length - 1"
+      class="text-white hover:text-[#0033A0] transition-colors"><i data-lucide="arrow-right"
+        class="w-6 h-6"></i></button>
+  </div>
+</div>
+
+<!-- EXPORT LOADING OVERLAY -->
+<div *ngIf="isExporting"
+  class="fixed inset-0 z-[200000] bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center fade-in cursor-wait">
+  <div class="flex flex-col items-center gap-6 p-8 rounded-lg">
+    <div class="w-16 h-16 border-4 border-gray-200 border-t-[#0033A0] rounded-full animate-spin"></div>
+    <div class="text-center space-y-2">
+      <h3 class="text-2xl font-black uppercase text-[#000048] tracking-widest">Generating Report</h3>
+      <p class="text-gray-500 font-mono text-sm font-bold">{{ exportProgress }}</p>
     </div>
   </div>
+</div>
+
+<!-- IMPORT SUCCESS OVERLAY -->
+<div *ngIf="importModalVisible"
+  class="fixed inset-0 z-[150000] bg-black/80 backdrop-blur-sm flex items-center justify-center fade-in">
+  <div class="bg-white max-w-md w-full shadow-2xl transform scale-100 transition-transform">
+    <!-- Header -->
+    <div class="bg-[#0033A0] p-6 text-white flex items-center gap-4 border-b-4 border-[#FFCD11]">
+      <div class="bg-white/20 p-3 rounded-full">
+        <i data-lucide="check" class="w-8 h-8 text-[#FFCD11]"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-black uppercase tracking-widest">Import Successful</h3>
+        <p class="text-blue-100 text-xs font-bold uppercase mt-1">Data has been loaded</p>
+      </div>
+    </div>
+
+    <!-- content -->
+    <div class="p-8">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="p-4 bg-neutral-50 border border-neutral-100">
+          <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Highlights</div>
+          <div class="text-2xl font-black text-neutral-800">{{ importStats.coreHighlights + importStats.appHighlights }}
+          </div>
+        </div>
+        <div class="p-4 bg-neutral-50 border border-neutral-100">
+          <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Sprints</div>
+          <div class="text-2xl font-black text-neutral-800">{{ importStats.sprints }}</div>
+        </div>
+        <div class="p-4 bg-neutral-50 border border-neutral-100">
+          <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Backlog</div>
+          <div class="text-2xl font-black text-neutral-800">{{ importStats.backlog }}</div>
+        </div>
+        <div class="p-4 bg-neutral-50 border border-neutral-100">
+          <div class="text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-1">Velocity</div>
+          <div class="text-2xl font-black text-neutral-800">{{ importStats.velocity }}</div>
+        </div>
+      </div>
+
+      <button (click)="closeImportModal()"
+        class="mt-8 w-full sharp bg-black text-[#FFCD11] hover:bg-neutral-800 py-4 text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center justify-center gap-2">
+        <span>Done</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </div>
+</div>

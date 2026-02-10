@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DQME Portal Defect Analysis Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --sidebar-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-color: #0c1421;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #d1d5db;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Slide Dimensions 16:9 ratio @ 1280x720 */
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background-color: var(--bg-color);
+            position: relative;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Header Section */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: var(--brand-color);
+            border-radius: 12px;
+        }
+
+        .title-text h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 32px;
+            letter-spacing: 0.02em;
+            color: var(--brand-color);
+            text-transform: uppercase;
+        }
+
+        .title-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .cycle-focus {
+            text-align: right;
+        }
+
+        .cycle-focus label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .date-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .date-display span {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            color: var(--brand-color);
+            text-transform: uppercase;
+        }
+
+        .date-box {
+            background: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+        }
+
+        /* Main Grid */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        /* Sidebar Stats */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stats-card {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .stats-card.resolution {
+            border: 2px solid var(--accent-green);
+        }
+
+        .card-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .res-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .res-count {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .res-percent {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-green);
+            line-height: 1;
+        }
+
+        .progress-bar-container {
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+            border-radius: 4px;
+        }
+
+        .severity-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .severity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .severity-item span:first-child::before {
+            content: "●";
+            margin-right: 8px;
+        }
+
+        .p2 span:first-child::before { color: var(--accent-red); }
+        .p3 span:first-child::before { color: var(--accent-orange); }
+        .p4 span:first-child::before { color: var(--accent-blue); }
+
+        .root-cause-section {
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        .rc-item {
+            margin-bottom: 15px;
+        }
+
+        .rc-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .rc-bar {
+            height: 4px;
+            background: #f1f5f9;
+            border-radius: 2px;
+        }
+
+        .rc-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        .footer-logo {
+            margin-top: auto;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .status-verified {
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 5px;
+        }
+
+        /* Defect Registry Area */
+        .registry-container {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .registry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .registry-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-pill {
+            background: #f1f5f9;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Table Design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            text-align: left;
+            padding-bottom: 15px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        tbody td {
+            padding: 24px 0;
+            vertical-align: top;
+        }
+
+        .id-cell {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 14px;
+            width: 100px;
+        }
+
+        .pri-cell {
+            width: 60px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .priority-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .desc-cell {
+            padding-right: 30px;
+        }
+
+        .desc-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .state-cell {
+            width: 120px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-new { background: #fee2e2; color: #ef4444; }
+        .badge-progress { background: #dbeafe; color: #3b82f6; }
+
+        .assign-cell {
+            width: 180px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide">
+        <header>
+            <div class="title-group">
+                <div class="logo-placeholder"></div>
+                <div class="title-text">
+                    <h1>Defect Analysis Report</h1>
+                    <p>Comprehensive QA Overview • DQME Portal INT</p>
+                </div>
+            </div>
+            <div class="cycle-focus">
+                <label>Cycle Focus</label>
+                <div class="date-display">
+                    <span>Jan 2026</span>
+                    <div class="date-box">03</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <div class="stats-card resolution">
+                    <span class="card-label">Resolution Status</span>
+                    <div class="res-flex">
+                        <span class="res-count">03</span>
+                        <span class="res-percent">33%</span>
+                    </div>
+                    <p style="font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">ACTIVE / TOTAL FOUND</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 33.3%;"></div>
+                    </div>
+                    <p style="font-size: 11px; text-align: right; color: var(--text-muted); margin-top: 4px; font-weight: 600;">1 / 3</p>
+                </div>
+
+                <div class="stats-card">
+                    <span class="card-label">Severity Breakdown</span>
+                    <ul class="severity-list">
+                        <li class="severity-item p2"><span>P2 Critical</span> <span>0</span></li>
+                        <li class="severity-item p3"><span>P3 High</span> <span>0</span></li>
+                        <li class="severity-item p4"><span>P4 Medium</span> <span>3</span></li>
+                    </ul>
+
+                    <div class="root-cause-section">
+                        <span class="card-label">Root Cause Distribution</span>
+                        <div class="rc-item">
+                            <div class="rc-label"><span>App Execution</span> <span>2 Items</span></div>
+                            <div class="rc-bar"><div class="rc-fill" style="width: 66%; background: var(--accent-blue);"></div></div>
+                        </div>
+                        <div class="rc-item">
+                            <div class="rc-label"><span>Core / Regression</span> <span>1 Item</span></div>
+                            <div class="rc-bar"><div class="rc-fill" style="width: 33%; background: var(--accent-orange);"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-logo">
+                    Cognizant x Caterpillar
+                    <div class="status-verified">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        Status: Active Sprint
+                    </div>
+                </div>
+            </div>
+
+            <div class="registry-container">
+                <div class="registry-header">
+                    <h2>Defect Registry</h2>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">FILTER:</span>
+                        <div class="filter-pill">Sprint 03</div>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Pri.</th>
+                            <th>Description</th>
+                            <th>State</th>
+                            <th>Assigned To</th>
+                        </tr>
+                    </thead>
+                    <tbody id="defect-body">
+                        <!-- Content will be injected by JS or hardcoded -->
+                        <tr>
+                            <td class="id-cell">#2336112</td>
+                            <td class="pri-cell"><span class="priority-dot" style="background: var(--accent-blue);"></span>P4</td>
+                            <td class="desc-cell">
+                                <div class="desc-title">DQME Portal - Filtered Data Report Creation Fails - Reports Stuck in Submitted or Error State</div>
+                                <div class="tag-row">
+                                    <span class="tag">App</span><span class="tag">Execution</span><span class="tag">Int</span><span class="tag">Testing</span>
+                                </div>
+                            </td>
+                            <td class="state-cell"><span class="badge badge-new">New</span></td>
+                            <td class="assign-cell">
+                                <div class="user-info">
+                                    <div class="avatar">UN</div>
+                                    <div class="user-name">Unassigned</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="id-cell">#2468008</td>
+                            <td class="pri-cell"><span class="priority-dot" style="background: var(--accent-blue);"></span>P4</td>
+                            <td class="desc-cell">
+                                <div class="desc-title">DQME Portal - INT - Unknown issues encountered during Template creation</div>
+                                <div class="tag-row">
+                                    <span class="tag">App</span><span class="tag">Core</span><span class="tag">Int</span><span class="tag">Regression</span>
+                                </div>
+                            </td>
+                            <td class="state-cell"><span class="badge badge-new">New</span></td>
+                            <td class="assign-cell">
+                                <div class="user-info">
+                                    <div class="avatar">LR</div>
+                                    <div class="user-name">Ludwig Rubio Jaime</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="id-cell">#2471279</td>
+                            <td class="pri-cell"><span class="priority-dot" style="background: var(--accent-blue);"></span>P4</td>
+                            <td class="desc-cell">
+                                <div class="desc-title">DQME Portal - INT - Email notification not sent when Fleet List is modified</div>
+                                <div class="tag-row">
+                                    <span class="tag">App</span><span class="tag">Execution</span><span class="tag">Int</span><span class="tag">Regression</span>
+                                </div>
+                            </td>
+                            <td class="state-cell"><span class="badge badge-progress">In Progress</span></td>
+                            <td class="assign-cell">
+                                <div class="user-info">
+                                    <div class="avatar">MK</div>
+                                    <div class="user-name">Manikandan Kasi</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data integration logic if needed for dynamic updates
+        const defectData = [
+            {
+                id: "2336112",
+                title: "DQME Portal - Filtered Data Report Creation Fails - Reports Stuck in Submitted or Error State",
+                priority: "4",
+                state: "New",
+                assigned: "Unassigned",
+                tags: ["App", "Execution", "Int", "Testing"]
+            },
+            {
+                id: "2468008",
+                title: "DQME Portal - INT - Unknown issues encountered during Template creation",
+                priority: "4",
+                state: "New",
+                assigned: "Ludwig Rubio Jaime",
+                tags: ["App", "Core", "Int", "Regression", "Testing"]
+            },
+            {
+                id: "2471279",
+                title: "DQME Portal - INT - Email notification not sent when Fleet List is modified",
+                priority: "4",
+                state: "In Progress",
+                assigned: "Manikandan Kasi",
+                tags: ["App", "Execution", "Int", "Regression", "Testing"]
+            }
+        ];
+
+        // Example: Logic to calculate stats based on the data
+        window.onload = () => {
+            console.log("Defect slide rendered with " + defectData.length + " items.");
+        };
+    </script>
+</body>
+</html>

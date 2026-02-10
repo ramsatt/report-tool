@@ -1,0 +1,178 @@
+<div class="slide-frame">
+    <!-- HEADER -->
+    <header class="flex justify-between items-end border-b border-slate-200 pb-4 animate-in">
+        <div>
+            <div class="flex items-center gap-2 mb-1">
+                <div class="bg-indigo-600 h-6 w-1 rounded"></div>
+                <h1 class="text-2xl font-bold tracking-tight text-slate-900">Team Coordination & Action Tracking</h1>
+            </div>
+            <p class="text-slate-500 text-xs uppercase tracking-widest font-semibold">DQME Application Ecosystem • Availability & Execution Planner</p>
+        </div>
+        <div class="text-right">
+            <p class="text-[10px] text-slate-400 font-mono">CYCLE: {{ data?.generalInfo?.month | uppercase }}-{{ data?.generalInfo?.year }}-PLAN</p>
+            <h2 class="text-lg font-bold text-indigo-700">Team Resource Management</h2>
+        </div>
+    </header>
+
+    <!-- MAIN GRID -->
+    <div class="grid grid-cols-12 gap-3 overflow-hidden animate-in" style="animation-delay: 0.2s;">
+        
+        <!-- LEFT: LEAVE & ACTIONS -->
+        <div class="col-span-8 flex flex-col gap-3 overflow-hidden">
+            
+            <!-- LEAVE PLANNER -->
+            <div class="glass flex flex-col flex-1 overflow-hidden">
+                <div class="p-2 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-600">Team Leave Planner</h3>
+                    <div class="text-[9px] font-bold text-indigo-600">Upcoming Schedule</div>
+                </div>
+                <div class="flex-grow overflow-auto custom-scrollbar">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead class="bg-slate-50 text-[10px] uppercase text-slate-400 font-bold sticky top-0">
+                            <tr>
+                                <th class="p-2 border-b border-slate-100">Date</th>
+                                <th class="p-2 border-b border-slate-100">Event</th>
+                                <th class="p-2 border-b border-slate-100">Team Member</th>
+                                <th class="p-2 border-b border-slate-100 text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <ng-container *ngIf="data?.leavePlan && data!.leavePlan.length > 0; else noLeaves">
+                                <tr *ngFor="let leave of data?.leavePlan" class="hover:bg-slate-50 transition-colors">
+                                    <td class="p-2 font-mono font-bold text-indigo-600 whitespace-nowrap text-[10px]">{{ leave.date }}</td>
+                                    <td class="p-2 text-slate-700">{{ leave.event }}</td>
+                                    <td class="p-2 font-semibold text-slate-900">{{ leave.member }}</td>
+                                    <td class="p-2 text-right">
+                                        <span class="status-badge status-upcoming text-[9px]">Scheduled</span>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <ng-template #noLeaves>
+                                <tr class="opacity-30 italic">
+                                    <td class="p-2 font-mono">TBD</td>
+                                    <td class="p-2 text-slate-400">---</td>
+                                    <td class="p-2 text-slate-400">---</td>
+                                    <td class="p-2 text-right">---</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-2 bg-amber-50 border-t border-amber-100">
+                    <p class="text-[10px] text-amber-800 font-medium">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Note: Resource allocation regarding scheduled leave.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ACTION ITEMS -->
+            <div class="glass flex flex-col flex-1 overflow-hidden">
+                <div class="p-2 border-b border-slate-100 bg-slate-50/50">
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-600">Action Item Registry</h3>
+                </div>
+                <div class="flex-grow overflow-auto custom-scrollbar">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead class="bg-slate-50 text-[10px] uppercase text-slate-400 font-bold sticky top-0">
+                            <tr>
+                                <th class="p-2 border-b border-slate-100">Action Item</th>
+                                <th class="p-2 border-b border-slate-100">Duration</th>
+                                <th class="p-2 border-b border-slate-100">Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <ng-container *ngIf="data?.teamActions && data!.teamActions.length > 0; else noActions">
+                                <tr *ngFor="let action of data?.teamActions" class="hover:bg-slate-50 transition-colors">
+                                    <td class="p-2 font-medium text-slate-800">{{ action.actionItem }}</td>
+                                    <td class="p-2 text-slate-600 whitespace-nowrap">{{ action.duration }}</td>
+                                    <td class="p-2 text-slate-500 italic text-xs">{{ action.comments }}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-template #noActions>
+                                <tr>
+                                    <td colspan="3" class="p-6 text-center text-slate-400 italic">
+                                        <div class="mb-2"><i class="fa-solid fa-clipboard-check text-2xl opacity-20"></i></div>
+                                        <div class="text-xs">No active action items registered for current sprint.</div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: OTHER CONTENT (KPIs + Capacity) -->
+        <div class="col-span-4 flex flex-col gap-3">
+            
+            <!-- KPIs -->
+            <div class="grid grid-cols-1 gap-3">
+                <div class="glass p-2 flex items-center gap-2">
+                    <div class="h-8 w-8 rounded-md bg-indigo-50 flex items-center justify-center text-indigo-600 text-base">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-bold text-slate-900">{{ uniqueTeamMembersCount | number:'2.0-0' }}</div>
+                        <div class="text-[8px] uppercase text-slate-500 font-bold tracking-tighter">Core Team Members</div>
+                    </div>
+                </div>
+                <div class="glass p-2 flex items-center gap-2 border-l-4 border-amber-500">
+                    <div class="h-8 w-8 rounded-md bg-amber-50 flex items-center justify-center text-amber-600 text-base">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-bold text-slate-900">{{ upcomingLeaveCount | number:'2.0-0' }}</div>
+                        <div class="text-[8px] uppercase text-slate-500 font-bold tracking-tighter">Upcoming Leave Events</div>
+                    </div>
+                </div>
+                <div class="glass p-2 flex items-center gap-2">
+                    <div class="h-8 w-8 rounded-md bg-emerald-50 flex items-center justify-center text-emerald-600 text-base">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-bold text-slate-900">{{ openActionItemsCount | number:'2.0-0' }}</div>
+                        <div class="text-[8px] uppercase text-slate-500 font-bold tracking-tighter">Open Action Items</div>
+                    </div>
+                </div>
+                <div class="glass p-2 flex items-center gap-2">
+                    <div class="h-8 w-8 rounded-md bg-sky-50 flex items-center justify-center text-sky-600 text-base">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-bold text-slate-900">100%</div>
+                        <div class="text-[8px] uppercase text-slate-500 font-bold tracking-tighter">Team Availability</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAPACITY VISUALIZATION -->
+            <div class="glass p-3 flex-grow flex flex-col justify-center">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Availability Dist.</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-[9px] font-bold text-slate-500 uppercase">
+                        <span>Risk Percentage</span>
+                        <span class="text-indigo-600">{{ riskPercentage | percent:'1.0-0' }}</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-indigo-500 h-full" [style.width.%]="riskPercentage * 100"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 text-center">
+                            <div class="text-[9px] text-slate-400 font-bold uppercase mb-1">Total FTE</div>
+                            <div class="text-lg font-bold text-slate-900">{{ totalFte | number:'1.1-1' }}</div>
+                        </div>
+                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 text-center">
+                            <div class="text-[9px] text-slate-400 font-bold uppercase mb-1">Risk Days</div>
+                            <div class="text-lg font-bold text-amber-600">{{ riskDays | number:'1.1-1' }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+        <div>DQME Resource Planning • Managed Document</div>
+        <div>Ref Date: {{ currentDate }}</div>
+    </footer>
+</div>

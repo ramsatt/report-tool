@@ -1,0 +1,71 @@
+<div class="slide-container" *ngIf="generalInfo">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div>
+            <div class="sidebar-header">
+                <div class="sidebar-accent"></div>
+                <div class="title-group">
+                    <h1>{{ generalInfo!.projectName.split(' ')[0] || 'DQME' }}</h1>
+                    <h1>{{ generalInfo!.projectName.split(' ')[1] || 'CORE' }}</h1>
+                    <p class="subtitle">PLATFORM</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="date-group">
+                <p class="cycle-label">Cycle Period</p>
+                <h2>{{ generalInfo.month }} {{ generalInfo.year }}</h2>
+                <p class="release-label">Q1-{{ generalInfo.year }} Release Stream</p>
+            </div>
+
+            <div class="confidential-group">
+                <div class="lock-icon">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-width="2"/></svg>
+                </div>
+                <div>
+                    <p class="client-name">Caterpillar</p>
+                    <p class="confidential-tag">Confidential Green</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-display">
+        <header class="main-header">
+            <div>
+                <span class="section-label">{{ generalInfo.month }} Review </span>
+                <h2 class="main-title">Application Highlights</h2>
+            </div>
+
+        </header>
+
+        <!-- Cards Container -->
+        <div class="cards-container">
+            <div class="content-card" *ngFor="let item of highlights">
+                <div class="icon-square" [innerHTML]="item.icon"></div>
+                <div>
+                    <h3 class="highlight-title">{{ item.title }}</h3>
+                    <p class="highlight-desc">{{ item.desc }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="slide-footer">
+            <div class="footer-left">
+                <span class="brand-text">COGNIZANT</span>
+                <div class="footer-dot"></div>
+                <span class="system-text">Reporting System</span>
+            </div>
+            <div class="footer-right">
+                <div class="version-info">
+                    <p class="version-label">Engine</p>
+                    <p class="version-val">v2.4.0</p>
+                </div>
+                <div class="page-number">4</div>
+            </div>
+        </footer>
+    </main>
+</div>

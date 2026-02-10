@@ -1,0 +1,46 @@
+<div class="slide-frame" *ngIf="generalInfo">
+  <div class="grid-overlay"></div>
+
+  <!-- Abstract Visual Elements -->
+  <div class="geometric-overlay">
+      <div class="pulse-core"></div>
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+  </div>
+
+  <!-- Logos -->
+  <div class="brand-logos">
+      <div class="logo-placeholder">COGNIZANT</div>
+      <div class="logo-divider"></div>
+      <div class="logo-placeholder logo-cat">CAT</div>
+  </div>
+
+  <main>
+      <div class="tag-row">
+          <div class="accent-line"></div>
+          <div class="tag">Executive Project Insight</div>
+      </div>
+      
+      <h1>CAT Technology</h1>
+      <div class="main-title">{{ 'DQME – Core/App' }}</div>
+
+      <div class="meta-container">
+          <div class="date-chip">
+              <span class="date-val">{{ generalInfo.month | uppercase }} {{ generalInfo.year }}</span>
+          </div>
+          <div class="gen-info">
+              <span class="gen-label">Report Generation</span>
+              <span class="gen-date">{{ generatedDate }}</span>
+          </div>
+      </div>
+  </main>
+
+  <footer>
+      <div class="copyright">&copy; {{ generalInfo.year }} COGNIZANT TECHNOLOGY SOLUTIONS. INTERNAL USE ONLY.</div>
+      <div class="confidential">
+          <div class="status-dot"></div>
+          CATERPILLAR: <span>CONFIDENTIAL GREEN</span>
+      </div>
+  </footer>
+</div>

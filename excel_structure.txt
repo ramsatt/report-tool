@@ -1,0 +1,58 @@
+Workbook Sheets: General Info, Delivery Metrics, Velocity Strategy, Defect Analysis, Backlog Items, Defect Metrics, Forward Looking Roadmap, Feedback, Leave Plan, Team Actions
+
+
+--- Sheet: General Info ---
+Headers (Row 1): ["Section","Value"]
+Row 2: ["Month","JAN"]
+Row 3: ["Year",2026]
+Row 4: ["Project Name","DQME App"]
+
+--- Sheet: Delivery Metrics ---
+Headers (Row 1): ["Stream","Sprint","Month","Committed","Delivered","Delivery %","Features Delivered","Deployed Date","Deployment Status","Bugs","Comments"]
+Row 2: ["Core Platform","Sprint 01",46023,1,0,0,"","","",0,""]
+Row 3: ["Core Platform","Sprint 02",46023,1,0,0,"","","",0,""]
+Row 4: ["App Platform","Sprint 01",46023,13,13,100,"Fleet list - User not able to see Entitled tab after role change to DB Admin Plus,\n DQME Portal - INT - Data Report Shows Incorrect Output After Modifying Template Fields,\n DQME Portal - UAT - Application keeps loading when user try to access portal for the first time,\n App Section - Home Screen - Migrate to Blocks4,",46053,"Success",0,"Completed"]
+
+--- Sheet: Velocity Strategy ---
+Headers (Row 1): ["Month","Sprint","Committed","Delivered","Delivery %","Comment​"]
+Row 2: [45870,"Sprint 15​",29,29,100,"Completed & Delivered all the items​"]
+Row 3: [45870,"Sprint 16​",14,14,100,"Completed & Delivered all the items​"]
+Row 4: [45901,"Sprint 17​",17,6,35.3,"Spilled over 11 pts to next sprint due to team transition​"]
+
+--- Sheet: Defect Analysis ---
+Headers (Row 1): ["Work Item Type","Title","Priority","Created Date","Resolved Date","Assigned To","Iteration Path","State","Tags","Defect Type","ID","Resolved Reason","Defect Root Cause"]
+Row 2: ["Bug","Fleet list - User not able to see Entitled tab after role change to DB Admin Plus",3,45937.85972222222,"1/22/2026 9:52","Sathish Kumar Ramalingam <sathishkumar.ramalingam@cat.com>","Cat Digital\\2026\\Sprint 01 (Jan 07 - Jan 20)","Resolved","App; Referred","",2121675,"Fixed","Data Error (incorrect data or lack of correct data or insufficient data)"]
+Row 3: ["Bug","DQME portal allowing Tableau URL from other sites to be captured and rendered",3,45968.09375,"12/24/2025 15:47","Varsha Julakanti <varsha.julakanti@cat.com>","Cat Digital\\2025\\Sprint 23 (Nov 12 - Nov 25)","Resolved","App","",2122267,"Fixed","Configuration Error (environment set up, etc.)"]
+Row 4: ["Bug","Custom field short name already exists validates the deleted custom field names",4,45877.66388888889,"12/31/2025 11:27","Sathish Kumar Ramalingam <sathishkumar.ramalingam@cat.com>","Cat Digital\\2025\\Sprint 26 (Dec 24 - Jan 06)","Closed","App; BST; BST_Functional_DQME","",2173408,"Fixed","Coding Error"]
+
+--- Sheet: Backlog Items ---
+Headers (Row 1): ["ID","Work Item Type","Title","Priority","Created Date","Assigned To","State","Tags","Iteration Path"]
+Row 2: [2336112,"Bug","DQME Portal - Filtered Data Report Creation Fails - Reports Stuck in Submitted or Error State",4,"11/17/2025 9:34","","New","App; Execution; Int; Testing","Cat Digital\\2025"]
+Row 3: [2468008,"Bug","DQME Portal - INT - Unknown issues encountered during Template creation",4,"1/28/2026 14:19","Ludwig Rubio Jaime <rubio_jaime_ludwig@cat.com>","New","App; Core; Int; Regression; Testing","Cat Digital\\2026\\Sprint 03 (Feb 04 - Feb 17)"]
+Row 4: [2471279,"Bug","DQME Portal - INT - Email notification not sent when Fleet List is modified",4,"1/29/2026 12:57","Manikandan Kasi <manikandan.kasi@cat.com>","In Progress","App; Execution; Int; Regression; Testing","Cat Digital\\2026\\Sprint 03 (Feb 04 - Feb 17)"]
+
+--- Sheet: Defect Metrics ---
+Headers (Row 1): ["Work Item Type","Title","Priority","Created Date","Resolved Date","Assigned To","Iteration Path","State","Tags","Defect Type","ID","Resolved Reason","Defect Root Cause"]
+Row 2: ["Bug","Fleet list - User not able to see Entitled tab after role change to DB Admin Plus",3,45937.85972222222,"1/22/2026 9:52","Sathish Kumar Ramalingam <sathishkumar.ramalingam@cat.com>","Cat Digital\\2026\\Sprint 01 (Jan 07 - Jan 20)","Resolved","App; Referred","",2121675,"Fixed","Data Error (incorrect data or lack of correct data or insufficient data)"]
+Row 3: ["Bug","DQME portal allowing Tableau URL from other sites to be captured and rendered",3,45968.09375,"12/24/2025 15:47","Varsha Julakanti <varsha.julakanti@cat.com>","Cat Digital\\2025\\Sprint 23 (Nov 12 - Nov 25)","Resolved","App","",2122267,"Fixed","Configuration Error (environment set up, etc.)"]
+Row 4: ["Bug","Custom field short name already exists validates the deleted custom field names",4,45877.66388888889,"12/31/2025 11:27","Sathish Kumar Ramalingam <sathishkumar.ramalingam@cat.com>","Cat Digital\\2025\\Sprint 26 (Dec 24 - Jan 06)","Closed","App; BST; BST_Functional_DQME","",2173408,"Fixed","Coding Error"]
+
+--- Sheet: Forward Looking Roadmap ---
+Headers (Row 1): ["S. No","Work Item","Work Item Details","Type","Priority","Discussion Status"]
+Row 2: [1,"Server Side Pagenation","To ensure optimal performance and prevent potential API timeout issues in the future, server‑side pagination should be implemented for the Feet List, Template, Digital Factory, and Charts modules. The current API response time is high, and as the volume of data grows, the absence of pagination may lead to significant delays and scalability challenges. Implementing server-side pagination will help improve load times, reduce server strain, and enhance overall system reliability.","Performance Improvement","High","Done"]
+Row 3: [2,"Spring Boot Version Upgrade","Security: Newer Spring Boot versions include critical security patches—for Spring, Tomcat, Netty, Jackson, Hibernate, etc. Staying on 2.5.8 exposes you to known CVEs.\n Compatibility: Modern libraries (AWS SDK, JDBC drivers, Swagger/OpenAPI, JDK versions) no longer support older Spring Boot 2.5.x.\n Performance & Stability: Spring Boot 2.7.x and 3.x provide faster startup, better memory usage, improved Actuator, and optimized logging & validation.\n Long-term Support: Spring Boot 2.5.x is end-of-life, meaning no updates, no bug fixes, no security fixes.\n Future-proofing: Boot 3.x moves to Jakarta EE + Java 17, aligning with the current Spring ecosystem and ensuring your app can use modern features.","Security & Performance","High","TBD"]
+Row 4: [3,"Error Handling","Backend send success error code for server fails case in some places. We need to implement global @ControllerAdvice to handle exceptions and clear HTTP status codes","Optimization","Low","TBD"]
+
+--- Sheet: Feedback ---
+Headers (Row 1): ["Action Date","Action Item","Owner","Status","Comments"]
+Row 2: ["11-19-2024​","End to end demo of sample automation test script ​(using any module)​","Manikandan​","Ongoing​","Part of the migration activity parallelly implementing e2e automation testing using mock data based on bandwidth​"]
+Row 3: ["01-17-2025​","Regression Test Case Execution for critical modules (Every Sprint)​","Parkavi​","Ongoing​","After discussion with Ludwig and Mahesh, Agreed to execute regression cases in every sprint based on the sprint work items.​"]
+Row 4: ["14-04-2025​","UAT Env Readiness to make Near PROD Data availability for UAT testing​","Ludwig​","Completed​","Templates and Data Reports UAT Testing completed in INT. Fleet List UAT testing InProgress.​"]
+
+--- Sheet: Leave Plan ---
+Headers (Row 1): ["Date","Event","Team Member"]
+Row 2: ["02 Mar 2026 - 13 Mar 2026","Leave Plan","Varsha Jalakandi"]
+
+--- Sheet: Team Actions ---
+Headers (Row 1): ["Action Item","Duration","Comments"]
+Row 2: ["NA","",""]

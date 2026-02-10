@@ -1,0 +1,151 @@
+<div class="slide-frame">
+    <!-- HEADER -->
+    <header class="flex justify-between items-end border-b border-slate-200 pb-2 animate-in">
+        <div>
+            <div class="flex items-center gap-3 mb-1">
+                <div class="bg-sky-600 h-8 w-1 rounded"></div>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Technical Optimization Roadmap</h1>
+            </div>
+            <p class="text-slate-500 text-sm uppercase tracking-widest font-semibold">DQME Application Ecosystem • Security & Performance Strategy</p>
+        </div>
+        <div class="text-right">
+            <p class="text-xs text-slate-400 font-mono">VERSION: 2.0-STRAT-PLAN</p>
+            <h2 class="text-xl font-bold text-sky-700">Engineering Quality Backlog</h2>
+        </div>
+    </header>
+
+    <!-- KPI STRIP -->
+    <div class="grid grid-cols-4 gap-3 animate-in" style="animation-delay: 0.1s;">
+        <div class="glass p-3 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 text-lg">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div>
+                <div class="text-xl font-bold text-slate-900">{{ kpiStats.strategicTasks | number:'2.0-0' }}</div>
+                <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Strategic Tasks</div>
+            </div>
+        </div>
+        <div class="glass p-3 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600 text-lg">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <div class="text-xl font-bold text-slate-900">{{ kpiStats.securityCritical | number:'2.0-0' }}</div>
+                <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Security Critical</div>
+            </div>
+        </div>
+        <div class="glass p-3 flex items-center gap-3 border-l-4 border-emerald-500">
+            <div class="h-10 w-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 text-lg">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div>
+                <div class="text-xl font-bold text-slate-900">{{ kpiStats.completionRate }}%</div>
+                <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Completion Rate</div>
+            </div>
+        </div>
+        <div class="glass p-3 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 text-lg">
+                <i class="fa-solid fa-gauge-high"></i>
+            </div>
+            <div>
+                <div class="text-xl font-bold text-slate-900">{{ kpiStats.performanceWins | number:'2.0-0' }}</div>
+                <div class="text-[10px] uppercase text-slate-500 font-bold tracking-tighter">Performance Wins</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN GRID CONTAINER -->
+    <div class="grid grid-rows-[1fr_auto] gap-4 overflow-hidden animate-in h-full" style="animation-delay: 0.2s;">
+        
+        <!-- TOP ROW: Roadmap + Chart -->
+        <div class="grid grid-cols-12 gap-4 h-full overflow-hidden">
+            <!-- LEFT: ROADMAP MATRIX (Takes more space now) -->
+            <div class="col-span-9 glass flex flex-col overflow-hidden bg-white/60 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl">
+                <div class="px-4 py-2 border-b border-slate-100/60 flex justify-between items-center bg-white/40 shrink-0">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-[#003f5c]">Strategic Work Items</h3>
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-1.5 w-1.5 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-sky-500"></span>
+                        </span>
+                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Live Tracking</span>
+                    </div>
+                </div>
+                
+                <div class="overflow-y-auto custom-scrollbar flex-grow p-3 grid grid-cols-2 gap-3 content-start">
+                    <div *ngFor="let item of roadmapItems" class="group relative bg-white rounded-lg p-2.5 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+                        <!-- Left Accent -->
+                        <div class="absolute inset-y-0 left-0 w-1 rounded-l-lg" [style.background-color]="item.accentColor"></div>
+                        
+                        <div class="pl-3">
+                            <div class="flex justify-between items-start mb-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-mono font-bold text-slate-400">#{{ item.sno }}</span>
+                                    <h4 class="text-xs font-bold text-slate-800 group-hover:text-current transition-colors line-clamp-1" [style.color]="'var(--slate-800)'" [title]="item.workItem">{{ item.workItem }}</h4>
+                                </div>
+                                <span class="px-1.5 py-px rounded-full text-[9px] font-bold bg-slate-100 border border-slate-200 shrink-0" [ngClass]="item.statusClass">{{ item.status || 'TBD' }}</span>
+                            </div>
+                            
+                            <p class="text-[10px] text-slate-500 leading-snug mb-1.5 line-clamp-2" [title]="item.details">{{ item.details }}</p>
+                            
+                            <div class="flex gap-2">
+                                <span class="px-1.5 py-px rounded text-[9px] font-bold uppercase tracking-wider" 
+                                    [style.background-color]="item.accentColor + '1a'" 
+                                    [style.color]="item.accentColor">
+                                    {{ item.type }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="roadmapItems.length === 0" class="col-span-2 text-center p-5 text-slate-400">
+                        No roadmap items found.
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: CHART (Aligned to top right) -->
+            <div class="col-span-3 glass flex flex-col items-center justify-center p-4 bg-white/60 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl h-full">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 text-center">Backlog Distribution</h3>
+                <div class="w-full flex-grow relative">
+                    <div echarts [options]="chartOption" class="w-full h-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM ROW: STRATEGIC INSIGHTS (Full Width) -->
+        <div class="glass p-4 bg-white/60 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl overflow-hidden shrink-0">
+            <div class="flex gap-8 items-start">
+                <div class="shrink-0 w-48">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Implementation Guidance</h3>
+                     <div class="mt-2 pt-2 border-t border-slate-100">
+                        <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase mb-1">
+                            <span>Readiness</span>
+                            <span class="text-sky-600">45%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-sky-600 h-full" style="width: 45%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex-grow grid grid-cols-2 gap-6">
+                    <div class="flex gap-3">
+                        <div class="mt-1 h-2 w-2 rounded-full bg-[#ff6361] shrink-0"></div>
+                        <p class="text-[11px] text-slate-600"><strong class="text-slate-900 block mb-0.5">Security Priority</strong> Spring Boot upgrade is non-negotiable for EOL compliance and Jakarta EE migration.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="mt-1 h-2 w-2 rounded-full bg-[#003f5c] shrink-0"></div>
+                        <p class="text-[11px] text-slate-600"><strong class="text-slate-900 block mb-0.5">Scalability Focus</strong> Pagination is the critical path for handling upcoming data growth in Factory & Chart modules.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+        <div>DQME Tech Strategy • Confidential Internal Document</div>
+        <div>Ref Date: {{ data?.generalInfo?.month | uppercase }} {{ data?.generalInfo?.year }}</div>
+    </footer>
+</div>

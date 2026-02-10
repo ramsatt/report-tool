@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Migration Status - Minimalist Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-navy: #0b1a2d;
+            --brand-cyan: #00d9ff;
+            --success: #10b981;
+            --bg-slate: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #e2e8f0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--brand-navy);
+        }
+
+        .slide-container {
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16 / 9;
+            background-color: white;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Sidebar Accents */
+        .sidebar-rail {
+            width: 80px;
+            background-color: var(--brand-navy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2.5rem 0;
+            justify-content: space-between;
+        }
+
+        .main-stage {
+            flex-grow: 1;
+            background-color: var(--bg-slate);
+            padding: 3.5rem 4.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Card Layout */
+        .status-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Module List Styling */
+        .module-item {
+            display: grid;
+            grid-template-columns: 2fr 1.2fr 0.8fr 1fr 1.5fr;
+            padding: 1rem 1.5rem;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+        }
+
+        .module-item:hover {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            transform: translateX(4px);
+        }
+
+        .module-item:last-child {
+            border-bottom: none;
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-completed { background: #ecfdf5; color: #059669; }
+        .badge-pending { background: #fffbeb; color: #d97706; }
+
+        .reveal-anim {
+            animation: slideFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes slideFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        .stat-header {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            padding-left: 1rem;
+            border-left: 3px solid #e2e8f0;
+        }
+
+        .stat-box.active {
+            border-left-color: var(--brand-cyan);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        <!-- BRANDING RAIL -->
+        <aside class="sidebar-rail">
+            <div class="flex flex-col items-center gap-8">
+                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-navy shadow-lg">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="h-px w-8 bg-white/10"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+            </div>
+            
+            <div class="text-white/20 font-bold text-xs rotate-180 mb-12" style="writing-mode: vertical-rl;">
+                V2.4.0 SYSTEM ENGINE
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-stage">
+            
+            <!-- HEADER -->
+            <header class="flex justify-between items-start mb-10 reveal-anim">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-2 py-0.5 bg-brand-navy text-white text-[10px] font-bold rounded uppercase tracking-widest">BLOCK 3</span>
+                        <p class="text-[0.7rem] font-bold text-gray-400 uppercase tracking-[0.3em]">Operational Registry</p>
+                    </div>
+                    <h1 class="text-4xl font-extrabold text-brand-navy tracking-tight">App Migration Status</h1>
+                </div>
+                
+                <div class="flex gap-10">
+                    <div class="text-right">
+                        <p class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest mb-1">Status Date</p>
+                        <p class="text-lg font-bold">FEB 10, 2026</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white rounded-2xl border border-slate-200 flex items-center justify-center font-bold text-brand-navy">5</div>
+                </div>
+            </header>
+
+            <!-- DASHBOARD STATS -->
+            <div class="stat-header reveal-anim" style="animation-delay: 0.1s;">
+                <div class="stat-box active">
+                    <p class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Completion</p>
+                    <p class="text-2xl font-extrabold">92.4%</p>
+                </div>
+                <div class="stat-box">
+                    <p class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest mb-1">Release Stream</p>
+                    <p class="text-2xl font-extrabold text-brand-cyan">JANUARY</p>
+                </div>
+                <div class="stat-box">
+                    <p class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest mb-1">Cluster Env</p>
+                    <p class="text-2xl font-extrabold">PRODUCTION</p>
+                </div>
+                <div class="stat-box">
+                    <p class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest mb-1">Classification</p>
+                    <p class="text-2xl font-extrabold text-emerald-500">SECURE</p>
+                </div>
+            </div>
+
+            <!-- MODULE LIST CARD -->
+            <div class="status-card reveal-anim" style="animation-delay: 0.2s;">
+                <!-- Header Labels -->
+                <div class="grid grid-cols-5 px-6 mb-4 text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest">
+                    <div class="col-span-1">Module Entity</div>
+                    <div>Lifecycle Window</div>
+                    <div>Progress</div>
+                    <div>Health</div>
+                    <div class="text-right">Deployment Notes</div>
+                </div>
+
+                <!-- Scrollable Items -->
+                <div class="flex-grow overflow-y-auto custom-scroll pr-2">
+                    <div class="module-item">
+                        <div class="font-bold text-brand-navy">Home Dashboard</div>
+                        <div class="text-xs text-gray-500 font-medium">19 Mar — 01 Apr</div>
+                        <div class="font-bold text-emerald-500 text-sm">100%</div>
+                        <div><span class="badge badge-completed">Completed</span></div>
+                        <div class="text-right text-[0.7rem] text-gray-400 italic">Demo Verified: DEV</div>
+                    </div>
+                    <div class="module-item">
+                        <div class="font-bold text-brand-navy">User Specific Screen</div>
+                        <div class="text-xs text-gray-500 font-medium">19 Mar — 13 May</div>
+                        <div class="font-bold text-emerald-500 text-sm">100%</div>
+                        <div><span class="badge badge-completed">Completed</span></div>
+                        <div class="text-right text-[0.7rem] text-gray-400 italic">Demo Verified: DEV</div>
+                    </div>
+                    <div class="module-item">
+                        <div class="font-bold text-brand-navy">Custom Field Logic</div>
+                        <div class="text-xs text-gray-500 font-medium">30 Apr — 27 May</div>
+                        <div class="font-bold text-emerald-500 text-sm">100%</div>
+                        <div><span class="badge badge-completed">Completed</span></div>
+                        <div class="text-right text-[0.7rem] text-gray-400 italic">Demo Verified: DEV</div>
+                    </div>
+                    <div class="module-item">
+                        <div class="font-bold text-brand-navy">Fleet List System</div>
+                        <div class="text-xs text-gray-500 font-medium">13 Oct — 28 Oct</div>
+                        <div class="font-bold text-emerald-500 text-sm">100%</div>
+                        <div><span class="badge badge-completed">Completed</span></div>
+                        <div class="text-right text-[0.7rem] text-gray-400 italic">Demo Verified: INT</div>
+                    </div>
+                    <div class="module-item">
+                        <div class="font-bold text-brand-navy">Digital Factory Core</div>
+                        <div class="text-xs text-gray-500 font-medium">19 Aug — 16 Sep</div>
+                        <div class="font-bold text-emerald-500 text-sm">100%</div>
+                        <div><span class="badge badge-completed">Completed</span></div>
+                        <div class="text-right text-[0.7rem] text-gray-400 italic">Demo Verified: INT</div>
+                    </div>
+                    <div class="module-item">
+                        <div class="font-bold text-brand-navy">Report Group Logic</div>
+                        <div class="text-xs text-gray-500 font-medium">12 Nov — 25 Nov</div>
+                        <div class="font-bold text-amber-500 text-sm">100%</div>
+                        <div><span class="badge badge-pending">Demo Pending</span></div>
+                        <div class="text-right text-[0.7rem] text-gray-400 italic">Final Validation Phase</div>
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="mt-6 pt-6 border-t border-slate-100 flex justify-between items-center">
+                    <div class="flex items-center gap-6">
+                        <span class="text-xs font-black tracking-tighter text-brand-navy">COGNIZANT</span>
+                        <div class="h-4 w-px bg-slate-200"></div>
+                        <span class="text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest">Enterprise Reporting System</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">Confidential Green</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

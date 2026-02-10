@@ -1626,61 +1626,45 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
 
       // Slide 12: Thank You
       slides.push(`
-        <div class="slide" style="width: 1000px; height: 562.5px; position: relative; background-color: white; overflow: hidden; page-break-after: always; flex-shrink: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <div class="slide" style="width: 1000px; height: 562.5px; position: relative; background-color: #ffffff; overflow: hidden; page-break-after: always; flex-shrink: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
             
-            <!-- Logo Top Right -->
-            <div style="position: absolute; top: 40px; right: 50px;">
-                <h2 style="color: #000048; font-size: 28px; font-weight: 800; margin: 0; letter-spacing: -0.5px;">Cognizant</h2>
-            </div>
-            
-            <!-- Center Content -->
-            <div style="position: absolute; top: 45%; left: 80px; transform: translateY(-50%);">
-                <h1 style="color: #000048; font-size: 56px; font-weight: 600; margin: 0; line-height: 1.2;">Thank you</h1>
-                <div style="width: 120px; height: 4px; background-color: #26C6DA; margin-top: 15px;"></div>
-            </div>
-            
-            <!-- Abstract Graphic Bottom Right -->
-             <div style="
-                position: absolute; 
-                bottom: -150px; 
-                right: -100px; 
-                width: 700px; 
-                height: 400px; 
-                background: linear-gradient(135deg, #000048 0%, #0033A0 40%, #2979ff 70%, #26C6DA 100%); 
-                transform: rotate(-15deg);
-                opacity: 0.9;
-                border-top-left-radius: 200px;
-                z-index: 1;">
-            </div>
-            <!-- Decorative accent lines in the swoosh -->
-             <div style="
-                position: absolute; 
-                bottom: -120px; 
-                right: -80px; 
-                width: 700px; 
-                height: 400px; 
-                border-top: 2px solid rgba(255,255,255,0.2);
-                transform: rotate(-15deg);
-                border-radius: 200px;
-                pointer-events: none;
-                z-index: 2;">
-            </div>
-             <div style="
-                position: absolute; 
-                bottom: -100px; 
-                right: -60px; 
-                width: 700px; 
-                height: 400px; 
-                border-top: 1px solid rgba(255,255,255,0.1);
-                transform: rotate(-15deg);
-                border-radius: 200px;
-                pointer-events: none;
-                z-index: 2;">
+           <!-- Accents -->
+            <div style="position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(79, 70, 229, 0.05) 0%, rgba(255, 255, 255, 0) 70%); border-radius: 50%;"></div>
+            <div style="position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(79, 70, 229, 0.03) 0%, rgba(255, 255, 255, 0) 70%); border-radius: 50%;"></div>
+
+            <!-- Content Center -->
+            <div style="position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%;">
+                <h1 style="font-size: 110px; font-weight: 800; margin: 0; line-height: 1; letter-spacing: -0.05em; background: linear-gradient(135deg, #1e293b 0%, #4f46e5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #1e293b;">Thank You.</h1>
+                <p style="font-size: 24px; font-weight: 400; color: #64748b; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 20px;">Any Questions?</p>
             </div>
 
-             <!-- Footer Minimal -->
-            <div style="position: absolute; bottom: 20px; left: 50px; z-index: 3;">
-                <p style="color: #666; font-size: 11px; margin: 0;">Caterpillar: Confidential Green</p>
+            <!-- Contact Grid -->
+            <div style="position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); display: flex; gap: 40px; width: 800px; justify-content: center;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 25px 40px; border-radius: 16px; text-align: center; flex: 1; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <div style="font-size: 13px; color: #4f46e5; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">DQME APP</div>
+                    <div style="font-weight: 700; font-size: 20px; color: #0f172a; margin-bottom: 4px;">Sathish Kumar Ramalingam</div>
+                    <div style="font-size: 13px; color: #64748b; font-weight: 500;">Senior Software Engineer</div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 25px 40px; border-radius: 16px; text-align: center; flex: 1; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <div style="font-size: 13px; color: #4f46e5; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">DQME CORE</div>
+                    <div style="font-weight: 700; font-size: 20px; color: #0f172a; margin-bottom: 4px;">Sajjan Rahar</div>
+                    <div style="font-size: 13px; color: #64748b; font-weight: 500;">Senior Software Engineer</div>
+                </div>
+            </div>
+
+            <!-- Branding Seal -->
+            <div style="position: absolute; bottom: 40px; right: 40px; display: flex; align-items: center; gap: 12px; opacity: 0.7;">
+                <i data-lucide="shield" style="width: 24px; height: 24px; color: #4f46e5;"></i>
+                <div style="text-align: left;">
+                    <p style="margin: 0; font-size: 11px; font-weight: 700; color: #0f172a; letter-spacing: 0.05em;">DQME APPLICATION ECOSYSTEM</p>
+                    <p style="margin: 0; font-size: 10px; opacity: 0.6; font-weight: 600; text-transform: uppercase;">Quality Assurance Strategy 2026</p>
+                </div>
+            </div>
+            
+             <!-- Decoration Top Left -->
+             <div style="position: absolute; top: 40px; left: 40px; display: flex; gap: 8px;">
+                <div style="width: 40px; height: 4px; background: #e2e8f0; border-radius: 2px;"></div>
+                <div style="width: 12px; height: 4px; background: #4f46e5; border-radius: 2px;"></div>
             </div>
         </div>
       `);
@@ -2261,9 +2245,65 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit {
             updateStatus('Creating Thank You slide...');
             const thankYouSlide = pptx.addSlide();
             thankYouSlide.background = { color: 'FFFFFF' };
-            thankYouSlide.addText('Thank you', { x: 0.8, y: 2.3, w: 8, h: 0.8, fontSize: 48, bold: true, color: '000048' });
-            thankYouSlide.addShape(pptx.ShapeType.rect, { x: 0.8, y: 3.2, w: 1.2, h: 0.05, fill: { color: '26C6DA' } });
-            thankYouSlide.addText('Cognizant', { x: 8.5, y: 0.4, w: 1.2, h: 0.4, fontSize: 24, bold: true, color: '000048' });
+            
+            // Accents
+            // Note: PptxGenJS shapes are limited, skipping complex background gradients for simplicity, keeping detailed content
+
+            // Title Main
+            thankYouSlide.addText('Thank You.', { 
+                x: 0, y: 1.5, w: 10, h: 1.5, 
+                fontSize: 80, bold: true, align: 'center', 
+                color: '1E293B' // Slate 900
+            });
+
+            // Subtitle
+            thankYouSlide.addText('ANY QUESTIONS?', { 
+                x: 0, y: 2.8, w: 10, h: 0.5, 
+                fontSize: 18, color: '64748B', align: 'center', charSpacing: 3 
+            });
+
+            // Contact Cards
+            // Box 1
+            thankYouSlide.addShape(pptx.ShapeType.roundRect, { 
+                x: 1.5, y: 3.5, w: 3.2, h: 1.5, 
+                fill: { color: 'F8FAFC' }, line: { color: 'E2E8F0', width: 1 }, rectRadius: 0.1 
+            });
+            thankYouSlide.addText('DQME APP', {
+                x: 1.5, y: 3.7, w: 3.2, h: 0.3, align: 'center', fontSize: 10, bold: true, color: '4F46E5'
+            });
+            thankYouSlide.addText('Sathish Kumar Ramalingam', {
+                x: 1.5, y: 4.0, w: 3.2, h: 0.4, align: 'center', fontSize: 14, bold: true, color: '0F172B'
+            });
+            thankYouSlide.addText('Senior Software Engineer', {
+                x: 1.5, y: 4.4, w: 3.2, h: 0.3, align: 'center', fontSize: 10, color: '64748B'
+            });
+
+            // Box 2
+            thankYouSlide.addShape(pptx.ShapeType.roundRect, { 
+                x: 5.3, y: 3.5, w: 3.2, h: 1.5, 
+                fill: { color: 'F8FAFC' }, line: { color: 'E2E8F0', width: 1 }, rectRadius: 0.1 
+            });
+            thankYouSlide.addText('DQME CORE', {
+                x: 5.3, y: 3.7, w: 3.2, h: 0.3, align: 'center', fontSize: 10, bold: true, color: '4F46E5'
+            });
+            thankYouSlide.addText('Sajjan Rahar', {
+                x: 5.3, y: 4.0, w: 3.2, h: 0.4, align: 'center', fontSize: 14, bold: true, color: '0F172B'
+            });
+            thankYouSlide.addText('Senior Software Engineer', {
+                x: 5.3, y: 4.4, w: 3.2, h: 0.3, align: 'center', fontSize: 10, color: '64748B'
+            });
+
+            // Branding Bottom Right
+            thankYouSlide.addText('DQME APPLICATION ECOSYSTEM', {
+                x: 6.0, y: 5.15, w: 3.8, h: 0.2, fontSize: 8, bold: true, color: '0F172B', align: 'right'
+            });
+            thankYouSlide.addText('Quality Assurance Strategy 2026', {
+                x: 6.0, y: 5.3, w: 3.8, h: 0.2, fontSize: 7, color: '64748B', align: 'right'
+            });
+
+            // Decoration Top Left
+            thankYouSlide.addShape(pptx.ShapeType.rect, { x: 0.4, y: 0.4, w: 0.4, h: 0.05, fill: { color: 'E2E8F0' } });
+            thankYouSlide.addShape(pptx.ShapeType.rect, { x: 0.85, y: 0.4, w: 0.12, h: 0.05, fill: { color: '4F46E5' } });
 
             updateStatus('Saving PPTX with content...');
             await pptx.writeFile({ fileName: `Monthly_Report_Content_${this.currentMonth}_${this.currentYear}.pptx` });

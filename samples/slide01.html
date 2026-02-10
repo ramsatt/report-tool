@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAT Technology - DQME Status Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --brand-primary: #38bdf8;
+            --brand-secondary: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(15, 23, 42, 0.4);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #000;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide-frame {
+            width: 1440px;
+            height: 810px;
+            background: var(--bg-deep);
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 30% 50%, #0f172a 0%, #020617 100%);
+            border: 1px solid var(--border);
+            position: relative;
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* TECH GRID BACKGROUND */
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at 80% 50%, black, transparent 80%);
+            pointer-events: none;
+        }
+
+        /* ABSTRACT GEOMETRIC BACKGROUND */
+        .geometric-overlay {
+            position: absolute;
+            right: -100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 900px;
+            height: 900px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .ring-1 { width: 350px; height: 350px; border-width: 2px; }
+        .ring-2 { width: 550px; height: 550px; border-style: dashed; opacity: 0.5; }
+        .ring-3 { width: 750px; height: 750px; border-width: 1px; opacity: 0.2; }
+
+        .pulse-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+            animation: core-glow 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes core-glow {
+            from { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* LOGO SECTION */
+        .brand-logos {
+            position: absolute;
+            top: 50px;
+            right: 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 10px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            z-index: 10;
+        }
+
+        .logo-placeholder {
+            height: 32px;
+            font-weight: 800;
+            color: #fff;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 20px;
+            background: var(--border);
+        }
+
+        .logo-cat { 
+            background: #FFCD11; 
+            color: #000; 
+            font-family: 'Arial Black', sans-serif;
+            padding: 4px 10px;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        /* CONTENT */
+        main {
+            flex-grow: 1;
+            padding-left: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        .tag-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .accent-line {
+            width: 40px;
+            height: 3px;
+            background: var(--brand-primary);
+            box-shadow: 0 0 15px var(--brand-primary);
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--brand-primary);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            margin-bottom: 10px;
+            color: var(--text-dim);
+            opacity: 0.8;
+        }
+
+        .main-title {
+            font-size: 110px;
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        /* METADATA */
+        .meta-container {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .date-chip {
+            background: var(--brand-secondary);
+            padding: 18px 30px;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .date-chip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .date-val {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+
+        .gen-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .gen-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-dim);
+            font-weight: 700;
+        }
+
+        .gen-date {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 30px 120px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-dim);
+            background: rgba(0,0,0,0.3);
+            z-index: 5;
+        }
+
+        .copyright {
+            letter-spacing: 0.05em;
+        }
+
+        .confidential {
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .confidential span {
+            color: #10b981;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="slide-frame">
+    <div class="grid-overlay"></div>
+
+    <!-- Abstract Visual Elements -->
+    <div class="geometric-overlay">
+        <div class="pulse-core"></div>
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+    </div>
+
+    <!-- Logos -->
+    <div class="brand-logos">
+        <div class="logo-placeholder">COGNIZANT</div>
+        <div class="logo-divider"></div>
+        <div class="logo-placeholder logo-cat">CAT</div>
+    </div>
+
+    <main>
+        <div class="tag-row">
+            <div class="accent-line"></div>
+            <div class="tag">Executive Project Insight</div>
+        </div>
+        
+        <h1>CAT Technology</h1>
+        <div class="main-title">DQME – Core/App</div>
+
+        <div class="meta-container">
+            <div class="date-chip">
+                <span class="date-val">JAN 2026</span>
+            </div>
+            <div class="gen-info">
+                <span class="gen-label">Report Generation</span>
+                <span class="gen-date">09 February 2026</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">© 2026 COGNIZANT TECHNOLOGY SOLUTIONS. INTERNAL USE ONLY.</div>
+        <div class="confidential">
+            <div class="status-dot"></div>
+            CATERPILLAR: <span>CONFIDENTIAL GREEN</span>
+        </div>
+    </footer>
+</div>
+
+<script>
+    // Parallax effect for the orbit rings
+    document.addEventListener('mousemove', (e) => {
+        const rings = document.querySelectorAll('.ring');
+        const grid = document.querySelector('.grid-overlay');
+        
+        const moveX = (window.innerWidth / 2 - e.pageX) / 80;
+        const moveY = (window.innerHeight / 2 - e.pageY) / 80;
+        
+        grid.style.transform = `translate(${moveX * 0.5}px, ${moveY * 0.5}px)`;
+        
+        rings.forEach((ring, index) => {
+            const factor = (index + 1) * 1.5;
+            ring.style.transform = `translate(calc(-50% + ${moveX * factor}px), calc(-50% + ${moveY * factor}px))`;
+        });
+    });
+</script>
+
+</body>
+</html>

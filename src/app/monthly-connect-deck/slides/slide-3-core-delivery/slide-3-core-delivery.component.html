@@ -1,0 +1,138 @@
+<div class="slide-container" *ngIf="generalInfo">
+    
+    <!-- SIDEBAR -->
+    <aside class="delivery-sidebar">
+        <div class="sidebar-bg-glow"></div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <div class="title-group">
+                    <div class="accent-bar"></div>
+                    <h1 class="sidebar-title">Delivery<br>Metrics</h1>
+                </div>
+                <p class="platform-label">CORE Platform</p>
+            </div>
+
+            <div class="cycle-info">
+                <p class="cycle-label">Cycle Period</p>
+                <p class="highlight-date">{{ generalInfo.month }} {{ generalInfo.year }}</p>
+                <p class="release-stream">Q1-{{ generalInfo.year }} Release Stream</p>
+            </div>
+
+            <div class="stats-card-wrapper">
+                <div class="progress-card">
+                    <p class="card-label">Overall Progress</p>
+                    <h1 class="big-percent">{{ summary.progress }}%</h1>
+                    
+                    <div class="card-divider"></div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <p class="stat-label">Capacity</p>
+                            <p class="stat-value text-white">{{ summary.totalCapacity }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Committed</p>
+                            <p class="stat-value text-white">{{ summary.totalCommitted }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Completed</p>
+                            <p class="stat-value text-cyan">{{ summary.totalDelivered }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Spilled</p>
+                            <p class="stat-value text-gray">{{ summary.totalSpilled }}</p>
+                        </div>
+                    </div>
+
+                    <div class="card-bottom-dash"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="confidential-area">
+            <div class="lock-box">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            </div>
+            <div class="confidential-text-group">
+                <span class="client-tag">Caterpillar</span>
+                <span class="status-tag">Confidential Green</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="delivery-content">
+        
+        <div class="cards-wrapper">
+            <div class="sprint-card" *ngFor="let metric of coreMetrics">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="sprint-icon" [innerHTML]="metric.iconHtml"></div>
+                        <div class="sprint-title">
+                            <h2>{{ metric.sprint }}</h2>
+                            <div class="sprint-meta">
+                                <span class="sprint-status-badge" [ngClass]="metric.statusClass">{{ metric.displayStatus }}</span>
+                                <span class="sprint-pct">{{ metric.deliveryPct | number:'1.0-0' }}%</span>
+                                <span class="sprint-date">{{ metric.sprintDuration }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-stats">
+                        <div class="stats-row">
+                            <div class="card-stat-item">
+                                <p>Capacity</p>
+                                <p class="val-slate-300">{{ metric.capacity }}</p>
+                            </div>
+                            <div class="card-stat-item">
+                                <p>Committed</p>
+                                <p class="val-slate-900">{{ metric.committed }}</p>
+                            </div>
+                            <div class="card-stat-item">
+                                <p>Completed</p>
+                                <p class="val-cyan-600">{{ metric.delivered }}</p>
+                            </div>
+                            <div class="card-stat-item spilled-col">
+                                <p>Spilled</p>
+                                <p class="val-slate-400">{{ metric.spilled }}</p>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-item" *ngFor="let feature of metric.featuresList">
+                        <div class="feature-bullet"></div>
+                        <p class="feature-text">{{ feature }}</p>
+                    </div>
+                    <div class="feature-item" *ngIf="metric.featuresList.length === 0">
+                        <div class="feature-bullet" style="background-color: #e2e8f0;"></div>
+                        <p class="feature-text" style="color: #94a3b8; font-style: italic;">No specific features listed for this sprint.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div *ngIf="coreMetrics.length === 0" class="no-data-msg" style="text-align: center; color: #94a3b8; margin-top: 3rem;">
+                No Core Platform delivery metrics found in data.
+            </div>
+        </div>
+
+        <footer class="slide-footer">
+            <div class="footer-brand">
+                <span class="brand-name">COGNIZANT</span>
+                <div class="brand-sep"></div>
+                <span class="system-name">Reporting System</span>
+            </div>
+            <div class="footer-meta">
+                <div class="engine-ver">
+                    <p class="ver-label">Engine Vers.</p>
+                    <p class="ver-val">v2.4.0</p>
+                </div>
+                <div class="page-num">3</div>
+            </div>
+        </footer>
+    </main>
+</div>

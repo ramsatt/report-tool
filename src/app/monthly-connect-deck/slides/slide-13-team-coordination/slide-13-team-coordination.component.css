@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+:root {
+    --bg-deep: #f8fafc;
+    --card-bg: #ffffff;
+    --accent-indigo: #4f46e5;
+    --accent-emerald: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-slate: #64748b;
+}
+
+/* Scoped to component, but relying on Tailwind heavily */
+.slide-frame {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    padding: 24px;
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #1e293b;
+    overflow: hidden;
+}
+
+.glass {
+    background: #ffffff; /* Fallback */
+    background: var(--card-bg, #ffffff);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+.status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+.status-upcoming { background: #e0f2fe; color: #0369a1; }
+.status-none { background: #f1f5f9; color: #94a3b8; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-in { animation: fadeIn 0.6s ease-out forwards; }

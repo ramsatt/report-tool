@@ -1,0 +1,126 @@
+<div class="slide-container">
+    <!-- HEADER -->
+    <header class="flex justify-between items-end border-b border-slate-200 pb-3">
+        <div>
+            <div class="flex items-center gap-3 mb-1">
+                <div class="bg-sky-600 h-8 w-1 rounded"></div>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Defect Performance Analytics</h1>
+            </div>
+            <p class="text-slate-500 text-[10px] uppercase tracking-widest font-bold">DQME APPLICATION ECOSYSTEM • SPRINT-WISE VELOCITY METRICS</p>
+        </div>
+        <div class="text-right">
+            <p class="text-[9px] text-slate-400 font-mono tracking-tighter uppercase italic">Dataset Period: {{data?.generalInfo?.month}} {{data?.generalInfo?.year}}</p>
+            <h2 class="text-xl font-bold text-sky-700 uppercase">Execution Velocity Summary</h2>
+        </div>
+    </header>
+
+    <!-- KPI STRIP -->
+    <div class="kpi-strip">
+        <div class="glass kpi-card">
+            <div class="kpi-icon bg-sky-50 text-sky-600">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div>
+                <div class="kpi-value text-sky-700">{{totalVolume}}</div>
+                <div class="kpi-label">Total Volume</div>
+            </div>
+        </div>
+        <div class="glass kpi-card border-l-4 border-emerald-500">
+            <div class="kpi-icon bg-emerald-50 text-emerald-600">
+                <i class="fas fa-check-double"></i>
+            </div>
+            <div>
+                <div class="kpi-value text-emerald-700">{{highestResolutionSprint}}</div>
+                <div class="kpi-label">Peak Performance Sprint</div>
+            </div>
+        </div>
+        <div class="glass kpi-card">
+            <div class="kpi-icon bg-amber-50 text-amber-600">
+                <i class="fas fa-hourglass-start"></i>
+            </div>
+            <div>
+                <div class="kpi-value text-amber-700">{{avgCarryOver}} Items</div>
+                <div class="kpi-label">Avg. Sprint Carry-over</div>
+            </div>
+        </div>
+        <div class="glass kpi-card">
+            <div class="kpi-icon bg-purple-50 text-purple-600">
+                <i class="fas fa-gauge-high"></i>
+            </div>
+            <div>
+                <div class="kpi-value text-purple-700">{{velocityRatio}}x</div>
+                <div class="kpi-label">Resolution Efficiency</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="main-grid">
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+            <div class="glass chart-section relative">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-600">Sprint Throughput: Created vs Resolved</h3>
+                    <div class="flex gap-4 text-[9px] font-bold">
+                        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded bg-sky-600"></span> Created</span>
+                        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded bg-emerald-600"></span> Resolved</span>
+                    </div>
+                </div>
+                <div class="chart-container-inner" echarts [options]="throughputOption"></div>
+            </div>
+
+            <!-- Table Removed as requested -->
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <div class="glass chart-section relative">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2 text-center">Root Cause Breakdown</h3>
+                <div class="chart-container-inner" echarts [options]="rcOption"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM SECTION: INSIGHTS (Full Width) -->
+    <div class="glass insights-section mt-4">
+        <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3 px-1">Execution Insights & Stability Benchmark</h3>
+        <div class="insights-grid">
+            <div class="insight-column">
+                <div class="insight-item">
+                    <div class="dot bg-emerald-500"></div>
+                    <p class="insight-text"><strong class="text-slate-900">Efficiency:</strong> Sprint-wise processing is averaging {{avgCarryOver}} items carried over.</p>
+                </div>
+                <div class="insight-item">
+                    <div class="dot bg-sky-500"></div>
+                    <p class="insight-text"><strong class="text-slate-900">Bottlenecks:</strong> Primary root cause is identified as <span class="text-sky-600 font-bold">{{primaryRootCause}}</span>.</p>
+                </div>
+            </div>
+            <div class="insight-column">
+                <div class="insight-item">
+                    <div class="dot bg-amber-500"></div>
+                    <p class="insight-text"><strong class="text-slate-900">Optimization:</strong> Current resolution ratio of {{velocityRatio}}x indicates stable maintenance.</p>
+                </div>
+                
+                <div class="stability-section-horizontal mt-1">
+                    <div class="flex justify-between items-center text-[9px] font-bold text-slate-500 uppercase mb-1">
+                        <span>Stability Index (Resolved %)</span>
+                        <span class="text-emerald-600">{{stabilityIndexValue}}%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" [style.width.%]="stabilityIndexValue"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="flex items-center gap-4">
+            <span>DQME • Internal Execution Performance Benchmark</span>
+            <span class="h-1 w-1 bg-slate-300 rounded-full"></span>
+            <span class="text-slate-400 font-mono lowercase tracking-normal italic">{{snapshotDate}}</span>
+        </div>
+        <div>Slide ID: 11</div>
+    </footer>
+</div>

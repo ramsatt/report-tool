@@ -66,7 +66,7 @@
             </div>
 
             <!-- ACTION ITEMS -->
-            <div class="glass flex flex-col flex-1 overflow-hidden">
+            <div class="glass flex flex-col flex-1 overflow-hidden" style="min-height: 120px;">
                 <div class="p-2 border-b border-slate-100 bg-slate-50/50">
                     <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-600">Action Item Registry</h3>
                 </div>
@@ -91,7 +91,7 @@
                                 <tr>
                                     <td colspan="3" class="p-6 text-center text-slate-400 italic">
                                         <div class="mb-2"><i class="fa-solid fa-clipboard-check text-2xl opacity-20"></i></div>
-                                        <div class="text-xs">No active action items registered for current sprint.</div>
+                                        <div class="text-xs">No active action items registered.</div>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -171,8 +171,13 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-        <div>DQME Resource Planning • Managed Document</div>
-        <div>Ref Date: {{ currentDate }}</div>
+    <footer class="mt-auto pt-3 pb-1 flex justify-between items-center border-t border-slate-200">
+        <div class="flex items-center">
+            <span class="text-[10px] font-black tracking-tighter text-brand-navy uppercase">COGNIZANT</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <span class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Caterpillar: Confidential Green</span>
+            <span class="text-[0.65rem] font-extrabold text-[#94a3b8]">13</span>
+        </div>
     </footer>
 </div>

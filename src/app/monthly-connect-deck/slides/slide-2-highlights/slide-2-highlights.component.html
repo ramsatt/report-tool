@@ -5,8 +5,7 @@
             <div class="sidebar-header">
                 <div class="sidebar-accent"></div>
                 <div class="title-group">
-                    <h1>{{ generalInfo!.projectName.split(' ')[0] || 'DQME' }}</h1>
-                    <h1>{{ generalInfo!.projectName.split(' ')[1] || 'CORE' }}</h1>
+                    <h1>DQME CORE</h1>
                     <p class="subtitle">PLATFORM</p>
                 </div>
             </div>
@@ -14,28 +13,16 @@
 
         <div>
             <div class="date-group">
-                <p class="cycle-label">Cycle Period</p>
                 <h2>{{ generalInfo.month }} {{ generalInfo.year }}</h2>
-                <p class="release-label">Q1-{{ generalInfo.year }} Release Stream</p>
-            </div>
-
-            <div class="confidential-group">
-                <div class="lock-icon">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-width="2"/></svg>
-                </div>
-                <div>
-                    <p class="client-name">Caterpillar</p>
-                    <p class="confidential-tag">Confidential Green</p>
-                </div>
             </div>
         </div>
+        
     </aside>
 
     <!-- MAIN CONTENT -->
     <main class="main-display">
         <header class="main-header">
             <div>
-                <span class="section-label">{{ generalInfo.month }} Review </span>
                 <h2 class="main-title">Key Accomplishments</h2>
             </div>
 
@@ -53,18 +40,13 @@
         </div>
 
         <!-- FOOTER -->
-        <footer class="slide-footer">
-            <div class="footer-left">
-                <span class="brand-text">COGNIZANT</span>
-                <div class="footer-dot"></div>
-                <span class="system-text">Reporting System</span>
+        <footer class="mt-auto pt-3 pb-1 flex justify-between items-center border-t border-slate-200">
+            <div class="flex items-center">
+                <span class="text-[10px] font-black tracking-tighter text-brand-navy">COGNIZANT</span>
             </div>
-            <div class="footer-right">
-                <div class="version-info">
-                    <p class="version-label">Engine</p>
-                    <p class="version-val">v2.4.0</p>
-                </div>
-                <div class="page-number">2</div>
+            <div class="flex items-center gap-8">
+                <span class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Caterpillar: Confidential Green</span>
+                <span class="text-[0.65rem] font-extrabold text-[#94a3b8]">2</span>
             </div>
         </footer>
     </main>

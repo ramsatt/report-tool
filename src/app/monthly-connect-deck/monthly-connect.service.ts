@@ -120,17 +120,17 @@ export class MonthlyConnectService {
     if (wsDelivery) {
       const rows = XLSX.utils.sheet_to_json(wsDelivery) as any[];
       data.deliveryMetrics = rows.map(row => ({
-        stream: row['Stream'],
-        sprint: row['Sprint'],
-        month: this.excelDateToJSDate(row['Month']),
-        committed: row['Committed'] || 0,
-        delivered: row['Delivered'] || 0,
-        deliveryPct: row['Delivery %'] || 0,
-        features: row['Features Delivered'],
-        deployedDate: this.excelDateToJSDate(row['Deployed Date']),
-        deploymentStatus: row['Deployment Status'],
-        bugs: row['Bugs'] || 0,
-        comments: row['Comments']
+        stream: this.scrubVal(row[this.scrubKey(row, 'Stream')]),
+        sprint: this.scrubVal(row[this.scrubKey(row, 'Sprint')]),
+        month: this.excelDateToJSDate(row[this.scrubKey(row, 'Month')]),
+        committed: row[this.scrubKey(row, 'Committed')] || 0,
+        delivered: row[this.scrubKey(row, 'Delivered')] || 0,
+        deliveryPct: row[this.scrubKey(row, 'Delivery %')] || 0,
+        features: this.scrubVal(row[this.scrubKey(row, 'Features Delivered')]),
+        deployedDate: this.excelDateToJSDate(row[this.scrubKey(row, 'Deployed Date')]),
+        deploymentStatus: this.scrubVal(row[this.scrubKey(row, 'Deployment Status')]),
+        bugs: row[this.scrubKey(row, 'Bugs')] || 0,
+        comment: this.scrubVal(row[this.scrubKey(row, 'Comments')] || row[this.scrubKey(row, 'Comment')])
       }));
     }
 
@@ -138,14 +138,30 @@ export class MonthlyConnectService {
     const wsVelocity = wb.Sheets['Velocity Strategy'];
     if (wsVelocity) {
       const rows = XLSX.utils.sheet_to_json(wsVelocity) as any[];
-      data.velocityStrategy = rows.map(row => ({
-        month: this.excelDateToJSDate(row['Month']),
-        sprint: row['Sprint'],
-        committed: row['Committed'] || 0,
-        delivered: row['Delivered'] || 0,
-        deliveryPct: row['Delivery %'] || 0,
-        comments: row['Comment'] || row['Comment '] || row['Comments'] || '' 
-      }));
+      data.velocityStrategy = rows.map(row => {
+        const committedKey = this.scrubKey(row, 'Committed');
+        const deliveredKey = this.scrubKey(row, 'Delivered');
+        const deliveryPctKey = this.scrubKey(row, 'Delivery %');
+        
+        const committed = row[committedKey] || 0;
+        const delivered = row[deliveredKey] || 0;
+        let deliveryPct = row[deliveryPctKey];
+        
+        if (deliveryPct === undefined) {
+          deliveryPct = committed > 0 ? (delivered / committed) * 100 : 0;
+        }
+        
+        return {
+          month: this.scrubVal(row[this.scrubKey(row, 'Month')]) || '',
+          sprint: this.scrubVal(row[this.scrubKey(row, 'Sprint')]) || '',
+          committed: committed,
+          delivered: delivered,
+          deliveryPct: Math.round(Number(deliveryPct) * 10) / 10,
+          plannedDeployment: this.excelDateToJSDate(row[this.scrubKey(row, 'Planned Deployment')]),
+          actualDeployment: this.excelDateToJSDate(row[this.scrubKey(row, 'Actual Deployment')]),
+          comment: this.scrubVal(row[this.scrubKey(row, 'Comment')] || row[this.scrubKey(row, 'Comments')]),
+        };
+      });
     }
 
     // 4. Defect Analysis

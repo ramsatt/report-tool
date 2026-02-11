@@ -14,9 +14,7 @@
             </div>
 
             <div class="cycle-info">
-                <p class="cycle-label">Cycle Period</p>
                 <p class="highlight-date">{{ generalInfo.month }} {{ generalInfo.year }}</p>
-                <p class="release-stream">Q1-{{ generalInfo.year }} Release Stream</p>
             </div>
 
             <div class="stats-card-wrapper">
@@ -47,16 +45,6 @@
 
                     <div class="card-bottom-dash"></div>
                 </div>
-            </div>
-        </div>
-
-        <div class="confidential-area">
-            <div class="lock-box">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
-            </div>
-            <div class="confidential-text-group">
-                <span class="client-tag">Caterpillar</span>
-                <span class="status-tag">Confidential Green</span>
             </div>
         </div>
     </aside>
@@ -98,8 +86,6 @@
                                 <p class="val-slate-400">{{ metric.spilled }}</p>
                             </div>
                         </div>
-                        
-
                     </div>
                 </div>
 
@@ -120,18 +106,13 @@
             </div>
         </div>
 
-        <footer class="slide-footer">
-            <div class="footer-brand">
-                <span class="brand-name">COGNIZANT</span>
-                <div class="brand-sep"></div>
-                <span class="system-name">Reporting System</span>
+        <footer class="mt-auto pt-3 pb-1 flex justify-between items-center border-t border-slate-200">
+            <div class="flex items-center">
+                <span class="text-[10px] font-black tracking-tighter text-brand-navy uppercase">COGNIZANT</span>
             </div>
-            <div class="footer-meta">
-                <div class="engine-ver">
-                    <p class="ver-label">Engine Vers.</p>
-                    <p class="ver-val">v2.4.0</p>
-                </div>
-                <div class="page-num">3</div>
+            <div class="flex items-center gap-8">
+                <span class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Caterpillar: Confidential Green</span>
+                <span class="text-[0.65rem] font-extrabold text-[#94a3b8]">3</span>
             </div>
         </footer>
     </main>

@@ -9,116 +9,103 @@
                 </svg>
             </div>
             <div class="header-title-group">
-                <h1 class="header-title">Delivery Metrics</h1>
+                <h1 class="header-title">Delivery Metrics Summary</h1>
                 <div class="header-subtitle">
                     <div class="subtitle-dot"></div>
                     <p class="subtitle-text">Last 6 Months</p>
                 </div>
             </div>
         </div>
-
-        <div class="header-right">
-            <div class="stream-info">
-                <p class="stream-label">Stream Focus</p>
-                <h2 class="stream-date">{{ generalInfo.month }} {{ generalInfo.year }}</h2>
-            </div>
-            <div class="page-number">07</div>
-        </div>
     </header>
 
     <!-- Content Grid -->
     <div class="content-grid">
         
-        <!-- Left Sidebar Column -->
-        <div class="sidebar-column">
+        <!-- Performance Section -->
+        <section class="performance-card">
+            <p class="card-label">Baseline Performance</p>
+            <div class="performance-value">
+                <span class="value-main">{{ summary.avgVelocity | number:'1.0-0' }}</span>
+                <span class="value-decimal">.{{ (summary.avgVelocity % 1 * 10) | number:'1.0-0' }}</span>
+                <span class="value-unit">% Avg</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" [style.width.%]="summary.avgVelocity"></div>
+            </div>
+            <p class="performance-note">{{ summary.description }}</p>
+        </section>
+
+        <!-- Charts Area -->
+        <section class="chart-card">
+            <div class="chart-header">
+                <p class="card-label">Velocity Lifecycle Analytics</p>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot legend-commit"></div>
+                        <span class="legend-label">Commit</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot legend-deliver"></div>
+                        <span class="legend-label">Deliver</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <div echarts [options]="chartOption" class="chart-echarts"></div>
+            </div>
+        </section>
+
+        <!-- Ledger Area (Standard Table) -->
+        <section class="ledger-card">
+            <div class="table-wrapper">
+                <table class="standard-table">
+                    <thead>
+                        <tr>
+                            <th class="col-month">Month</th>
+                            <th class="col-sprint">Sprint</th>
+                            <th class="col-sp">Committed SP</th>
+                            <th class="col-sp">Delivered SP</th>
+                            <th class="col-pct">Delivery %</th>
+                            <th class="col-date">Planned Deployment</th>
+                            <th class="col-date">Actual Deployment</th>
+                            <th class="col-comment">Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let metric of velocityMetrics">
+                            <td *ngIf="metric.monthRowSpan > 0" [attr.rowspan]="metric.monthRowSpan" class="col-month merged-cell">
+                                {{ metric.period }}
+                            </td>
+                            <td class="col-sprint">{{ metric.sprint }}</td>
+                            <td class="col-sp">{{ metric.committed }}</td>
+                            <td class="col-sp">{{ metric.delivered }}</td>
+                            <td class="col-pct">
+                                <span class="pct-value" [ngClass]="metric.statusClass">
+                                    {{ metric.deliveryPct }}%
+                                </span>
+                            </td>
+                            <td class="col-date">{{ metric.plannedDeployment }}</td>
+                            <td class="col-date">{{ metric.actualDeployment }}</td>
+                            <td class="col-comment" title="{{ metric.comment }}">{{ metric.comment }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
-            <!-- Performance Section -->
-            <section class="performance-card">
-                <p class="card-label">Baseline Performance</p>
-                <div class="performance-value">
-                    <span class="value-main">{{ summary.avgVelocity | number:'1.0-0' }}</span>
-                    <span class="value-decimal">.{{ (summary.avgVelocity % 1 * 10) | number:'1.0-0' }}</span>
-                    <span class="value-unit">% Avg</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" [style.width.%]="summary.avgVelocity"></div>
-                </div>
-                <p class="performance-note">{{ summary.description }}</p>
-            </section>
-
-            <!-- Execution Context Section -->
-            <section class="context-card">
-                <p class="card-label">Execution Context</p>
-                <div class="context-list">
-                    <div class="context-item" *ngFor="let note of executionNotes">
-                        <div class="context-bullet" [style.background-color]="note.bulletColor"></div>
-                        <p class="context-text" [style.color]="note.bulletColor === '#cbd5e1' ? '#94a3b8' : '#475569'" 
-                           [style.font-style]="note.bulletColor === '#cbd5e1' ? 'italic' : 'normal'">
-                            {{ note.text }}
-                        </p>
-                    </div>
-                </div>
-                <div class="context-footer">
-                    <div class="engine-version">
-                        <p class="version-label">Engine Vers.</p>
-                        <p class="version-value">v2.4.0</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Right Main Column -->
-        <div class="main-column">
-            
-            <!-- Charts Area -->
-            <section class="chart-card">
-                <div class="chart-header">
-                    <p class="card-label">Velocity Lifecycle Analytics</p>
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-dot legend-commit"></div>
-                            <span class="legend-label">Commit</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot legend-deliver"></div>
-                            <span class="legend-label">Deliver</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <div echarts [options]="chartOption" class="chart-echarts"></div>
-                </div>
-            </section>
-
-            <!-- Ledger Area -->
-            <section class="ledger-card">
-                <!-- Sticky Table Header -->
-                <div class="ledger-header">
-                    <div class="ledger-col-period">Period</div>
-                    <div class="ledger-col-identity">Operational Identity</div>
-                    <div class="ledger-col-velocity">Velocity %</div>
-                    <div class="ledger-col-outcome">Outcome</div>
-                </div>
-                
-                <!-- Scrollable Body -->
-                <div class="ledger-body">
-                    <div class="ledger-row" *ngFor="let metric of velocityMetrics">
-                        <div class="ledger-col-period">{{ metric.period }}</div>
-                        <div class="ledger-col-identity">
-                            <p class="identity-name">{{ metric.sprint }}</p>
-                            <p class="identity-desc">{{ metric.comments }}</p>
-                        </div>
-                        <div class="ledger-col-velocity">{{ metric.deliveryPct }}%</div>
-                        <div class="ledger-col-outcome">
-                            <span class="status-pill" [ngClass]="metric.statusClass">{{ metric.displayStatus }}</span>
-                        </div>
-                    </div>
-                    
-                    <div *ngIf="velocityMetrics.length === 0" class="no-data-msg">
-                        No velocity strategy data found.
-                    </div>
-                </div>
-            </section>
-        </div>
+            <div *ngIf="velocityMetrics.length === 0" class="no-data-msg">
+                No velocity strategy data found.
+            </div>
+        </section>
     </div>
+    
+    <!-- FOOTER -->
+    <footer class="mt-auto pt-3 pb-1 flex justify-between items-center border-t border-slate-200">
+        <div class="flex items-center">
+            <span class="text-[10px] font-black tracking-tighter text-brand-navy uppercase">COGNIZANT</span>
+        </div>
+        <div class="flex items-center gap-8">
+            <span class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Caterpillar: Confidential Green</span>
+            <span class="text-[0.65rem] font-extrabold text-[#94a3b8]">6</span>
+        </div>
+    </footer>
 </div>

@@ -13,7 +13,6 @@
   display: flex;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.15);
 }
 
 /* Sidebar Accents */
@@ -24,13 +23,13 @@
   flex-direction: column;
   align-items: center;
   padding: 2.5rem 0;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .main-stage {
   flex-grow: 1;
-  background-color: var(--bg-slate);
-  padding: 1.25rem 2.5rem;
+  background-color: white;
+  padding: 1.5rem 2.5rem; /* Reduced from 2rem 3.5rem */
   display: flex;
   flex-direction: column;
 }
@@ -51,73 +50,94 @@
   height: 18px;
 }
 
-.registry-label {
-  color: #94a3b8;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  margin: 0;
-  line-height: 18px;
-}
-
-
-
-
-/* Card Layout */
-.status-card {
-  background: white;
-  border-radius: 16px;
-  padding: 1rem 1.25rem;
-  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-
-
-/* Module List Styling */
-.module-grid {
+/* DASHBOARD STATS */
+.stat-header {
   display: grid;
-  grid-template-columns: 2fr 1.2fr 0.8fr 1fr 1.5fr;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; /* Reduced from 2rem */
+  margin-bottom: 1rem; /* Reduced from 2rem */
 }
 
-.module-item {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  align-items: center;
-  border-bottom: 1px solid #f1f5f9;
-  transition: all 0.2s ease;
+.stat-box {
+  padding-left: 1rem;
+  border-left: 3px solid #e2e8f0;
 }
 
-
-
-
-.module-item:hover {
-  background-color: #f8fafc;
-  border-radius: 12px;
-  transform: translateX(4px);
+.stat-box.active {
+  border-left-color: var(--brand-cyan);
 }
 
-.module-item:last-child {
-  border-bottom: none;
+.stat-box p:last-child {
+    line-height: 1;
+    margin-top: 0.25rem;
 }
 
+/* TABLE DESIGN */
+.table-container {
+    flex-grow: 1;
+    overflow-y: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.migration-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.migration-table th {
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.75rem;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+.migration-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+}
+
+.migration-table tr:last-child td {
+    border-bottom: none;
+}
+
+.name-cell {
+    font-size: 0.75rem; /* Reduced from 0.9 */
+    font-weight: 700;
+    color: var(--brand-navy);
+}
+
+.timeline-cell {
+    font-size: 0.65rem; /* Reduced from 0.75 */
+    color: #64748b;
+    font-weight: 500;
+}
+
+.progress-val {
+    font-size: 0.75rem; /* Reduced from 0.85 */
+    font-weight: 800;
+}
+
+.comment-cell {
+    font-size: 0.65rem; /* Reduced from 0.75 */
+    color: #475569;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+/* BADGES */
 .badge {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 700;
-  padding: 0.25rem 0.6rem;
-  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-
 
 .badge-completed {
   background: #ecfdf5;
@@ -129,6 +149,7 @@
   color: #d97706;
 }
 
+/* ANIMATIONS */
 .reveal-anim {
   animation: slideFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
@@ -142,33 +163,19 @@
   }
 }
 
-.custom-scroll::-webkit-scrollbar {
-  width: 5px;
+.custom-scroll::-webkit-scrollbar { width: 5px; }
+.custom-scroll::-webkit-scrollbar-track { background: transparent; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+.page-number {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.875rem;
+    font-weight: 800;
+    font-size: 0.65rem;
+    color: #94a3b8;
+    z-index: 10;
 }
 
-.custom-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scroll::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
-  border-radius: 10px;
-}
-
-.stat-header {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-
-
-.stat-box {
-  padding-left: 1rem;
-  border-left: 3px solid #e2e8f0;
-}
-
-.stat-box.active {
-  border-left-color: var(--brand-cyan);
-}
+.text-center { text-align: center; }
+.text-right { text-align: right; }

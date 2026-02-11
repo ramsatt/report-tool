@@ -1,126 +1,117 @@
 <div class="slide-container">
-    <!-- HEADER -->
-    <header class="flex justify-between items-end border-b border-slate-200 pb-3">
-        <div>
-            <div class="flex items-center gap-3 mb-1">
-                <div class="bg-sky-600 h-8 w-1 rounded"></div>
-                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Defect Performance Analytics</h1>
+    <header>
+        <div class="header-left">
+            <div class="logo-box">
+                <svg viewBox="0 0 24 24" fill="white" width="24" height="24">
+                    <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20ZM13,7H11v6l5.2,3.1.8-1.3L13,12.3Z"/>
+                </svg>
             </div>
-            <p class="text-slate-500 text-[10px] uppercase tracking-widest font-bold">DQME APPLICATION ECOSYSTEM • SPRINT-WISE VELOCITY METRICS</p>
+            <div class="header-text">
+                <h1>DEFECTION METRICS</h1>
+                <p>Enterprise Execution Benchmarking</p>
+            </div>
         </div>
-        <div class="text-right">
-            <p class="text-[9px] text-slate-400 font-mono tracking-tighter uppercase italic">Dataset Period: {{data?.generalInfo?.month}} {{data?.generalInfo?.year}}</p>
-            <h2 class="text-xl font-bold text-sky-700 uppercase">Execution Velocity Summary</h2>
+        <div class="header-right">
+            <div class="cycle-pill">{{data?.generalInfo?.month}} / {{data?.generalInfo?.year}}</div>
         </div>
     </header>
 
-    <!-- KPI STRIP -->
     <div class="kpi-strip">
-        <div class="glass kpi-card">
-            <div class="kpi-icon bg-sky-50 text-sky-600">
-                <i class="fas fa-chart-line"></i>
+        <div class="kpi-card glass">
+            <div class="kpi-icon" style="background: #eff6ff; color: #1e40af;">
+                <i class="fa-solid fa-bug"></i>
             </div>
-            <div>
-                <div class="kpi-value text-sky-700">{{totalVolume}}</div>
-                <div class="kpi-label">Total Volume</div>
-            </div>
-        </div>
-        <div class="glass kpi-card border-l-4 border-emerald-500">
-            <div class="kpi-icon bg-emerald-50 text-emerald-600">
-                <i class="fas fa-check-double"></i>
-            </div>
-            <div>
-                <div class="kpi-value text-emerald-700">{{highestResolutionSprint}}</div>
-                <div class="kpi-label">Peak Performance Sprint</div>
+            <div class="kpi-data">
+                <div class="kpi-value">{{totalVolume}}</div>
+                <div class="kpi-label">TOTAL VOLUME</div>
             </div>
         </div>
-        <div class="glass kpi-card">
-            <div class="kpi-icon bg-amber-50 text-amber-600">
-                <i class="fas fa-hourglass-start"></i>
+        <div class="kpi-card glass">
+            <div class="kpi-icon" style="background: #fef2f2; color: #b91c1c;">
+                <i class="fa-solid fa-bolt"></i>
             </div>
-            <div>
-                <div class="kpi-value text-amber-700">{{avgCarryOver}} Items</div>
-                <div class="kpi-label">Avg. Sprint Carry-over</div>
+            <div class="kpi-data">
+                <div class="kpi-value">{{highestResolutionSprint}}</div>
+                <div class="kpi-label">PEAK RESOLUTION</div>
             </div>
         </div>
-        <div class="glass kpi-card">
-            <div class="kpi-icon bg-purple-50 text-purple-600">
-                <i class="fas fa-gauge-high"></i>
+        <div class="kpi-card glass">
+            <div class="kpi-icon" style="background: #ecfdf5; color: #047857;">
+                <i class="fa-solid fa-check-double"></i>
             </div>
-            <div>
-                <div class="kpi-value text-purple-700">{{velocityRatio}}x</div>
-                <div class="kpi-label">Resolution Efficiency</div>
+            <div class="kpi-data">
+                <div class="kpi-value">{{stabilityIndexValue}}%</div>
+                <div class="kpi-label">STABILITY INDEX</div>
+            </div>
+        </div>
+        <div class="kpi-card glass">
+            <div class="kpi-icon" style="background: #fff7ed; color: #c2410c;">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">{{avgCarryOver}}</div>
+                <div class="kpi-label">AVG CARRY OVER</div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN GRID -->
     <div class="main-grid">
-        <!-- LEFT PANEL -->
         <div class="left-panel">
-            <div class="glass chart-section relative">
-                <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-600">Sprint Throughput: Created vs Resolved</h3>
-                    <div class="flex gap-4 text-[9px] font-bold">
-                        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded bg-sky-600"></span> Created</span>
-                        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded bg-emerald-600"></span> Resolved</span>
-                    </div>
+            <div class="chart-section glass">
+                <div class="section-badge">DEFECTION TREND</div>
+                <div class="chart-container-inner">
+                    <div echarts [options]="throughputOption" class="w-full h-full"></div>
                 </div>
-                <div class="chart-container-inner" echarts [options]="throughputOption"></div>
             </div>
-
-            <!-- Table Removed as requested -->
+            <div class="table-section glass">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Module Entity</th>
+                            <th>Created</th>
+                            <th>Resolved</th>
+                            <th>Throughput</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of sprintMetrics">
+                            <td class="font-bold">{{item.name}}</td>
+                            <td>{{item.created}}</td>
+                            <td class="text-emerald-600 font-bold">{{item.resolved}}</td>
+                            <td class="throughput-rate">{{item.throughputRate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- RIGHT PANEL -->
         <div class="right-panel">
-            <div class="glass chart-section relative">
-                <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2 text-center">Root Cause Breakdown</h3>
-                <div class="chart-container-inner" echarts [options]="rcOption"></div>
+            <div class="insights-section glass">
+                <div class="section-badge mb-4">ROOT CAUSE DISTRIBUTION</div>
+                <div class="chart-container-inner" style="height: 180px;">
+                    <div echarts [options]="rcOption" class="w-full h-full"></div>
+                </div>
+            </div>
+
+            <div class="stability-section-horizontal glass p-4">
+              <div class="flex justify-between items-center mb-1">
+                  <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Platform Stability</span>
+                  <span class="text-emerald-600 font-bold text-xs">{{stabilityIndexValue}}%</span>
+              </div>
+              <div class="progress-bar-container">
+                  <div class="progress-bar" [style.width.%]="stabilityIndexValue"></div>
+              </div>
             </div>
         </div>
     </div>
 
-    <!-- BOTTOM SECTION: INSIGHTS (Full Width) -->
-    <div class="glass insights-section mt-4">
-        <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3 px-1">Execution Insights & Stability Benchmark</h3>
-        <div class="insights-grid">
-            <div class="insight-column">
-                <div class="insight-item">
-                    <div class="dot bg-emerald-500"></div>
-                    <p class="insight-text"><strong class="text-slate-900">Efficiency:</strong> Sprint-wise processing is averaging {{avgCarryOver}} items carried over.</p>
-                </div>
-                <div class="insight-item">
-                    <div class="dot bg-sky-500"></div>
-                    <p class="insight-text"><strong class="text-slate-900">Bottlenecks:</strong> Primary root cause is identified as <span class="text-sky-600 font-bold">{{primaryRootCause}}</span>.</p>
-                </div>
-            </div>
-            <div class="insight-column">
-                <div class="insight-item">
-                    <div class="dot bg-amber-500"></div>
-                    <p class="insight-text"><strong class="text-slate-900">Optimization:</strong> Current resolution ratio of {{velocityRatio}}x indicates stable maintenance.</p>
-                </div>
-                
-                <div class="stability-section-horizontal mt-1">
-                    <div class="flex justify-between items-center text-[9px] font-bold text-slate-500 uppercase mb-1">
-                        <span>Stability Index (Resolved %)</span>
-                        <span class="text-emerald-600">{{stabilityIndexValue}}%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" [style.width.%]="stabilityIndexValue"></div>
-                    </div>
-                </div>
-            </div>
+    <footer class="mt-auto pt-3 pb-1 flex justify-between items-center border-t border-slate-200">
+        <div class="flex items-center">
+            <span class="text-[10px] font-black tracking-tighter text-brand-navy uppercase">COGNIZANT</span>
         </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="flex items-center gap-4">
-            <span>DQME • Internal Execution Performance Benchmark</span>
-            <span class="h-1 w-1 bg-slate-300 rounded-full"></span>
-            <span class="text-slate-400 font-mono lowercase tracking-normal italic">{{snapshotDate}}</span>
+        <div class="flex items-center gap-8">
+            <span class="text-[0.55rem] font-bold text-slate-400 uppercase tracking-widest">Caterpillar: Confidential Green</span>
+            <span class="text-[0.65rem] font-extrabold text-[#94a3b8]">11</span>
         </div>
-        <div>Slide ID: 11</div>
     </footer>
 </div>

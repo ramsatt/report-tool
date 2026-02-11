@@ -17,7 +17,7 @@ export interface DeliveryMetric {
   deployedDate: string;
   deploymentStatus: string;
   bugs: number;
-  comments: string;
+  comment: string;
 }
 
 export interface VelocityStrategy {
@@ -26,7 +26,9 @@ export interface VelocityStrategy {
   committed: number;
   delivered: number;
   deliveryPct: number;
-  comments: string;
+  plannedDeployment?: string;
+  actualDeployment?: string;
+  comment: string;
 }
 
 export interface DefectItem {

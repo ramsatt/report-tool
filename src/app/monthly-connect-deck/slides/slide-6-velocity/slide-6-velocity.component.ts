@@ -8,6 +8,7 @@ interface VelocityDisplay extends VelocityStrategy {
     period: string;
     statusClass: string;
     displayStatus: string;
+    monthRowSpan: number;
 }
 
 interface VelocitySummary {
@@ -16,10 +17,7 @@ interface VelocitySummary {
     description: string;
 }
 
-interface ExecutionNote {
-    text: string;
-    bulletColor: string;
-}
+
 
 @Component({
     selector: 'app-slide-6-velocity',
@@ -36,14 +34,10 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
     summary: VelocitySummary = {
         avgVelocity: 0,
         totalSprints: 0,
-        description: 'Strategic efficiency calculated across last 14 release cycles.'
+        description: 'Strategic efficiency calculated across last 6 monts.'
     };
     
-    executionNotes: ExecutionNote[] = [
-        { text: 'Q4-25 transition stabilized during current stream.', bulletColor: '#818cf8' },
-        { text: 'Production hardening achieved 100% completion in recent milestones.', bulletColor: '#22d3ee' },
-        { text: 'Sprint 26 duplicate work issues monitored for root cause.', bulletColor: '#cbd5e1' }
-    ];
+
     
     chartOption: EChartsOption = {};
 
@@ -67,9 +61,12 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
             return dateA.getTime() - dateB.getTime();
         });
 
+        // Limit to last 18 entries (approx 6-9 months) to ensure it fits the slide without scroll
+        const limited = sorted.slice(-18);
+
         let totalVelocity = 0;
         
-        this.velocityMetrics = sorted.map(v => {
+        this.velocityMetrics = limited.map(v => {
             const pct = v.deliveryPct || 0;
             totalVelocity += pct;
             
@@ -93,9 +90,29 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
                 ...v,
                 period,
                 statusClass,
-                displayStatus
+                displayStatus,
+                plannedDeployment: this.formatDeploymentDate(v.plannedDeployment),
+                actualDeployment: this.formatDeploymentDate(v.actualDeployment),
+                monthRowSpan: 0 // Will be set below
             };
         });
+
+        // Calculate RowSpans for months
+        for (let i = 0; i < this.velocityMetrics.length; i++) {
+            if (i > 0 && this.velocityMetrics[i].period === this.velocityMetrics[i - 1].period) {
+                this.velocityMetrics[i].monthRowSpan = -1; // Flag to skip rendering
+            } else {
+                let span = 1;
+                for (let j = i + 1; j < this.velocityMetrics.length; j++) {
+                    if (this.velocityMetrics[j].period === this.velocityMetrics[i].period) {
+                        span++;
+                    } else {
+                        break;
+                    }
+                }
+                this.velocityMetrics[i].monthRowSpan = span;
+            }
+        }
 
         this.summary.totalSprints = this.velocityMetrics.length;
         this.summary.avgVelocity = this.summary.totalSprints > 0 
@@ -103,13 +120,30 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
             : 0;
     }
 
+    private formatDeploymentDate(dateStr: string | undefined): string {
+        if (!dateStr || dateStr === '') return '-';
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return dateStr;
+        
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = date.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+        return `${day} ${month}`;
+    }
+
     private parseExcelDate(excelDate: string | number): Date {
+        if (!excelDate) return new Date();
         if (typeof excelDate === 'number') {
             // Excel date serial number
             const epoch = new Date(1899, 11, 30);
             return new Date(epoch.getTime() + excelDate * 86400000);
         }
-        return new Date(excelDate);
+        
+        // Handle strings like "Aug2025" or "Sep 2025"
+        const str = String(excelDate).trim();
+        const normalized = str.replace(/^([a-zA-Z]{3})(\d{4})$/, '$1 $2');
+        const date = new Date(normalized);
+        
+        return isNaN(date.getTime()) ? new Date() : date;
     }
 
     private formatPeriod(excelDate: string | number): string {
@@ -156,9 +190,9 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
                     show: false
                 },
                 axisLabel: {
-                    color: '#94a3b8',
+                    color: '#475569', // Deep slate for X-axis labels (Sprints)
                     fontSize: 9,
-                    fontWeight: 600,
+                    fontWeight: 800,
                     margin: 8
                 }
             },
@@ -166,7 +200,7 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
                 type: 'value',
                 splitLine: {
                     lineStyle: {
-                        color: '#f1f5f9',
+                        color: '#e2e8f0',
                         type: 'dashed'
                     }
                 },
@@ -177,8 +211,9 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
                     show: false
                 },
                 axisLabel: {
-                    color: '#cbd5e1',
+                    color: '#64748b', // Solid color for Y-axis labels (Values)
                     fontSize: 9,
+                    fontWeight: 700,
                     margin: 8
                 }
             },
@@ -188,7 +223,7 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
                     type: 'bar',
                     data: commitData,
                     itemStyle: {
-                        color: '#cbd5e1',
+                        color: '#94a3b8',
                         borderRadius: [3, 3, 0, 0]
                     },
                     barMaxWidth: 40
@@ -198,7 +233,7 @@ export class Slide6VelocityComponent implements OnInit, OnChanges {
                     type: 'bar',
                     data: deliverData,
                     itemStyle: {
-                        color: '#22d3ee',
+                        color: '#0891b2',
                         borderRadius: [3, 3, 0, 0]
                     },
                     barMaxWidth: 40
